@@ -1,0 +1,133 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container theme-showcase" role="main">
+        <div class="starter-template">
+            <div class="col-lg-12 topHeader">
+                <div class="col-md-4 courseLogoBox">
+                    <h1>Course List</h1>
+                </div>
+                <div class="col-md-8 courseFiltes">
+                    <form id="filtersForm" method="get" action="">
+                        <p class="col-md-4">
+                            <label for="courseCategories">Find by category </label>
+                            <select class="form-control" id="courseCategories" name="category">
+                                {% if criteria.category is not defined or criteria.category is empty %}
+                                    <option selected="" value="">-- Select From List --</option>
+                                {% else %}
+                                    <option value="">-- Select From List --</option>
+                                {% endif %}
+
+                                {% for category in filtersData.categories %}
+                                    {% if criteria.category is defined and criteria.category == category.id %}
+                                        <option selected="" value="{{ category.id }}">{{ category.name }}</option>
+                                    {% else %}
+                                        <option value="{{ category.id }}">{{ category.name }}</option>
+                                    {% endif %}
+
+                                {% endfor %}
+                            </select>
+                        </p>
+                        <p class="col-md-4">
+                            <label for="courseLanguages">Find by language </label>
+                            <select class="form-control" id="courseLanguages" name="language">
+                                {% if criteria.language is not defined or criteria.language is empty %}
+                                    <option selected="" value="">-- Select From List --</option>
+                                {% else %}
+                                    <option value="">-- Select From List --</option>
+                                {% endif %}
+
+                                {% for key, language  in filtersData.languages %}
+                                    {% if   criteria.language is defined and criteria.language == key %}
+                                        <option selected="" value="{{ key }}">{{ language }}</option>
+                                    {% else %}
+                                        <option value="{{ key }}">{{ language }}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+                        </p>
+                        <p class="col-md-4">
+                            <label for="courseAuthors">Find by author </label>
+                            <select class="form-control" id="courseAuthors" name="author">
+                                {% if criteria.user is not defined or criteria.user is empty %}
+                                    <option selected="" value="">-- Select From List --</option>
+                                {% else %}
+                                    <option value="">-- Select From List --</option>
+                                {% endif %}
+
+                                {% for user  in filtersData.users %}
+                                    {% if criteria.user is defined and criteria.user == user.id %}
+                                        <option selected=""
+                                                value="{{ user.id }}">{{ user.firstName }} {{ user.lastName }}</option>
+                                    {% else %}
+                                        <option value="{{ user.id }}">{{ user.firstName }} {{ user.lastName }}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+                        </p>
+                        <input type="submit" id="filterButton" hidden="">
+                    </form>
+                </div>
+                <div class="page-header header-course-list"></div>
+            </div>
+
+            <div class="col-lg-12" id="message">
+            </div>
+
+            {% for course in courses %}
+                <div class="col-md-12 courseBox">
+
+                    <div class="col-md-4 courseLogoBox">
+                        {% if course.logo %}
+                            <img class="courseLogo" src="/{{ course.logo }}">
+                        {% else %}
+                            <img class="courseLogo" src="/images/default-course-logo.png">
+
+                        {% endif %}
+                    </div>
+
+                    <div class="col-md-8 courseDetail">
+                        <h2>{{ course.title }}</h2>
+                        <p>{{ course.subTitle }}</p>
+                        <p>
+                            <span><strong>Author:</strong> <em>{{ course.user.firstName }} {{ course.user.lastName }}</em></span>
+
+                        </p>
+                        <a role="button" data-course-id="6" class="btn btn-default subscribe" data-loading-text="">
+                            Subscribe </a>
+                        <a role="button" href="/course/{{ course.id }}"
+                           class="btn btn-default">View course <span
+                                    class="glyphicon glyphicon-chevron-right"></span></a>
+                        <p></p>
+                    </div>
+                    <hr>
+                </div>
+            {% endfor %}
+
+            <div class="col-md-12">
+                <div class="text-center">
+                    <ul class="pagination">
+                        <li class="active"><a href="#">1</a></li>
+                        <li><a href="http://internalcourses.devcom.com/course/course_list/4">2</a></li>
+                        <li><a href="http://internalcourses.devcom.com/course/course_list/4">»</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <script type="text/javascript">
+                var subscribeUrl = 'http://internalcourses.devcom.com/subscribe/course_subscribe/';
+                var unsubscribeUrl = 'http://internalcourses.devcom.com/subscribe/course_unsubscribe/';
+                var unsubscribeLable = 'Unsubscribe';
+                var subscribeLable = 'Subscribe';
+                var unsubscribeLoadingLable = '';
+                var subscribeLoadingLable = '';
+                var siteUrl = 'http://internalcourses.devcom.com/course/course_list';
+                var viewCourseUrl = 'http://internalcourses.devcom.com/course/view_course';
+            </script>
+            <script type="text/javascript" src="http://internalcourses.devcom.com/assets/js/scripts.js"></script>
+            <script type="text/javascript" src="http://internalcourses.devcom.com/assets/js/course.js"></script>
+            <script type="text/javascript" src="http://internalcourses.devcom.com/assets/js/courseList.js"></script>
+
+        </div>
+    </div>
+{% endblock %}

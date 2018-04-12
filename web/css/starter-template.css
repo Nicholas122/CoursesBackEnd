@@ -1,0 +1,384 @@
+.starter-template {
+    padding: 40px 0;
+    text-align: left;
+}
+
+.form-signin {
+    margin: 0 auto;
+    max-width: 330px;
+    padding: 15px;
+}
+.form-signin .form-signin-heading, .form-signin .checkbox {
+    margin-bottom: 10px;
+}
+.form-signin .checkbox {
+    font-weight: normal;
+}
+.form-signin .form-control {
+    -moz-box-sizing: border-box;
+    font-size: 16px;
+    height: auto;
+    padding: 10px;
+    position: relative;
+}
+.form-signin .form-control:focus {
+    z-index: 2;
+}
+.form-signin input[type="text"] {
+    margin-bottom: -1px;
+}
+.form-signin input[type="password"] {
+    margin-bottom: 10px;
+}
+
+.user-small-logo {
+    display: inline-block;
+    background-image: url('/images/default-user-logo.png');
+    background-position: -156px -113px;
+    border-radius: 5px;
+    margin: -5px 7px -7px 0;
+    width: 25px;
+    height: 25px;
+}
+.user-big-logo {
+    display: block;
+    background-image: url('/images/default-user-logo.png');
+    background-position: -23px -13px;
+    width: 130px;
+    height: 120px;
+}
+.user-menu-logo {
+    border-radius: 5px;
+    margin: -5px 7px -7px 0;
+    width: 25px;
+    height: 25px;
+}
+
+/*Course list*/
+ul.user-course-list {
+    list-style: none;
+    margin: 0 0 10px 0;
+    padding: 0;
+}
+ul.user-course-list li {
+    margin-bottom: 7px;
+}
+ul.user-course-list li a {
+    display: inline-block;
+}
+ul.user-course-list li small {
+    display: block;
+    line-height: 100%;
+}
+.edit-course {
+    margin-left: 5px;
+}
+
+.lecture-description {
+    display: block;
+    margin: 5px 0 0 15px;
+}
+
+.menu-inline {
+    display: inline-block;
+}
+/*ul.course-lecture-list {
+    list-style: none;
+    margin: 0 0 10px 0;
+    padding: 0;
+}
+ul.course-lecture-list li {
+    display: block;
+    margin: 5px 0;
+}
+ul.course-lecture-list li small {
+    display: block;
+    margin: 0 0 0 10px;
+    font-style: italic;
+}*/
+
+.course-info {
+    background-color: #FFFFFF;
+    border: 1px solid #DDDDDD;
+    border-radius: 4px;
+    box-shadow: none;
+    margin: 0;
+    padding: 5px;
+}
+
+/* Rating box */
+.animated {
+    -webkit-transition: height 0.2s;
+    -moz-transition: height 0.2s;
+    transition: height 0.2s;
+}
+
+.stars
+{
+    margin: 20px 0;
+    font-size: 24px;
+    color: #d17581;
+}
+
+.rating_stars
+{
+    width: 140px;
+    float: left;
+}
+
+.rating_legend
+{
+    width: 150px;
+    float: left;
+    margin: 14px 0px;
+}
+
+.float_left
+{
+    float: left;
+}
+
+.rating_container
+{
+    height: 75px;
+}
+
+.selected_rating
+{
+    color: #d17581;
+    font-weight: bold;
+}
+
+/* Rating box End */
+
+/* Paging */
+
+#data_table {
+    width: 100%;
+}
+
+#data_table_paginate
+{
+    width: 150px;
+    text-align: left;
+    padding-top: 5px;
+}
+
+#data_table_info
+{
+    float: right;
+    text-align: right;
+    width: 250px;
+    padding-top: 5px;
+}
+
+#data_table_previous
+{
+    padding-right: 10px;
+}
+
+#data_table_length
+{
+    padding-bottom: 5px;
+}
+
+.fieldset_container
+{
+    padding: 10px 0px 10px 20px;
+    margin-top: 10px;
+}
+
+.paginate_disabled_next, .paginate_disabled_previous {
+    opacity: 0.5;
+    cursor: default;
+    text-decoration: none;
+}
+
+.paginate_disabled_next:hover, .paginate_disabled_previous:hover {
+    text-decoration: none;
+}
+
+/* Paging End*/
+
+@media (max-width: 767px) {
+    #collapse_summary {
+    .collapse;
+    }
+}
+
+
+.courseLogoBox{
+    /*margin-top: 25px;*/
+    padding-left: 10px;
+    padding-right: 10px;
+    text-align: center;
+    height: auto;
+    width: 220px;
+    max-width: 220px;
+    float: none;
+    display: table-cell;
+    vertical-align: middle;
+}
+.courseLogo{
+    /* padding-left: 10px; */
+    /* padding-right: 10px; */
+    width: auto;
+    height: auto;
+    max-width: 200px;
+    max-height: 132px;
+    vertical-align: middle;
+}
+.viewCourseLogo{
+    /* padding-left: 10px; */
+    /* padding-right: 10px; */
+    display:none; /*table-column;*/
+    width: auto;
+    height: auto;
+    max-width: 200px;
+    max-height: 132px;
+    vertical-align: middle;
+    margin-left: 40px;
+    margin-top: 27px;
+}
+.userMenuLogo{
+    border-radius: 5px;
+    margin: -5px 5px -7px 0;
+    max-width: 25px !important;
+    max-height: 25px;
+    height: auto;
+    width: auto;
+}
+
+.saveUserBtn {
+    margin-left: -15px;
+    width: 50%;
+}
+
+.editUserLogo {
+    display: block;
+    height: auto;
+    width: auto;
+    max-width: 550px;
+    max-height: 365px;
+}
+
+.editCourseLogoBox {
+    padding-left:0px;height: 85px;width: 262px;
+
+}
+.editCourseLogo{
+    max-height: 85px;
+    max-width: 200px;
+    height: auto;
+    width: auto;
+    padding: 4px;
+    /*line-height: 1.428571429;*/
+    background-color: #ffffff;
+    /*border: 1px solid #dddddd;*/
+    border-radius: 4px;
+}
+
+
+.courseBox{
+    display: inline-block;
+    width: 100%;
+}
+
+.courseDetail {
+    float: none;
+    display: table-cell;
+    width: auto;
+    padding-left: 35px;
+    padding-bottom: 11px;
+}
+
+.header-course-list{
+    margin-top: 0px;
+}
+
+.topHeader{
+    margin-top: 30px;
+}
+.courseFiltes{
+    float: none;
+    display: table-cell;
+    width: auto;
+    padding-left: 20px;
+}
+
+#courseSummery {
+    margin-top: 14px;
+    margin-bottom: 40px;
+    margin-left: 17px;
+    width: 98.6%;
+}
+#subtitle {
+    font-size: 117%;
+}
+.viewCourseDetail {
+    margin-left: 19px;
+}
+#pageHeaderMyCourse {
+    padding-bottom: 0px;
+    margin-bottom: 0px;
+}
+
+.top-buffer-auth {
+    margin-top:30px;
+
+}
+
+.top-buffer-auth > div:first-child {
+    margin-bottom: 32px;
+}
+#loginBorderWrap{
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin: 6px 375px -10px;
+}
+.loginForm {
+    padding:25px 15px;
+}
+#signUpBottom {
+    margin: 25px 375px 0px;
+    display: table;
+    width: 27.9%;
+}
+#signUpLabel{
+    display: table-cell;
+    /* float: left; */
+    line-height: 14px;
+    font-size: 17px;
+}
+#signUpWrap{
+    display: table-cell;
+    float: right;
+
+}
+.singUpBtn{
+    width: 197%;
+}
+.welcome_p {
+    font-size: 17px;
+    margin-top: 45px;
+}
+.site_logo{
+    border-radius: 5px;
+    margin: -4px 0px -7px 0;
+    width: 123px;
+    height: 27px;
+}
+.userLoggedLogo {
+    height: 25px;
+    width: 25px;
+    /*max-width: 100%;*/
+}
+.userLogoBox{
+    border-radius: 5px;
+    margin: -5px 7px -7px 0;
+    width: 25px;
+    height: auto;
+}
+div#googleRegister {
+    margin-top: -23px;
+}

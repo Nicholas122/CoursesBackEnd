@@ -1,0 +1,32 @@
+# To get started with security, check out the documentation:
+# https://symfony.com/doc/current/security.html
+security:
+    role_hierarchy:
+        ROLE_USER:
+          - ABILITY_USER_OWNER
+          - ABILITY_USER_UPDATE
+          - ABILITY_USER_DELETE
+        ROLE_SUPER_ADMIN: [ROLE_USER]
+    encoders:
+        AppBundle\Entity\User: sha512
+    providers:
+        app.user_provider:
+            id: app.user_provider
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+            anonymous: ~
+
+
+        main:
+            anonymous: ~
+            provider: app.user_provider
+            logout:
+                path:   /logout
+                target: /
+            guard:
+                authenticators:
+                    - form_authenticator
+        default:
+            anonymous: ~
