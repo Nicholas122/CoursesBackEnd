@@ -15,7 +15,7 @@ class CourseSubscribeController extends BaseController
 {
     /**
      * @Route("/subscribe/{course}", name="course-subscribe")
-     *  @Security("has_role('ROLE_USER')")
+     * @Security("has_role('ROLE_USER')")
      */
     public function indexAction(Course $course)
     {
