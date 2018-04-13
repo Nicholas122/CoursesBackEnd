@@ -24,7 +24,6 @@ class CourseSubscribeController extends BaseController
         return $this->redirectToRoute('course', ['course' => $course->getId()]);
     }
 
-
     /**
      * @Route("/unsubscribe/{course}", name="course-unsubscribe")
      * @Security("has_role('ROLE_USER')")
