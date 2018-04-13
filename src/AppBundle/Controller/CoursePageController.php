@@ -35,11 +35,15 @@ class CoursePageController extends BaseController
             $criteria['user'] = $request->get('author');
         }
 
-        $courses = $repository->findBy($criteria);
+        $query = $repository->createQuery($criteria);
+
         $filtersData = $repository->getFiltersData();
+        $paginator  = $this->get('knp_paginator');
+
+        $pagination = $paginator->paginate($query, $request->query->getInt('page', 1),10);
 
         return $this->render('coursepage/index.html.twig', [
-            'courses' => $courses, 'filtersData' => $filtersData,
+            'pagination' => $pagination, 'filtersData' => $filtersData,
             'criteria' => $criteria]);
     }
 

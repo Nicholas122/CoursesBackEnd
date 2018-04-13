@@ -12,6 +12,18 @@ use Symfony\Component\Intl\Intl;
  */
 class CourseRepository extends \Doctrine\ORM\EntityRepository
 {
+
+    public function createQuery($criteria)
+    {
+        $queryBuilder = $this->createQueryBuilder('entity');
+
+        foreach ($criteria as $key => $value) {
+            $queryBuilder->andWhere($queryBuilder->expr()->eq('entity.'.$key, $queryBuilder->expr()->literal($value)));
+        }
+
+        return $queryBuilder->getQuery();
+    }
+
     public function getFiltersData()
     {
         $filtersData = [];
