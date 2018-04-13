@@ -56,7 +56,6 @@ class OwnerVoter implements VoterInterface
         } else {
             $roles[] = (string) $role[0];
         }
-
         if (!$this->supportsClass(get_class($object))) {
             if (get_class($object) == get_class($this)) {
                 if (in_array($attributes[0], $roles)) {
@@ -89,7 +88,6 @@ class OwnerVoter implements VoterInterface
         }
 
         $roleOwn = $baseRoleName.'_'.self::ABILITY_NAME_OWNER;
-
         if (in_array($roleOwn, $roles) && in_array($attribute, $roles)) {
             $owners = $object->getOwners();
             foreach ($owners as $owner) {

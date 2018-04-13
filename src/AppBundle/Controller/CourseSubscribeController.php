@@ -19,7 +19,7 @@ class CourseSubscribeController extends BaseController
      */
     public function indexAction(Course $course)
     {
-        $this->getCourseSubscribeService->subscribe($course, $this->getUser());
+        $this->getCourseSubscribeService()->subscribe($course, $this->getUser());
 
         return $this->redirectToRoute('course', ['course' => $course->getId()]);
     }
@@ -30,7 +30,7 @@ class CourseSubscribeController extends BaseController
      */
     public function unsubscribeAction(Course $course)
     {
-        $this->getCourseSubscribeService->unsubscribe($course, $this->getUser());
+        $this->getCourseSubscribeService()->unsubscribe($course, $this->getUser());
 
         return $this->redirectToRoute('courses');
     }

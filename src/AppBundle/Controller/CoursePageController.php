@@ -71,6 +71,7 @@ class CoursePageController extends BaseController
 
     /**
      * @Route("/courses/new", name="courses-new")
+     * @Security("has_role('ROLE_USER')")
      */
     public function newAction(Request $request)
     {
@@ -95,6 +96,7 @@ class CoursePageController extends BaseController
 
     /**
      * @Route("/courses-edit/{course}", name="courses-new")
+     * @Security("is_granted('ABILITY_COURSE_UPDATE', course)")
      */
     public function editAction(Course $course,Request $request)
     {

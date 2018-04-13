@@ -6,6 +6,10 @@ security:
           - ABILITY_USER_OWNER
           - ABILITY_USER_UPDATE
           - ABILITY_USER_DELETE
+          - ABILITY_COURSE_OWNER
+          - ABILITY_COURSE_CREATE
+          - ABILITY_COURSE_UPDATE
+          - ABILITY_COURSE_DELETE
         ROLE_SUPER_ADMIN: [ROLE_USER]
     encoders:
         AppBundle\Entity\User: sha512
