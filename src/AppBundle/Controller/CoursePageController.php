@@ -49,21 +49,23 @@ class CoursePageController extends BaseController
      */
     public function myAction(Request $request)
     {
-        $courses = $this->getDoctrine()->getRepository('AppBundle:Course')->findBy(['user' => $this->getUser()->getId()]);
+        $repository = $this->getDoctrine()->getRepository('AppBundle:Course');
 
-        return $this->render('coursepage/my.html.twig', ['courses' => $courses]);
+        $courses = $repository->findBy(['user' => $this->getUser()->getId()]);
+
+        $subscribedCourses = $repository->findSubscribedCourses($this->getUser()->getId());
+
+        return $this->render('coursepage/my.html.twig', ['courses' => $courses, 'subscribedCourses' => $subscribedCourses]);
     }
 
 
     /**
-     * @Route("/courses/{course}", name="course")
+     * @Route("/course/{course}", name="course")
      * @Security("has_role('ROLE_USER')")
      */
     public function courseAction(Course $course)
     {
-        $courses = $this->getDoctrine()->getRepository('AppBundle:Course')->findBy(['user' => $this->getUser()->getId()]);
-
-        return $this->render('coursepage/my.html.twig', ['courses' => $courses]);
+        return $this->render('coursepage/course.html.twig', ['course' => $course]);
     }
 
 

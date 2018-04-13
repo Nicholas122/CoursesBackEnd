@@ -15,6 +15,7 @@ class CourseSubscribeController extends BaseController
 {
     /**
      * @Route("/subscribe/{course}", name="course-subscribe")
+     *  @Security("has_role('ROLE_USER')")
      */
     public function indexAction(Course $course)
     {
@@ -32,6 +33,7 @@ class CourseSubscribeController extends BaseController
 
     /**
      * @Route("/unsubscribe/{course}", name="course-unsubscribe")
+     * @Security("has_role('ROLE_USER')")
      */
     public function unsubscribeAction(Course $course)
     {

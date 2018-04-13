@@ -31,8 +31,8 @@ security:
             oauth:
                 resource_owners:
                     google: "/connect/check-google"
-                login_path: /connect
-                failure_path: /connect
+                login_path: /login
+                failure_path: /login
                 oauth_user_provider:
                     service: app.oauth_user_provider
         default:

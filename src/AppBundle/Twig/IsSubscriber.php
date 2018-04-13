@@ -27,9 +27,15 @@ class IsSubscriber extends \Twig_Extension
         );
     }
 
-    public function isSubscriber(Course $course, User $user)
+    public function isSubscriber(Course $course, $user)
     {
-        return $this->courseSubscribeService->isSubscribed($course, $user);
+        $response = false;
+
+        if ($course instanceof Course && $user instanceof User) {
+            $response = $this->courseSubscribeService->isSubscribed($course, $user);
+        }
+
+        return $response;
     }
 
 }
