@@ -93,8 +93,17 @@
                             <span><strong>Author:</strong> <em>{{ course.user.firstName }} {{ course.user.lastName }}</em></span>
 
                         </p>
-                        <a role="button" data-course-id="6" class="btn btn-default subscribe" data-loading-text="">
-                            Subscribe </a>
+                        {% if course|isSubscriber(app.user) %}
+                            <a role="button" href="/unsubscribe/{{ course.id }}" data-course-id="6" class="btn btn-success unsubscribe"
+                               data-loading-text="">
+                                Unsubscribe </a>
+                        {% else %}
+                            <a role="button" href="/subscribe/{{ course.id }}" data-course-id="6"
+                               class="btn btn-default subscribe" data-loading-text="">
+                                Subscribe </a>
+                        {% endif %}
+
+
                         <a role="button" href="/course/{{ course.id }}"
                            class="btn btn-default">View course <span
                                     class="glyphicon glyphicon-chevron-right"></span></a>

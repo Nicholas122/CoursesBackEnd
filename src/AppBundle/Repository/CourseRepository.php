@@ -33,4 +33,16 @@ class CourseRepository extends \Doctrine\ORM\EntityRepository
 
         return $filtersData;
     }
+
+    public function findSubscribedCourses($userId)
+    {
+        $queryBuilder = $this->createQueryBuilder('entity');
+
+        $result = $queryBuilder
+            ->leftJoin('AppBundle:CourseSubscriber', 'courseSubscriber', 'WITH', 'courseSubscriber.course = entity.id')
+            ->where($queryBuilder->expr()->eq('courseSubscriber.user', $userId))
+            ->getQuery()->getResult();
+
+        return $result;
+    }
 }

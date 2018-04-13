@@ -1,0 +1,431 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container theme-showcase" role="main">
+        <div class="starter-template">
+            <link rel="stylesheet" href="/css/viewCourse.css">
+            <script type="text/javascript" src="./DevCom Courses - DevCom Policy Cource_files/fitvids.js"></script>
+            <div class="page-header">
+                <div class="col-md-12" id="message" style="margin-left: 17px">
+                </div>
+                <div class="row viewCourseHeader">
+                    <div class="col-md-8">
+                        <div class="col-md-12 viewCourseDetail">
+                            <h1>{{ course.title }}</h1>
+                            <p id="subtitle">
+                                <small>{{ course.subtitle }}</small>
+                            </p>
+                            <div class="row">
+                                <div class="col-md-6 col-xs-6">
+                                    <span><strong>Created:</strong> <em>{{ course.createData|date('d-M-y') }}</em></span>
+                                </div>
+
+                                <div class="col-md-6 col-xs-6 text-right" style="padding-right: 26px;">
+                                    {% if course|isSubscriber(app.user) %}
+                                        <a role="button" href="/unsubscribe/{{ course.id }}" data-course-id="6"
+                                           class="btn btn-success unsubscribe"
+                                           data-loading-text="">
+                                            Unsubscribe </a>
+                                    {% else %}
+                                        <a role="button" href="/subscribe/{{ course.id }}" data-course-id="6"
+                                           class="btn btn-default subscribe" data-loading-text="">
+                                            Subscribe </a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12" id="courseSummery">
+                            <div class="panel-group">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                            <a data-toggle="collapse"
+                                               href="http://internalcourses.devcom.com/course/view_course/6#collapse_summary">Course
+                                                Summary</a>
+                                        </h4>
+                                    </div>
+                                    <div id="collapse_summary" class="panel-collapse in">
+                                        <div class="panel-body">
+                                            {{ course.summary|raw }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        {% if course.logo %}
+                            <img class="viewCourseLogo" src="/{{ course.logo }}">
+                        {% else %}
+                            <img class="viewCourseLogo" src="/default-course-logo.png">
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="vendor">
+                </div>
+            </div>
+
+
+            <div class="col-md-12 lessonContainer">
+                <div class="col-md-8">
+                    <div class="panel-group">
+
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse"
+                                       href="http://internalcourses.devcom.com/course/view_course/6#collapse4">Employment
+                                        Period</a>&nbsp;
+                                </h4>
+                            </div>
+                            <div id="collapse4" class="panel-collapse in ">
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                            <a role="button" class="btn-link"
+                                               href="http://internalcourses.devcom.com/lecture/view_lecture/23">Contract</a>
+                                            <span class="label label-info">New</span>
+                                        </div>
+                                        <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                            <em class="small lecture-description">Contract</em>
+                                            <span class="small lecture-description text-right"><em>Created at:&nbsp;28-Jun-2016</em></span>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                            <a role="button" class="btn-link"
+                                               href="http://internalcourses.devcom.com/lecture/view_lecture/24">Employee
+                                                Performance and Improvements Review Schedule</a>
+                                            <span class="label label-info">New</span>
+                                        </div>
+                                        <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                            <em class="small lecture-description">Employee Performance and Improvements
+                                                Review Schedule</em>
+                                            <span class="small lecture-description text-right"><em>Created at:&nbsp;28-Jun-2016</em></span>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                            <a role="button" class="btn-link"
+                                               href="http://internalcourses.devcom.com/lecture/view_lecture/25">Intellectual
+                                                Property</a>
+                                            <span class="label label-info">New</span>
+                                        </div>
+                                        <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                            <em class="small lecture-description">Intellectual Property</em>
+                                            <span class="small lecture-description text-right"><em>Created at:&nbsp;28-Jun-2016</em></span>
+                                        </div>
+                                    </div>
+                                    <!--tests-->
+                                    <!-- end tests-->
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse"
+                                       href="http://internalcourses.devcom.com/course/view_course/6#collapse6">Schedule</a>&nbsp;
+                                </h4>
+                            </div>
+                            <div id="collapse6" class="panel-collapse collapsing ">
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                            <a role="button" class="btn-link"
+                                               href="http://internalcourses.devcom.com/lecture/view_lecture/14">Vacations</a>
+                                            <span class="label label-info">New</span>
+                                        </div>
+                                        <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                            <em class="small lecture-description">Vacations</em>
+                                            <span class="small lecture-description text-right"><em>Created at:&nbsp;28-Jun-2016</em></span>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                            <a role="button" class="btn-link"
+                                               href="http://internalcourses.devcom.com/lecture/view_lecture/15">Day off,
+                                                Step out, Work from home</a>
+                                            <span class="label label-info">New</span>
+                                        </div>
+                                        <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                            <em class="small lecture-description">Day off, Step out, Work from home</em>
+                                            <span class="small lecture-description text-right"><em>Created at:&nbsp;28-Jun-2016</em></span>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                            <a role="button" class="btn-link"
+                                               href="http://internalcourses.devcom.com/lecture/view_lecture/16">Approving
+                                                vacations, days-off, work out of office and step-outs.</a>
+                                            <span class="label label-info">New</span>
+                                        </div>
+                                        <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                            <em class="small lecture-description">Approving vacations, days-off, work
+                                                out of office and step-outs.</em>
+                                            <span class="small lecture-description text-right"><em>Created at:&nbsp;28-Jun-2016</em></span>
+                                        </div>
+                                    </div>
+                                    <!--tests-->
+                                    <div class="row">
+                                        <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                            <a role="button" class="btn-link"
+                                               href="http://internalcourses.devcom.com/test/view_test/4">Vacations
+                                                Test</a>
+                                        </div>
+                                        <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                            <em class="small lecture-description">Vacations </em>
+                                            <span class="small lecture-description text-right"><em>Created at:&nbsp;28-Jun-2016</em></span>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                            <a role="button" class="btn-link"
+                                               href="http://internalcourses.devcom.com/test/view_test/6">Planning and
+                                                agreeding vacations test</a>
+                                        </div>
+                                        <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                            <em class="small lecture-description">Planning and agreeding vacations
+                                                test</em>
+                                            <span class="small lecture-description text-right"><em>Created at:&nbsp;28-Jun-2016</em></span>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                            <a role="button" class="btn-link"
+                                               href="http://internalcourses.devcom.com/test/view_test/7">Step out
+                                                test</a>
+                                        </div>
+                                        <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                            <em class="small lecture-description">Step out test</em>
+                                            <span class="small lecture-description text-right"><em>Created at:&nbsp;28-Jun-2016</em></span>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                            <a role="button" class="btn-link"
+                                               href="http://internalcourses.devcom.com/test/view_test/8">Google calendar
+                                                test</a>
+                                        </div>
+                                        <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                            <em class="small lecture-description">Google calendar test</em>
+                                            <span class="small lecture-description text-right"><em>Created at:&nbsp;28-Jun-2016</em></span>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                            <a role="button" class="btn-link"
+                                               href="http://internalcourses.devcom.com/test/view_test/9">Day off
+                                                test</a>
+                                        </div>
+                                        <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                            <em class="small lecture-description">Day off test</em>
+                                            <span class="small lecture-description text-right"><em>Created at:&nbsp;28-Jun-2016</em></span>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                            <a role="button" class="btn-link"
+                                               href="http://internalcourses.devcom.com/test/view_test/10">З ким
+                                                узгоджувати степ аут</a>
+                                        </div>
+                                        <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                            <em class="small lecture-description">З ким узгоджувати степ аут</em>
+                                            <span class="small lecture-description text-right"><em>Created at:&nbsp;28-Jun-2016</em></span>
+                                        </div>
+                                    </div>
+                                    <!-- end tests-->
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse"
+                                       href="http://internalcourses.devcom.com/course/view_course/6#collapse7">Probation
+                                        period</a>&nbsp;
+                                </h4>
+                            </div>
+                            <div id="collapse7" class="panel-collapse collapsing ">
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                            <a role="button" class="btn-link"
+                                               href="http://internalcourses.devcom.com/lecture/view_lecture/17">Probation
+                                                period</a>
+                                            <span class="label label-info">New</span>
+                                        </div>
+                                        <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                            <em class="small lecture-description">Probation period for new persons</em>
+                                            <span class="small lecture-description text-right"><em>Created at:&nbsp;28-Jun-2016</em></span>
+                                        </div>
+                                    </div>
+                                    <!--tests-->
+                                    <!-- end tests-->
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse"
+                                       href="http://internalcourses.devcom.com/course/view_course/6#collapse8">Leaving
+                                        the Company</a>&nbsp;
+                                </h4>
+                            </div>
+                            <div id="collapse8" class="panel-collapse collapsing ">
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                            <a role="button" class="btn-link"
+                                               href="http://internalcourses.devcom.com/lecture/view_lecture/18">Leaving
+                                                the Company</a>
+                                            <span class="label label-info">New</span>
+                                        </div>
+                                        <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                            <em class="small lecture-description">Leaving the Company</em>
+                                            <span class="small lecture-description text-right"><em>Created at:&nbsp;28-Jun-2016</em></span>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                            <a role="button" class="btn-link"
+                                               href="http://internalcourses.devcom.com/lecture/view_lecture/19">Decision</a>
+                                            <span class="label label-info">New</span>
+                                        </div>
+                                        <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                            <em class="small lecture-description">Decision</em>
+                                            <span class="small lecture-description text-right"><em>Created at:&nbsp;28-Jun-2016</em></span>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                            <a role="button" class="btn-link"
+                                               href="http://internalcourses.devcom.com/lecture/view_lecture/20">Communication</a>
+                                            <span class="label label-info">New</span>
+                                        </div>
+                                        <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                            <em class="small lecture-description">Communication</em>
+                                            <span class="small lecture-description text-right"><em>Created at:&nbsp;28-Jun-2016</em></span>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                            <a role="button" class="btn-link"
+                                               href="http://internalcourses.devcom.com/lecture/view_lecture/21">Procedure</a>
+                                            <span class="label label-info">New</span>
+                                        </div>
+                                        <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                            <em class="small lecture-description">Procedure</em>
+                                            <span class="small lecture-description text-right"><em>Created at:&nbsp;28-Jun-2016</em></span>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                            <a role="button" class="btn-link"
+                                               href="http://internalcourses.devcom.com/lecture/view_lecture/22">Vacations</a>
+                                            <span class="label label-info">New</span>
+                                        </div>
+                                        <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                            <em class="small lecture-description">Vacations</em>
+                                            <span class="small lecture-description text-right"><em>Created at:&nbsp;28-Jun-2016</em></span>
+                                        </div>
+                                    </div>
+                                    <!--tests-->
+                                    <div class="row">
+                                        <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                            <a role="button" class="btn-link"
+                                               href="http://internalcourses.devcom.com/test/view_test/5">Leaving the
+                                                Company Test</a>
+                                        </div>
+                                        <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                            <em class="small lecture-description">Leaving the Company</em>
+                                            <span class="small lecture-description text-right"><em>Created at:&nbsp;28-Jun-2016</em></span>
+                                        </div>
+                                    </div>
+                                    <!-- end tests-->
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse"
+                                       href="http://internalcourses.devcom.com/course/view_course/6#collapse9">Working
+                                        schedule</a>&nbsp;
+                                </h4>
+                            </div>
+                            <div id="collapse9" class="panel-collapse collapsing ">
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                            <a role="button" class="btn-link"
+                                               href="http://internalcourses.devcom.com/lecture/view_lecture/26">Working
+                                                schedule</a>
+                                            <span class="label label-info">New</span>
+                                        </div>
+                                        <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                            <em class="small lecture-description">Working schedule</em>
+                                            <span class="small lecture-description text-right"><em>Created at:&nbsp;28-Jun-2016</em></span>
+                                        </div>
+                                    </div>
+                                    <!--tests-->
+                                    <!-- end tests-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--Rating-->
+                    <!--        -->
+
+                    <!--        <table id="data_table" border="0" cellspacing="0" cellpadding="0" class="display">-->
+                    <!--            <thead>-->
+                    <!--            <tr>-->
+                    <!--                <th></th>-->
+                    <!--            </tr>-->
+                    <!--            </thead>-->
+                    <!--            <tbody>-->
+                    <!--            -->        <!--                <tr>-->
+                    <!--                    <td>-->
+                    <!--                        <div class="panel panel-default">-->
+                    <!--                            <div class="panel-body">-->
+                    <!--                                <img src="--><!--" class="user-menu-logo">-->
+                    <!--                                <b>--><!--</b>-->
+                    <!--                                <br>-->
+                    <!--                                <div class="rating_stars stars starrr unbind" data-rating="-->
+                    <!--"></div>-->
+                    <!--                                <span>--><!--</span>-->
+                    <!--                            </div>-->
+                    <!--                        </div>-->
+                    <!--                    </td>-->
+                    <!--                </tr>-->
+                    <!--            -->        <!--            </tbody>-->
+                    <!--        </table>-->
+                    <!--/.Rating-->
+
+                </div>
+                <div class="col-md-4">
+                </div>
+            </div>
+
+
+            <script type="text/javascript">
+                var error_message = 'Something wrong during deleting. Please refresh your page and try again.';
+                var deleteUrl = null;
+                $("#promoVideo").fitVids()
+            </script>
+            <script type="text/javascript"
+                    src="/js/jquery.dataTables.js"></script>
+            <script type="text/javascript" src="/js/scripts.js"></script>
+            <script type="text/javascript" src="/js/course.js"></script>
+
+
+        </div>
+    </div>
+{% endblock %}

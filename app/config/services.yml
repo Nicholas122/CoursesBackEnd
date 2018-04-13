@@ -48,3 +48,12 @@ services:
 
     app.oauth_user_provider:
         class: AppBundle\Security\Authentication\AppOauthUserProvider
+
+    app.course_subscriber.service:
+        public: true
+        class: AppBundle\Service\CourseSubscribeService
+
+    app.is_subscriber.twig_extension:
+        class: AppBundle\Twig\IsSubscriber
+        tags:
+            - { name: twig.extension }

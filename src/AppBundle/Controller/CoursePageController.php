@@ -56,6 +56,18 @@ class CoursePageController extends BaseController
 
 
     /**
+     * @Route("/courses/{course}", name="course")
+     * @Security("has_role('ROLE_USER')")
+     */
+    public function courseAction(Course $course)
+    {
+        $courses = $this->getDoctrine()->getRepository('AppBundle:Course')->findBy(['user' => $this->getUser()->getId()]);
+
+        return $this->render('coursepage/my.html.twig', ['courses' => $courses]);
+    }
+
+
+    /**
      * @Route("/courses/new", name="courses-new")
      */
     public function newAction(Request $request)

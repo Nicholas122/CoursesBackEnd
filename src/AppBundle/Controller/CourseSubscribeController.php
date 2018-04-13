@@ -1,0 +1,47 @@
+<?php
+
+namespace AppBundle\Controller;
+
+use AppBundle\Entity\Course;
+use AppBundle\Entity\CourseSubscriber;
+use AppBundle\Form\CourseForm;
+use AppBundle\Repository\CourseRepository;
+use AppBundle\Service\CourseSubscribeService;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+
+class CourseSubscribeController extends BaseController
+{
+    /**
+     * @Route("/subscribe/{course}", name="course-subscribe")
+     */
+    public function indexAction(Course $course)
+    {
+        /**
+         * @var CourseSubscribeService $courseSubscriberService
+         */
+        $courseSubscriberService = $this->get('app.course_subscriber.service');
+
+        $courseSubscriberService->subscribe($course, $this->getUser());
+
+
+        return $this->redirectToRoute('course', ['course' => $course->getId()]);
+    }
+
+
+    /**
+     * @Route("/unsubscribe/{course}", name="course-unsubscribe")
+     */
+    public function unsubscribeAction(Course $course)
+    {
+        /**
+         * @var CourseSubscribeService $courseSubscriberService
+         */
+        $courseSubscriberService = $this->get('app.course_subscriber.service');
+
+        $courseSubscriberService->unsubscribe($course, $this->getUser());
+
+        return $this->redirectToRoute('courses');
+    }
+}

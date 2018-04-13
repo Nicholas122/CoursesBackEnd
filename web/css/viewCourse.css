@@ -1,0 +1,31 @@
+
+video {
+    max-width: 709px;
+    height: auto;
+}
+iframe,
+embed,
+object {
+    max-width: 100%;
+    width: 709px;
+    max-height: 398px;
+}
+
+#promoVideo{
+    padding-left: 32px;
+    padding-bottom: 8px;
+    width: 65%;
+    height: auto;
+}
+.vendor{
+    min-width: 100%;
+}
+.lessonContainer {
+    margin-left: 2px;
+}
+.viewCourseHeader {
+   margin-bottom: -20px;
+}
+.viewPageHeader {
+    padding-bottom: 0px;
+}
