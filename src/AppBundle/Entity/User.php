@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use HWI\Bundle\OAuthBundle\Security\Core\User\OAuthUser;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use JMS\Serializer\Annotation as JMS;
@@ -132,6 +133,16 @@ class User implements HasOwnerInterface, UserInterface
      * @ORM\Column(type="smallint", nullable=true)
      */
     protected $isTeacher;
+
+    /**
+     *  @ORM\Column(type="string", length=255, unique=true, nullable=true)
+     */
+    protected $googleId;
+
+    /**
+     *  @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $photo;
 
     /**
      * Returns the roles granted to the user.
@@ -455,5 +466,53 @@ class User implements HasOwnerInterface, UserInterface
     public function getIsTeacher()
     {
         return $this->isTeacher;
+    }
+
+    /**
+     * Set googleId
+     *
+     * @param string $googleId
+     *
+     * @return User
+     */
+    public function setGoogleId($googleId)
+    {
+        $this->googleId = $googleId;
+
+        return $this;
+    }
+
+    /**
+     * Get googleId
+     *
+     * @return string
+     */
+    public function getGoogleId()
+    {
+        return $this->googleId;
+    }
+
+    /**
+     * Set photo
+     *
+     * @param string $photo
+     *
+     * @return User
+     */
+    public function setPhoto($photo)
+    {
+        $this->photo = $photo;
+
+        return $this;
+    }
+
+    /**
+     * Get photo
+     *
+     * @return string
+     */
+    public function getPhoto()
+    {
+        return $this->photo;
     }
 }

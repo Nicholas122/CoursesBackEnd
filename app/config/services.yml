@@ -42,3 +42,9 @@ services:
         class: AppBundle\EventListener\UserEntityListener
         tags:
             - { name: doctrine.orm.entity_listener }
+
+    hwi_oauth.user.provider.entity:
+        class: HWI\Bundle\OAuthBundle\Security\Core\User\OAuthUserProvider
+
+    app.oauth_user_provider:
+        class: AppBundle\Security\Authentication\AppOauthUserProvider

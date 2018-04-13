@@ -18,6 +18,8 @@ class AppKernel extends Kernel
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
             new JMS\SerializerBundle\JMSSerializerBundle(),
+            new HWI\Bundle\OAuthBundle\HWIOAuthBundle(),
+            new Http\HttplugBundle\HttplugBundle(),
 
             new AppBundle\AppBundle(),
         ];

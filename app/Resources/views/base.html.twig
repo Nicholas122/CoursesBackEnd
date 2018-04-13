@@ -44,7 +44,11 @@
                 {% if app.user %}
                     <li class="dropdown">
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                            <span class="user-small-logo"></span>
+                            {% if app.user.photo %}
+                                <img src="{{ app.user.photo }}" alt="" class="user-small-logo">
+                            {% else %}
+                                <span class="user-small-logo"></span>
+                            {% endif %}
 
                             {{ app.user.email }}<b class="caret"></b>
 

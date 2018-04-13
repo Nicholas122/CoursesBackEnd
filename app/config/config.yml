@@ -71,3 +71,12 @@ doctrine_migrations:
     namespace: Application\Migrations
     table_name: migration_versions
     name: Application Migrations
+
+hwi_oauth:
+    firewall_names: [main]
+    resource_owners:
+        google:
+            type:                google
+            client_id:           577207494003-kaauljqq9vji8mpg93vji0qe8jtnp2tm.apps.googleusercontent.com
+            client_secret:       D490ZqczvekIZU6U6_HOm8lt
+            scope:               "https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile"

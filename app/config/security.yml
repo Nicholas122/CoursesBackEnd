@@ -28,5 +28,12 @@ security:
             guard:
                 authenticators:
                     - form_authenticator
+            oauth:
+                resource_owners:
+                    google: "/connect/check-google"
+                login_path: /connect
+                failure_path: /connect
+                oauth_user_provider:
+                    service: app.oauth_user_provider
         default:
             anonymous: ~
