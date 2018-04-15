@@ -13,12 +13,16 @@ use Symfony\Component\Intl\Intl;
 class CourseRepository extends \Doctrine\ORM\EntityRepository
 {
 
-    public function createQuery($criteria)
+    public function createQuery($criteria, $order)
     {
         $queryBuilder = $this->createQueryBuilder('entity');
 
         foreach ($criteria as $key => $value) {
             $queryBuilder->andWhere($queryBuilder->expr()->eq('entity.'.$key, $queryBuilder->expr()->literal($value)));
+        }
+
+        foreach ($order as $key => $value) {
+            $queryBuilder->addOrderBy('entity.'.$key, $value);
         }
 
         return $queryBuilder->getQuery();

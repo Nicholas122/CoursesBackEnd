@@ -35,7 +35,7 @@ class CoursePageController extends BaseController
             $criteria['user'] = $request->get('author');
         }
 
-        $query = $repository->createQuery($criteria);
+        $query = $repository->createQuery($criteria, ['creationDate' => 'DESC']);
 
         $filtersData = $repository->getFiltersData();
         $paginator  = $this->get('knp_paginator');
@@ -99,7 +99,7 @@ class CoursePageController extends BaseController
     }
 
     /**
-     * @Route("/courses-edit/{course}", name="courses-new")
+     * @Route("/courses-edit/{course}", name="courses-edit")
      * @Security("is_granted('ABILITY_COURSE_UPDATE', course)")
      */
     public function editAction(Course $course,Request $request)

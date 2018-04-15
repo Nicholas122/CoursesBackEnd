@@ -12,8 +12,11 @@ use JMS\Serializer\Annotation as JMS;
  * @JMS\ExclusionPolicy("all")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\CourseRepository")
  * @ORM\HasLifecycleCallbacks()
+ * @ORM\EntityListeners({
+ *     "AppBundle\EventListener\SetOwnerListener",
+ *     "AppBundle\EventListener\PhotoEntityListener"})
  */
-class Course implements HasOwnerInterface
+class Course implements HasOwnerInterface, PhotoInterface
 {
     /**
      * @var int
@@ -423,5 +426,17 @@ class Course implements HasOwnerInterface
     public function getCategory()
     {
         return $this->category;
+    }
+
+    public function setPhoto($photo)
+    {
+        $this->setLogo($photo);
+
+        return $this;
+    }
+
+    public function getPhoto()
+    {
+        return $this->getLogo();
     }
 }

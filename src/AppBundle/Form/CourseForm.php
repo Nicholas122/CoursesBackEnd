@@ -43,7 +43,7 @@ class CourseForm extends AbstractType
                 ]])
             ->add('summary', TextareaType::class, ['attr' => ['placeholder' => 'Enter here summary of the course.', 'class' => 'form-control', 'cols' => 40, 'rows' => 10], 'label' => 'Course Summary'])
             ->add('logo', FileType::class, ['attr' => ['class' => 'form-control'], 'label' => 'Upload course image logo', 'required' => false])
-            ->add('video', TextType::class, ['attr' => ['placeholder' => 'Only embed code', 'class' => 'form-control'], 'label' => 'Put your promo video'])
+            ->add('video', TextType::class, ['attr' => ['placeholder' => 'Only embed code', 'class' => 'form-control'], 'label' => 'Put your promo video', 'required' => false])
             ->add('session', ChoiceType::class, ['attr' => ['class' => 'form-control'],
                 'choices' => [
                     'Without enrollment sessions' => 'withoutEnrollment',

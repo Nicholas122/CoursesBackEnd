@@ -14,6 +14,7 @@
 
         <div class="row">
             <div class="col-md-6">
+
                 <div class="page-header">
                     <h3>Learning ({{ subscribedCourses|length }})</h3>
                 </div>
@@ -39,7 +40,7 @@
                 <ul class="user-course-list">
                     {% for course in courses %}
                     <li>
-                        <a role="button" class="btn-link" href="/courses/{{ course.id }}" title="{{ course.title }}">{{ course.title }}</a>
+                        <a role="button" class="btn-link" href="/course/{{ course.id }}" title="{{ course.title }}">{{ course.title }}</a>
                         <a role="button" class="btn-link" href="/courses-edit/{{ course.id }}" title="Update Your Course"><span class="glyphicon glyphicon-edit"></span></a>
                         <div class="dropdown menu-inline">
                             <a class="dropdown-toggle" id="ctAction" role="button" data-toggle="dropdown" data-target="#" href="http://internalcourses.devcom.com/course/my_course#">
