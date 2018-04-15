@@ -21,6 +21,7 @@ class AppKernel extends Kernel
             new HWI\Bundle\OAuthBundle\HWIOAuthBundle(),
             new Http\HttplugBundle\HttplugBundle(),
             new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
+            new Ivory\CKEditorBundle\IvoryCKEditorBundle(),
 
             new AppBundle\AppBundle(),
         ];

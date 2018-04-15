@@ -11,7 +11,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 class SectionPageController extends BaseController
 {
-   /**
+    /**
      * @Route("/section/new/{course}", name="section-new")
      * @Security("has_role('ROLE_USER')")
      */
@@ -34,6 +34,30 @@ class SectionPageController extends BaseController
         }
 
 
-        return $this->render('sectionpage/new.html.twig', ['form' => $form->createView(), 'course' => $course]);
+        return $this->render('sectionpage/new.html.twig', ['form' => $form->createView()]);
+    }
+
+    /**
+     * @Route("/section-edit/{section}", name="section-edit")
+     * @Security("has_role('ROLE_USER')")
+     */
+    public function editAction(Section $section, Request $request)
+    {
+        $form = $this->createForm(SectionForm::class, $section);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid() && 'POST' == $request->getMethod()) {
+
+            $em = $this->getDoctrine()->getManager();
+
+            $em->persist($section);
+            $em->flush();
+
+            return $this->redirectToRoute('course', ['course' => $section->getCourse()->getId()]);
+        }
+
+
+        return $this->render('sectionpage/new.html.twig', ['form' => $form->createView()]);
     }
 }

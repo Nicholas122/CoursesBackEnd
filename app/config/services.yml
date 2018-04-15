@@ -73,3 +73,8 @@ services:
         public: true
         arguments: ['%web_dir%', '%base_dir%']
         class: AppBundle\Service\PhotoService
+
+    app.get_lectures_by_section.twig_extension:
+        class: AppBundle\Twig\GetLectureBySection
+        tags:
+            - { name: twig.extension }

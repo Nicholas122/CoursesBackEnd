@@ -29,9 +29,9 @@ class Section implements HasOwnerInterface
     /**
      * @JMS\Expose
      * @JMS\Groups({"default"})
-     * @ORM\Column(type="string", length=100, nullable=false)
+     * @ORM\Column(type="string", length=300, nullable=false)
      * @Assert\NotBlank()
-     * @Assert\Length(max="100")
+     * @Assert\Length(max="300")
      */
     protected $name;
 
