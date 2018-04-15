@@ -53,7 +53,7 @@ class CoursePageController extends BaseController
      */
     public function myAction(Request $request)
     {
-        $repository = $this->getDoctrine()->getRepository('AppBundle:Course');
+        $repository = $this->getRepository('AppBundle:Course');
 
         $courses = $repository->findBy(['user' => $this->getUser()->getId()]);
 
@@ -69,7 +69,9 @@ class CoursePageController extends BaseController
      */
     public function courseAction(Course $course)
     {
-        return $this->render('coursepage/course.html.twig', ['course' => $course]);
+        $sections = $this->getRepository('AppBundle:Section')->findBy(['course' => $course->getId()]);
+
+        return $this->render('coursepage/course.html.twig', ['course' => $course, 'sections' => $sections]);
     }
 
 

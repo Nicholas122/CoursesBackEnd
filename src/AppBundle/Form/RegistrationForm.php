@@ -55,6 +55,6 @@ class RegistrationForm extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'auth';
+        return 'appbundle_registration';
     }
 }

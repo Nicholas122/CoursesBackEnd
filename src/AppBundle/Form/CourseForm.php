@@ -73,6 +73,6 @@ class CourseForm extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'appbundle_language';
+        return 'appbundle_course';
     }
 }

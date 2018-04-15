@@ -33,6 +33,7 @@
                 {% endif %}
             </div>
 
+            {% if app.user.isTeacher %}
             <div class="col-md-6">
                 <div class="page-header">
                     <h3>Teaching ({{ courses|length }})</h3>
@@ -66,6 +67,7 @@
                     <a role="button" href="/courses/new" class="btn btn-default">Create New Course <span class="glyphicon glyphicon-plus-sign"></span></a>
                 </p>
             </div>
+            {% endif %}
         </div>
 
         <!-- Modal -->
