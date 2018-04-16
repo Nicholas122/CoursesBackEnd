@@ -12,3 +12,8 @@ hwi_oauth_redirect:
 
 google_login:
     path: /connect/check-google
+
+resize:
+    path: /files/{linkedEntityType}/{linkedEntityId}/{name}-{width}x{height}.{format}
+    defaults: { _controller: AppBundle:File:resizeFileImage }
+    methods: [GET]

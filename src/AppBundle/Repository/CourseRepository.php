@@ -30,7 +30,7 @@ class CourseRepository extends \Doctrine\ORM\EntityRepository
 
     public function getFiltersData()
     {
-        $filtersData = [];
+        $filtersData = ['categories' => [], 'users' => [], 'languages' => []];
 
         $queryBuilder = $this->createQueryBuilder('entity');
 

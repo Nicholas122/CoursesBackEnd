@@ -79,7 +79,7 @@
 
             <div class="col-md-4 courseLogoBox">
                 {% if course.logo %}
-                <img class="courseLogo" src="/{{ course.logo }}">
+                <img class="courseLogo" src="/{{ course.logo|resize(198, 132) }}">
                 {% else %}
                 <img class="courseLogo" src="/images/default-course-logo.png">
 

@@ -123,14 +123,14 @@ class User implements HasOwnerInterface, UserInterface
     /**
      * @JMS\Expose
      * @JMS\Groups({"default", "auth"})
-     * @ORM\Column(type="smallint", nullable=true)
+     * @ORM\Column(type="boolean", nullable=true)
      */
     protected $isStudent;
 
     /**
      * @JMS\Expose
      * @JMS\Groups({"default", "auth"})
-     * @ORM\Column(type="smallint", nullable=true)
+     * @ORM\Column(type="boolean", nullable=true)
      */
     protected $isTeacher;
 
@@ -423,7 +423,7 @@ class User implements HasOwnerInterface, UserInterface
     /**
      * Set isStudent
      *
-     * @param integer $isStudent
+     * @param boolean $isStudent
      *
      * @return User
      */
@@ -437,7 +437,7 @@ class User implements HasOwnerInterface, UserInterface
     /**
      * Get isStudent
      *
-     * @return integer
+     * @return boolean
      */
     public function getIsStudent()
     {
@@ -447,7 +447,7 @@ class User implements HasOwnerInterface, UserInterface
     /**
      * Set isTeacher
      *
-     * @param integer $isTeacher
+     * @param boolean $isTeacher
      *
      * @return User
      */
@@ -461,7 +461,7 @@ class User implements HasOwnerInterface, UserInterface
     /**
      * Get isTeacher
      *
-     * @return integer
+     * @return boolean
      */
     public function getIsTeacher()
     {

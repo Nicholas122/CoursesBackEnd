@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container theme-showcase" role="main">
+        <div class="starter-template">
+            <div class="page-header">
+                <h1>Edit User</h1>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12">
+                </div>
+            </div>
+
+            <div class="row">
+                {{ form_start(form, { 'attr' : { 'class': 'form-signin loginForm col-6 col-sm-6 col-md-6 col-lg-6' } }) }}
+                {% for child in form.children|keys %}
+                    <p class="login_field text-left">
+                        {% if 'token' not in form_label(attribute(form.children,child)) %}
+                            {{ form_label(attribute(form.children,child)) }}
+                        {% endif %}
+                        {{ form_widget(attribute(form.children,child)) }}
+                    </p>
+                {% endfor %}
+                {{ form_end(form) }}
+
+                <div class="col-6 col-sm-6 col-md-6 col-lg-6">
+                    <p id="logo-image-holder">
+                        {% if app.user.photo %}
+                            <img src="{{ app.user.photo|resize(120, 130) }}" alt="" class="user-big-logo">
+                            {% else %}
+                                <span class="user-big-logo"></span>
+                        {% endif %}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

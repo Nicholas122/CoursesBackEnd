@@ -78,3 +78,8 @@ services:
         class: AppBundle\Twig\GetLectureBySection
         tags:
             - { name: twig.extension }
+
+    app.resize.twig_extension:
+        class: AppBundle\Twig\Resize
+        tags:
+            - { name: twig.extension }
