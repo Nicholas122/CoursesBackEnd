@@ -54,7 +54,7 @@
 
                             </ul>
                         </div>
-                        <a class="btn-link btn-delete" title="Delete Your Course" data-delete-url="/courses-delete/16" data-target="#deleteConfirmation" data-toggle="modal" href="http://internalcourses.devcom.com/course/my_course#">
+                        <a class="btn-link btn-delete" title="Delete Your Course" data-delete-url="/courses-delete/{{ course.id }}" data-target="#deleteConfirmation" data-toggle="modal" href="#" data-confirm-body="Do you really want to delete this course?">
                             <span class="glyphicon glyphicon-remove"></span>
                         </a>
                         <small>{{ course.subTitle }}</small>
@@ -91,7 +91,7 @@
         var error_message = 'Something wrong during deleting. Please refresh your page and try again.';
         var deleteUrl = null;
         </script>
-        <script type="text/javascript" src="./DevCom Courses - My Courses_files/scripts.js"></script>
-        <script type="text/javascript" src="./DevCom Courses - My Courses_files/course.js"></script>  </div>
+        <script type="text/javascript" src="/js/scripts.js"></script>
+        <script type="text/javascript" src="/js/course.js"></script>  </div>
     </div>
     {% endblock %}

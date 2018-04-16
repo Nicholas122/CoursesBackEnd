@@ -51,7 +51,7 @@ class PhotoEntityListener
      *
      * @param LifecycleEventArgs $args
      */
-    public function removePhotos(Photo $entity, LifecycleEventArgs $args)
+    public function removePhotos(PhotoInterface $entity, LifecycleEventArgs $args)
     {
         $path = $entity->getPhoto();
 

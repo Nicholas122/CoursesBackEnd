@@ -123,4 +123,18 @@ class CoursePageController extends BaseController
 
         return $this->render('coursepage/new.html.twig', ['form' => $form->createView()]);
     }
+
+    /**
+     * @Route("/courses-delete/{course}", name="courses-delete")
+     * @Security("is_granted('ABILITY_COURSE_DELETE', course)")
+     */
+    public function deleteAction(Course $course,Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $em->remove($course);
+        $em->flush();
+
+        return $this->redirectToRoute('courses');
+    }
 }
