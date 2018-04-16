@@ -1,180 +1,195 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-<div class="container theme-showcase" role="main">
-    <div class="starter-template">
-        <link rel="stylesheet" href="/css/viewCourse.css">
-        <script type="text/javascript" src="./DevCom Courses - DevCom Policy Cource_files/fitvids.js"></script>
-        <div class="page-header">
-            <div class="col-md-12" id="message" style="margin-left: 17px">
-            </div>
-            <div class="row viewCourseHeader">
-                <div class="col-md-8">
-                    <div class="col-md-12 viewCourseDetail">
-                        <h1>{{ course.title }}
-                            {% if is_granted('ABILITY_COURSE_UPDATE', course) %}
-                            <small>
-                                <a role="button" class="btn-link" title="Update Your Course" href="/courses-edit/{{course.id}}"><span class="glyphicon glyphicon-edit"></span></a>
-                                <div class="dropdown menu-inline">
-                                    <a class="dropdown-toggle" id="cAction" role="button" data-toggle="dropdown" data-target="#" href="#">
-                                        <span class="glyphicon glyphicon-plus-sign"></span><b class="caret"></b>
-                                    </a>
-                                    <ul class="dropdown-menu" role="menu" aria-labelledby="cAction">
-                                        <li role="presentation"><a role="menuitem" href="/section/new/{{course.id}}" title="Add Section">Add Section</a></li>
-                                        <li role="presentation"><a role="menuitem" href="/lecture/new/{{course.id}}" title="Add Lecture">Add Lecture</a></li>
-                                        <li role="presentation"><a role="menuitem" href="http://courses.devcom.com/test/create_test/60" title="Add Test">Add Test</a></li>
+    <div class="container theme-showcase" role="main">
+        <div class="starter-template">
+            <link rel="stylesheet" href="/css/viewCourse.css">
+            <script type="text/javascript" src="./DevCom Courses - DevCom Policy Cource_files/fitvids.js"></script>
+            <div class="page-header">
+                <div class="col-md-12" id="message" style="margin-left: 17px">
+                </div>
+                <div class="row viewCourseHeader">
+                    <div class="col-md-8">
+                        <div class="col-md-12 viewCourseDetail">
+                            <h1>{{ course.title }}
+                                {% if is_granted('ABILITY_COURSE_UPDATE', course) %}
+                                    <small>
+                                        <a role="button" class="btn-link" title="Update Your Course"
+                                           href="/courses-edit/{{ course.id }}"><span
+                                                    class="glyphicon glyphicon-edit"></span></a>
+                                        <div class="dropdown menu-inline">
+                                            <a class="dropdown-toggle" id="cAction" role="button" data-toggle="dropdown"
+                                               data-target="#" href="#">
+                                                <span class="glyphicon glyphicon-plus-sign"></span><b class="caret"></b>
+                                            </a>
+                                            <ul class="dropdown-menu" role="menu" aria-labelledby="cAction">
+                                                <li role="presentation"><a role="menuitem"
+                                                                           href="/section/new/{{ course.id }}"
+                                                                           title="Add Section">Add Section</a></li>
+                                                <li role="presentation"><a role="menuitem"
+                                                                           href="/lecture/new/{{ course.id }}"
+                                                                           title="Add Lecture">Add Lecture</a></li>
+                                                <li role="presentation"><a role="menuitem"
+                                                                           href="http://courses.devcom.com/test/create_test/60"
+                                                                           title="Add Test">Add Test</a></li>
 
-                                    </ul>
+                                            </ul>
+                                        </div>
+                                        <a class="btn-link btn-delete" title="Delete Your Course"
+                                           data-delete-url="/courses-delete/{{ course.id }}"
+                                           data-target="#deleteConfirmation" data-toggle="modal" href="#"
+                                           data-confirm-body="Do you really want to delete this course?">
+                                            <span class="glyphicon glyphicon-remove"></span>
+                                        </a>
+
+                                    </small>
+                                {% endif %}
+                            </h1>
+                            <p id="subtitle">
+                                <small>{{ course.subtitle }}</small>
+                            </p>
+                            <div class="row">
+                                <div class="col-md-6 col-xs-6">
+                                    <span><strong>Created:</strong> <em>{{ course.creationDate|date('d-M-y') }}</em></span>
                                 </div>
-                                <a class="btn-link btn-delete" title="Delete Your Course" data-delete-url="/courses-delete/{{ course.id }}" data-target="#deleteConfirmation" data-toggle="modal" href="#" data-confirm-body="Do you really want to delete this course?">
-                                    <span class="glyphicon glyphicon-remove"></span>
-                                </a>
 
-                            </small>
-                            {% endif %}
-                        </h1>
-                        <p id="subtitle">
-                            <small>{{ course.subtitle }}</small>
-                        </p>
-                        <div class="row">
-                            <div class="col-md-6 col-xs-6">
-                                <span><strong>Created:</strong> <em>{{ course.creationDate|date('d-M-y') }}</em></span>
+                                <div class="col-md-6 col-xs-6 text-right" style="padding-right: 26px;">
+                                    {% if course|isSubscriber(app.user) %}
+                                        <a role="button" href="/unsubscribe/{{ course.id }}" data-course-id="6"
+                                           class="btn btn-success unsubscribe"
+                                           data-loading-text="">
+                                            Unsubscribe </a>
+                                    {% else %}
+                                        <a role="button" href="/subscribe/{{ course.id }}" data-course-id="6"
+                                           class="btn btn-default subscribe" data-loading-text="">
+                                            Subscribe </a>
+                                    {% endif %}
+                                </div>
                             </div>
-
-                            <div class="col-md-6 col-xs-6 text-right" style="padding-right: 26px;">
-                                {% if course|isSubscriber(app.user) %}
-                                <a role="button" href="/unsubscribe/{{ course.id }}" data-course-id="6"
-                                class="btn btn-success unsubscribe"
-                                data-loading-text="">
-                            Unsubscribe </a>
-                            {% else %}
-                            <a role="button" href="/subscribe/{{ course.id }}" data-course-id="6"
-                            class="btn btn-default subscribe" data-loading-text="">
-                        Subscribe </a>
-                        {% endif %}
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-12" id="courseSummery">
-                <div class="panel-group">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h4 class="panel-title">
-                                <a data-toggle="collapse"
-                                href="http://internalcourses.devcom.com/course/view_course/6#collapse_summary">Course
-                            Summary</a>
-                        </h4>
-                    </div>
-                    <div id="collapse_summary" class="panel-collapse in">
-                        <div class="panel-body">
-                            {{ course.summary|raw }}
                         </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-4">
-        {% if course.logo %}
-        <img class="viewCourseLogo" src="/{{ course.logo }}">
-        {% else %}
-        <img class="viewCourseLogo" src="/default-course-logo.png">
-        {% endif %}
-    </div>
-</div>
-
-<div class="vendor">
-</div>
-</div>
-
-
-<div class="col-md-12 lessonContainer">
-    <div class="col-md-8">
-        <div class="panel-group">
-            {% for section in sections %}
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h4 class="panel-title">
-                        <a data-toggle="collapse" href="/#collapse{{section.id}}" class="collapsed">
-                            {{ section.name }}
-                        </a>
-                        {% if is_granted('ABILITY_SECTION_UPDATE', section) %}
-                        <a role="button" class="btn-link" title="Edit" href="/section-edit/{{section.id}}">
-                            <span class="glyphicon glyphicon-edit"></span>
-                        </a>  
-                        <a class="btn-link btn-delete" title="Delete Your Section" data-delete-url="http://courses.devcom.com/section/delete_section/38" data-target="#deleteConfirmation" data-toggle="modal" href="#" data-confirm-body="Do you really want to delete this section?">
-                            <span class="glyphicon glyphicon-remove"></span>
-                        </a>
-                        {% endif %}
-                    </h4>
-                </div>
-                {% if section|lectures|length > 0 %}
-                    <div id="collapse{{section.id}}" class="panel-collapse in" style="height: auto;">
-                        <div class="panel-body">
-                            {% for lecture in section|lectures %}
-                                <div class="row">
-                                    <div class="col-12 col-sm-12 col-md-12 col-lg-12">
-                                        <a role="button" class="btn-link" href="/lecture/{{ lecture.id }}">{{ lecture.title }}</a>
-                                        <span class="label label-info">New</span>
+                        <div class="col-md-12" id="courseSummery">
+                            <div class="panel-group">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                            <a data-toggle="collapse"
+                                               href="http://internalcourses.devcom.com/course/view_course/6#collapse_summary">Course
+                                                Summary</a>
+                                        </h4>
                                     </div>
-                                    <div class="col-12 col-sm-12 col-md-12 col-lg-12">
-                                        <em class="small lecture-description">{{ lecture.description }}</em>
-                                        <span class="small lecture-description text-right"><em>Created at: {{ lecture.creationDate|date('d-M-y') }}</em></span>
+                                    <div id="collapse_summary" class="panel-collapse in">
+                                        <div class="panel-body">
+                                            {{ course.summary|raw }}
+                                        </div>
                                     </div>
                                 </div>
-                            {% endfor %}
+                            </div>
                         </div>
                     </div>
-                {% endif %}
+                    <div class="col-md-4">
+                        {% if course.logo %}
+                            <img class="viewCourseLogo" src="/{{ course.logo }}">
+                        {% else %}
+                            <img class="viewCourseLogo" src="/default-course-logo.png">
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="vendor">
+                </div>
             </div>
-            {% endfor %}
-        </div>
 
-        <!--Rating-->
-        <!--        -->
 
-        <!--        <table id="data_table" border="0" cellspacing="0" cellpadding="0" class="display">-->
-            <!--            <thead>-->
-                <!--            <tr>-->
+            <div class="col-md-12 lessonContainer">
+                <div class="col-md-8">
+                    <div class="panel-group">
+                        {% for section in sections %}
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" href="/#collapse{{ section.id }}" class="collapsed">
+                                            {{ section.name }}
+                                        </a>
+                                        {% if is_granted('ABILITY_SECTION_UPDATE', section) %}
+                                            <a role="button" class="btn-link" title="Edit"
+                                               href="/section-edit/{{ section.id }}">
+                                                <span class="glyphicon glyphicon-edit"></span>
+                                            </a>
+                                            <a class="btn-link btn-delete" title="Delete Your Section"
+                                               data-delete-url="/section-delete/{{ section.id }}"
+                                               data-target="#deleteConfirmation" data-toggle="modal" href="#"
+                                               data-confirm-body="Do you really want to delete this section?">
+                                                <span class="glyphicon glyphicon-remove"></span>
+                                            </a>
+                                        {% endif %}
+                                    </h4>
+                                </div>
+                                {% if section|lectures|length > 0 %}
+                                    <div id="collapse{{ section.id }}" class="panel-collapse in" style="height: auto;">
+                                        <div class="panel-body">
+                                            {% for lecture in section|lectures %}
+                                                <div class="row">
+                                                    <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                                        <a role="button" class="btn-link"
+                                                           href="/lecture/{{ lecture.id }}">{{ lecture.title }}</a>
+                                                        <span class="label label-info">New</span>
+                                                    </div>
+                                                    <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                                        <em class="small lecture-description">{{ lecture.description }}</em>
+                                                        <span class="small lecture-description text-right"><em>Created at: {{ lecture.creationDate|date('d-M-y') }}</em></span>
+                                                    </div>
+                                                </div>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                    <!--Rating-->
+                    <!--        -->
+
+                    <!--        <table id="data_table" border="0" cellspacing="0" cellpadding="0" class="display">-->
+                    <!--            <thead>-->
+                    <!--            <tr>-->
                     <!--                <th></th>-->
                     <!--            </tr>-->
                     <!--            </thead>-->
                     <!--            <tbody>-->
-                        <!--            -->        <!--                <tr>-->
-                            <!--                    <td>-->
-                                <!--                        <div class="panel panel-default">-->
-                                    <!--                            <div class="panel-body">-->
-                                        <!--                                <img src="--><!--" class="user-menu-logo">-->
-                                        <!--                                <b>--><!--</b>-->
-                                        <!--                                <br>-->
-                                        <!--                                <div class="rating_stars stars starrr unbind" data-rating="-->
-                                            <!--"></div>-->
-                                            <!--                                <span>--><!--</span>-->
-                                            <!--                            </div>-->
-                                            <!--                        </div>-->
-                                            <!--                    </td>-->
-                                            <!--                </tr>-->
-                                            <!--            -->        <!--            </tbody>-->
-                                            <!--        </table>-->
-                                            <!--/.Rating-->
+                    <!--            -->        <!--                <tr>-->
+                    <!--                    <td>-->
+                    <!--                        <div class="panel panel-default">-->
+                    <!--                            <div class="panel-body">-->
+                    <!--                                <img src="--><!--" class="user-menu-logo">-->
+                    <!--                                <b>--><!--</b>-->
+                    <!--                                <br>-->
+                    <!--                                <div class="rating_stars stars starrr unbind" data-rating="-->
+                    <!--"></div>-->
+                    <!--                                <span>--><!--</span>-->
+                    <!--                            </div>-->
+                    <!--                        </div>-->
+                    <!--                    </td>-->
+                    <!--                </tr>-->
+                    <!--            -->        <!--            </tbody>-->
+                    <!--        </table>-->
+                    <!--/.Rating-->
 
-                                        </div>
-                                        <div class="col-md-4">
-                                        </div>
-                                    </div>
-
-
-                                    <script type="text/javascript">
-                                    var error_message = 'Something wrong during deleting. Please refresh your page and try again.';
-                                    var deleteUrl = null;
-                                    $("#promoVideo").fitVids()
-                                    </script>
-                                    <script type="text/javascript"
-                                    src="/js/jquery.dataTables.js"></script>
-                                    <script type="text/javascript" src="/js/scripts.js"></script>
-                                    <script type="text/javascript" src="/js/course.js"></script>
+                </div>
+                <div class="col-md-4">
+                </div>
+            </div>
 
 
-                                </div>
-                            </div>
-                            {% endblock %}
+            <script type="text/javascript">
+                $("#promoVideo").fitVids()
+            </script>
+            <script type="text/javascript"
+                    src="/js/jquery.dataTables.js"></script>
+            <script type="text/javascript" src="/js/scripts.js"></script>
+            <script type="text/javascript" src="/js/course.js"></script>
+
+
+        </div>
+    </div>
+{% endblock %}

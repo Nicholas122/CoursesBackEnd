@@ -48,9 +48,9 @@
                                 <span class="glyphicon glyphicon-plus-sign"></span><b class="caret"></b>
                             </a>
                             <ul class="dropdown-menu" role="menu" aria-labelledby="ctAction">
-                                <li role="presentation"><a role="menuitem" href="http://internalcourses.devcom.com/section/create_section/16" title="Add Section">Add Section</a></li>
-                                <li role="presentation"><a role="menuitem" href="http://internalcourses.devcom.com/lecture/create_lecture/16" title="Add Lecture">Add Lecture</a></li>
-                                <li role="presentation"><a role="menuitem" href="http://internalcourses.devcom.com/test/create_test/16" title="Add Test">Add Test</a></li>
+                                <li role="presentation"><a role="menuitem" href="/section/new/{{ course.id }}" title="Add Section">Add Section</a></li>
+                                <li role="presentation"><a role="menuitem" href="/lecture/new/{{ course.id }}" title="Add Lecture">Add Lecture</a></li>
+                                <li role="presentation"><a role="menuitem" href="/test/new/{{ course.id }}" title="Add Test">Add Test</a></li>
 
                             </ul>
                         </div>
@@ -70,27 +70,6 @@
             {% endif %}
         </div>
 
-        <!-- Modal -->
-        <div class="modal fade" id="deleteConfirmation" tabindex="-1" role="dialog" aria-labelledby="deleteConfirmationLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                        <h4 class="modal-title" id="deleteConfirmationLabel">Confirm your deleting</h4>
-                    </div>
-                    <div class="modal-body">Do you really want to delete this course?</div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-primary confirm-deleting">Delete</button>
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                    </div>
-                </div>
-            </div>
-        </div><!-- /.Modal -->
-
-        <script type="text/javascript">
-        var error_message = 'Something wrong during deleting. Please refresh your page and try again.';
-        var deleteUrl = null;
-        </script>
         <script type="text/javascript" src="/js/scripts.js"></script>
         <script type="text/javascript" src="/js/course.js"></script>  </div>
     </div>

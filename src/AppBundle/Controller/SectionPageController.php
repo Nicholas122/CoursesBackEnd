@@ -39,7 +39,7 @@ class SectionPageController extends BaseController
 
     /**
      * @Route("/section-edit/{section}", name="section-edit")
-     * @Security("has_role('ROLE_USER')")
+     * @Security("is_granted('ABILITY_SECTION_UPDATE', section)")
      */
     public function editAction(Section $section, Request $request)
     {
@@ -59,5 +59,21 @@ class SectionPageController extends BaseController
 
 
         return $this->render('sectionpage/new.html.twig', ['form' => $form->createView()]);
+    }
+
+    /**
+     * @Route("/section-delete/{section}", name="section-edit")
+     * @Security("is_granted('ABILITY_SECTION_DELETE', section)")
+     */
+    public function deleteAction(Section $section, Request $request)
+    {
+        $courseId = $section->getCourse()->getId();
+
+        $em = $this->getDoctrine()->getManager();
+
+        $em->remove($section);
+        $em->flush();
+
+        return $this->redirectToRoute('course', ['course' => $courseId]);
     }
 }
