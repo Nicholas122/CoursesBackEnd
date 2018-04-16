@@ -1,0 +1,92 @@
+.my-clock {
+    float: right;
+    padding: 0px;
+    width: auto;
+    margin: auto;
+    margin-right: 30px;
+}
+.my-header {
+    margin-left: 15px;
+}
+.startTest {
+    margin: 15px;
+    text-align: center;
+    /*width: 20%;*/
+
+}
+.testDescription {
+    text-align: center;
+    margin: 20px;
+}
+#startBtn, #disabledbBtn{
+    width: 35%;
+
+}
+.pager{
+    margin-top: 50px;
+    margin-bottom: 0px;
+    width: 97%;
+    /*margin-right: 30px;*/
+}
+#previousQuestion ,#nextQuestion{
+    /*width: 20%;*/
+    /*height: 4%;*/
+    width: 150px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+#calendarPagination {
+    display: inline-block;
+}
+
+#finish-button {
+    float: right;
+    
+}
+
+#finishTest {
+    padding: 5px 14px;
+    background-color: #ffffff;
+    border: 1px solid #dddddd;
+    border-radius: 15px;
+    width: 150px;
+    float:right;
+    text-align: center;
+}
+
+.hidden{
+    display: none;
+}
+.qHeader{
+    text-align: center;
+}
+.answerContainers{
+    margin-top: 10px;
+}
+.userInputAnswers{
+    width: 95%;
+    margin-left: 15px;
+}
+.multiAnswers{
+    padding-right: 0px;
+    padding-left: 0px;
+    margin-left: 25px;
+    width: 1%;
+}
+.resultHeader, #resultsBody {
+    text-align: center;
+}
+.pagination {
+    padding: 6px 10px;
+    margin: 4px 1px;
+}
+
+.currentQuestion {
+    color: black; 
+    font-weight : bold;
+}
+
+.input-answer {
+    transform: scale(1.4);
+}

@@ -1,0 +1,147 @@
+.timeLimits{
+    width: 20%;
+}
+.timePHolders {
+    margin-left: -337px;
+    float: left;
+    padding-right: 0px;
+    padding-left: 0px;
+    padding-top: 7px;
+    width: 60%;
+}
+
+.correctAnswer{
+    float: right;
+    margin-right: 34px;
+    /*text-align: right;*/
+}
+#formButtons {
+    /*margin-top: 30px;*/
+    margin-left: -5px;
+    margin-right: -15px;
+    padding-right: -15px;
+}
+div#formButtons>.col-4{
+    margin-left: 0px;
+    margin-right: 0px;
+}
+div#formButtons>.col-4 > .col-12{
+    margin-left: 0px;
+    margin-right: 0px;
+    padding-left: 0px;
+    padding-right: 0px;
+}
+.testBorder{
+    border: 1px solid #cccccc;
+    border-radius: 6px;
+}
+.testLimits {
+    margin: 20px;
+}
+.testDescription{
+    margin: 10px;
+}
+.answerNumLabel{
+    margin-right: -90px;
+    margin-top: 6px;
+}
+.answers{
+    margin-left: 20px;
+    width: 110%;
+}
+.correctCheckbox{
+    margin-top: 8px;
+    /*margin-right: -15px;*/
+    /*margin-left: -15px;*/
+    float: right;
+    padding-right: 0px;
+    padding-left: 30px;
+
+}
+span.glyphicon.glyphicon-remove.delAnsButton{
+    padding-left: 20px;
+}
+.ansButtons{
+    margin-left: 25px;
+    margin-top:0px;
+    margin-bottom: 0px;
+
+}
+.timegroups{
+    margin: 0px;
+    height: 52px;
+}
+
+.error{
+    border-color: #a94442;
+}
+.error:focus {
+    border-color: #843534;
+}
+.labelError{
+    color: darkred;
+
+}
+.labelError.answer{
+    color: darkred;
+    padding-left: 20px;
+}
+#questions-container{
+    margin-bottom: 50px;
+    padding-bottom: 20px;
+}
+
+#add-readquestion {
+	margin-bottom:20px;
+}
+.readquestions {
+	margin-left:15px;
+	margin-right:15px;
+}
+.delAnsButton{
+    padding-left: 10px;
+}
+.delete-question{
+    float: right;
+    margin-left: 15px;
+    margin-top: 5px;
+}
+
+.delete-read-question{
+    float: right;
+    margin-left: 15px;
+    margin-top: 5px;
+}
+
+.addAnsButton{
+    width:30%;
+}
+.questionHeader{
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: 500;
+    line-height: 1.1;
+    font-size: 24px;
+}
+.questions{
+    margin-top: 50px;
+}
+
+#wrapCorrectLabel{
+    margin-bottom: 2px;
+}
+
+.edit-test-weight-wrap-input{
+    float: right; 
+	padding-right: 0px; 
+	padding-left: 0px;
+	margin-bottom: 15px;
+}
+.edit-test-weight-wrap-textarea{
+    float: right; 
+	padding-right: 0px;
+}
+
+.reading-test {
+    padding-left: 30px;
+    padding-right: 30px;
+}

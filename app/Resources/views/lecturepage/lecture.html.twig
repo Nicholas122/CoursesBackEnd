@@ -1,0 +1,124 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container theme-showcase" role="main">
+        <div class="starter-template">
+            <link href="/css/viewLecture.css" rel="stylesheet">
+
+            <!-- Left navbar section -->
+            <div class="left-navbar col-lg-2 col-md-2">
+                <div class="panel-group">
+                    {% for section in sections %}
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" href="#collapse{{ section.id }}">{{ section.name }}</a>
+                                </h4>
+                            </div>
+                            <div id="collapse{{ section.id }}" class="panel-collapse in ">
+                                <div class="panel-body">
+                                    <ul class="nav">
+                                        {% for item in section|lectures %}
+                                            {% if item.id == lecture.id %}
+                                                <li class="active">
+                                                    <a role="button" class="btn-link" href="/lecture/{{ item.id }}">{{ item.title }}</a>
+                                                </li>
+                                                {% else %}
+                                                    <li>
+                                                        <a role="button" class="btn-link" href="/lecture/{{ item.id }}">{{ item.title }}</a>
+                                                    </li>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                    {% endfor %}
+                </div>
+            </div>
+            <!-- End of Left navbar section -->
+
+            <div class="col-lg-10 col-md-10">
+                <div class="page-header">
+                    <h1>
+                        {{ lecture.title }}
+                        <small>
+                            <a role="button" class="btn-link" title="Edit"
+                               href="/lecture/edit_lecture/62"><span
+                                        class="glyphicon glyphicon-edit"></span></a>
+                            <a class="btn-link btn-delete" title="Delete Your Lecture"
+                               data-delete-url="/lecture/delete_lecture/62"
+                               data-target="#deleteConfirmation" data-toggle="modal" href="#">
+                                <span class="glyphicon glyphicon-remove"></span>
+                            </a>
+                        </small>
+                    </h1>
+                    <p class="small">{{ lecture.description }}</p>
+                </div>
+
+                <div class="row">
+                    <!-- Main content section -->
+                    <div class="col-md-10">
+                        {{ lecture.content|raw }}
+                        <ul class="pager">
+                        </ul>
+                        <!-- /.Bottom pagers -->
+                    </div>
+                    <!-- /.Main content section -->
+                    <!-- Navigation section -->
+                    <div class="col-md-2">
+                        <ul class="nav">
+                            <li><a role="button" class="btn-link btn-block" title="Back to Course"
+                                   href="/course/{{ lecture.section.course.id }}">Back to Course</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- /.Navigation section -->
+                </div>
+            </div>
+
+            <!--Style for formula spans-->
+            <style id="hideMath_Id">
+                .my-math {
+                    display: none;
+                    visibility: hidden;
+                }
+            </style>
+            <!-- /.Style for formula spans-->
+            <!--Style for loader divs-->
+            <style id="loaderId">
+                .loader {
+                    display: inline-block;
+                }
+            </style>
+            <!-- /.Style for loader divs-->
+
+            <script type="text/javascript">
+                var error_message = 'Something went wrong during deleting. Please refresh your page and try again.';
+                var deleteUrl = null;
+
+                $(".my-math").after("<img src='/images/loader_mathjax.gif' class='loader' alt='Loader Icon'/>");
+
+            </script>
+            <!--Mathjax library-->
+            <script type="text/javascript"
+                    src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
+
+            <!--Hide formulas until they are rendered-->
+            <script>
+                MathJax.Hub.Queue(
+                    function () {
+                        document.getElementById('hideMath_Id').disabled = true;
+                        $('.loader').hide();
+                    }
+                );
+            </script>
+            <!-- /.Hide formulas until they are rendered-->
+            <!--MathJax-Span-1-->
+
+            <script type="text/javascript" src="/js/scripts.js"></script>
+            <script type="text/javascript" src="/js/course.js"></script>
+        </div>
+    </div>
+{% endblock %}

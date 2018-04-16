@@ -11,14 +11,14 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 class LecturePageController extends BaseController
 {
-   /**
+    /**
      * @Route("/lecture/new/{course}", name="lecture-new")
      * @Security("has_role('ROLE_USER')")
      */
     public function newAction(Course $course, Request $request)
     {
         $lecture = new Lecture();
-        $form = $this->createForm(LectureForm::class, $lecture, ['course' =>$course]);
+        $form = $this->createForm(LectureForm::class, $lecture, ['course' => $course]);
 
         $form->handleRequest($request);
 
@@ -34,5 +34,16 @@ class LecturePageController extends BaseController
 
 
         return $this->render('lecturepage/new.html.twig', ['form' => $form->createView(), 'course' => $course]);
+    }
+
+    /**
+     * @Route("/lecture/{lecture}", name="lecture")
+     * @Security("has_role('ROLE_USER')")
+     */
+    public function lectureAction(Lecture $lecture, Request $request)
+    {
+        $sections = $this->getRepository('AppBundle:Section')->findBy(['course' => $lecture->getSection()->getCourse()]);
+
+        return $this->render('lecturepage/lecture.html.twig', ['lecture' => $lecture, 'sections' => $sections, '']);
     }
 }
