@@ -10,7 +10,7 @@ use JMS\Serializer\Annotation as JMS;
  * Section.
  *
  * @JMS\ExclusionPolicy("all")
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\LectureRepository")
  * @ORM\HasLifecycleCallbacks()
  */
 class Lecture implements HasOwnerInterface

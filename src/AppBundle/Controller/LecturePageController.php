@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Course;
 use AppBundle\Entity\Lecture;
 use AppBundle\Form\LectureForm;
+use AppBundle\Repository\LectureRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -42,8 +43,20 @@ class LecturePageController extends BaseController
      */
     public function lectureAction(Lecture $lecture, Request $request)
     {
+        /**
+         * @var LectureRepository $repository
+         */
+        $repository = $this->getRepository('AppBundle:Lecture');
+
         $sections = $this->getRepository('AppBundle:Section')->findBy(['course' => $lecture->getSection()->getCourse()]);
 
-        return $this->render('lecturepage/lecture.html.twig', ['lecture' => $lecture, 'sections' => $sections, '']);
+        $nextLecture = $repository->getNextLecture($lecture);
+        $previousLecture = $repository->getPreviousLecture($lecture);
+
+
+        return $this->render('lecturepage/lecture.html.twig', [
+            'lecture' => $lecture, 'sections' => $sections,
+            'nextLecture' => $nextLecture, 'previousLecture' => $previousLecture
+        ]);
     }
 }

@@ -21,12 +21,14 @@
                                         {% for item in section|lectures %}
                                             {% if item.id == lecture.id %}
                                                 <li class="active">
-                                                    <a role="button" class="btn-link" href="/lecture/{{ item.id }}">{{ item.title }}</a>
+                                                    <a role="button" class="btn-link"
+                                                       href="/lecture/{{ item.id }}">{{ item.title }}</a>
                                                 </li>
-                                                {% else %}
-                                                    <li>
-                                                        <a role="button" class="btn-link" href="/lecture/{{ item.id }}">{{ item.title }}</a>
-                                                    </li>
+                                            {% else %}
+                                                <li>
+                                                    <a role="button" class="btn-link"
+                                                       href="/lecture/{{ item.id }}">{{ item.title }}</a>
+                                                </li>
                                             {% endif %}
                                         {% endfor %}
                                     </ul>
@@ -62,6 +64,22 @@
                     <div class="col-md-10">
                         {{ lecture.content|raw }}
                         <ul class="pager">
+                            {% if nextLecture is not empty %}
+                                <li class="next">
+                                    <a role="button" class="btn-link" title="Next lesson"
+                                       href="/lecture/{{ nextLecture.id }}">Next lesson
+                                        <span class="glyphicon glyphicon-arrow-right"></span>
+                                    </a>
+                                </li>
+                            {% endif %}
+                            {% if previousLecture is not empty %}
+                                <li class="previous">
+                                    <a role="button" class="btn-link" title="Previous lesson"
+                                       href="/lecture/{{ previousLecture.id }}">
+                                        <span class="glyphicon glyphicon-arrow-left"></span> Previous lesson
+                                    </a>
+                                </li>
+                            {% endif %}
                         </ul>
                         <!-- /.Bottom pagers -->
                     </div>

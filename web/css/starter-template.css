@@ -33,7 +33,7 @@
 
 .user-small-logo {
     display: inline-block;
-    background-image: url('/assets/images/default-user-logo.png');
+    background-image: url('/images/default-user-logo.png');
     background-position: -156px -113px;
     border-radius: 5px;
     margin: -5px 7px -7px 0;
@@ -42,7 +42,7 @@
 }
 .user-big-logo {
     display: block;
-    background-image: url('/assets/images/default-user-logo.png');
+    background-image: url('/images/default-user-logo.png');
     background-position: -23px -13px;
     width: 130px;
     height: 120px;
