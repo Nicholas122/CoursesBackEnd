@@ -27,7 +27,7 @@ class PhotoEntityListener
      * Upload photo.
      *
      * @ORM\PrePersist()
-     *
+     * @ORM\PreUpdate()
      * @param LifecycleEventArgs $args
      */
     public function upload(PhotoInterface $entity, LifecycleEventArgs $args)

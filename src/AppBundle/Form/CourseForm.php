@@ -4,6 +4,7 @@ namespace AppBundle\Form;
 
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\ButtonType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
@@ -12,6 +13,8 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class CourseForm extends AbstractType
@@ -42,7 +45,7 @@ class CourseForm extends AbstractType
 
                 ]])
             ->add('summary', TextareaType::class, ['attr' => ['placeholder' => 'Enter here summary of the course.', 'class' => 'form-control', 'cols' => 40, 'rows' => 10], 'label' => 'Course Summary'])
-            ->add('logo', FileType::class, ['attr' => ['class' => 'form-control'], 'label' => 'Upload course image logo', 'required' => false])
+            ->add('logo', FileType::class, ['attr' => ['class' => 'form-control'], 'label' => 'Upload course image logo', 'required' => false, 'data_class' => null])
             ->add('video', TextType::class, ['attr' => ['placeholder' => 'Only embed code', 'class' => 'form-control'], 'label' => 'Put your promo video', 'required' => false])
             ->add('session', ChoiceType::class, ['attr' => ['class' => 'form-control'],
                 'choices' => [
