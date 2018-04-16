@@ -1,0 +1,154 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container theme-showcase" role="main">
+        <div class="starter-template">
+            <script type="text/javascript" src="/js/createTest.js"></script>
+            <script src="https://cdn.ckeditor.com/4.9.1/standard/ckeditor.js"></script>
+
+            <link href="http://localhost/assets/css/createTest.css" rel="stylesheet">
+            <div class="page-header">
+                <h1></h1>
+            </div>
+
+            <div class="row">
+                <div id="message" class="col-lg-12">
+                </div>
+            </div>
+            <form action="/test/new/{{ course.id }}" class="form-horizontal" method="post" accept-charset="utf-8" id="questions-form">
+                <div class="testBorder">
+                    <div class="testLimits">
+
+                        <div class="form-group">
+
+                            <p class="col-4 col-sm-4 col-md-4">
+                                <label for="title">Title</label>
+                                <input id="title" name="title" class="form-control" type="text" maxlength="300"
+                                       placeholder="Max length 300">
+                            </p>
+
+                            <p class="col-4 col-sm-4 col-md-4">
+                                <label for="description">Description</label>
+                                <input id="description" name="description" class="form-control" type="text"
+                                       maxlength="500" placeholder="Max length 500">
+                            </p>
+                            <p class="col-4 col-sm-4 col-md-4">
+                                <label for="section">Select Section</label>
+                                <select name="section" id="section" class="form-control">
+                                    <option value="0">-- Select From List --</option>
+                                    {% for section in sections %}
+                                        <option value="{{ section.id }}">{{ section.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </p>
+                        </div>
+
+                        <div class="form-group timegroups">
+                            <label for="timeLimit" class="col-sm-2 control-label">Time limit</label>
+                            <div class="col-sm-5">
+                                <input id="timeLimit" name="timeLimit" class="form-control  timeLimits"
+                                       type="number" min="0" maxlength="10">
+                            </div>
+                            <label class="col-sm-2 timePHolders">sets the test time limit in minutes</label>
+                        </div>
+                        <div class="form-group timegroups">
+
+                            <label for="testRate" class="col-sm-2 control-label">Pass/fail score</label>
+                            <div class="col-sm-5">
+                                <input id="testRate" name="testRate" class="form-control  timeLimits" type="number"
+                                       min="0" max="100" value="60">
+                            </div>
+                            <label class="col-sm-2 timePHolders">passing score in percent</label>
+
+                        </div>
+                        <div class="form-group timegroups">
+
+                            <label class="col-sm-2 control-label">Retake timeout</label>
+                            <div class="col-sm-5">
+                                <input id="retakeTimeout" name="retakeTimeout" class="form-control  timeLimits"
+                                       type="number" min="1" max="365">
+                            </div>
+                            <label class="col-sm-2 timePHolders">period of time after which a user can retake the test
+                                in days</label>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="form-group" style="margin-bottom: -50px;">
+                    <div class="col-sm-12">
+                        <h1>
+                            <b>Test questions</b>
+                        </h1>
+                    </div>
+                </div>
+
+                <div id="main-question-container" class="col-sm-12" style="padding-top:60px"
+                     data-main-question-count="1">
+                    <div class="question" id="question-1">
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                <h2>
+                                    <b>
+                                        <label class="mainQuestionHeader"> Question 1 </label>
+                                    </b>
+                                </h2>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-12" style="margin-top:50px;margin-bottom:50px;">
+                            <h4>
+                                <div class="col-3 col-sm-3 col-md-3 col-lg-offset-4">
+                                    <label for="QuestionType">Choose question type</label>
+                                    <select name="QuestionType" id="QuestionType-1" class="form-control choseqt">
+                                        <option value="0">-- Select From List --</option>
+                                        <option value="1">Multiple choice</option>
+                                        <option value="2">User input</option>
+                                        <option value="3">Reading test</option>
+                                    </select>
+                                </div>
+                            </h4>
+                        </div>
+                        <div class="question-area" id="question-area-1" style="padding-top:10px"
+                             data-multichoise-count="0" data-userinput-count="0" data-readtest-count="0">
+
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+            <div id="formButtons" class="col-md-12">
+                <!--Buttons-->
+                <div class=" col-4 col-sm-4 col-md-4 col-lg-4">
+                    <div class="col-12 col-sm-12 col-md-12 col-lg-12" hidden="">
+                        <button id="add-reading-test" data-clicks="0" type="button"
+                                class="btn btn-lg btn-primary btn-block">Add reading test
+                        </button>
+                    </div>
+
+                    <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                        <button disabled="" id="add-main-question" data-clicks="0" type="button"
+                                class="btn btn-lg btn-primary btn-block">Add main question
+                        </button>
+                    </div>
+
+                </div>
+
+                <div class="col-4 col-sm-4 col-md-4 col-lg-4">
+                    <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                        <button id="saveBtn" type="button" class="btn btn-lg btn-primary btn-block">Save</button>
+                    </div>
+                </div>
+
+                <div class="col-4 col-sm-4 col-md-4 col-lg-4">
+                    <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                        <a role="button" class="btn btn-lg btn-default btn-block"
+                           href="http://localhost/course/view_course/18">Cancel</a>
+                    </div>
+                </div>
+
+            </div>
+            <script type="text/javascript" src="/js/scripts.js"></script>
+
+        </div>
+    </div>
+{% endblock %}
