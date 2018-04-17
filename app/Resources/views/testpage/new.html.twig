@@ -6,7 +6,7 @@
             <script type="text/javascript" src="/js/createTest.js"></script>
             <script src="https://cdn.ckeditor.com/4.9.1/standard/ckeditor.js"></script>
 
-            <link href="http://localhost/assets/css/createTest.css" rel="stylesheet">
+            <link href="/css/createTest.css" rel="stylesheet">
             <div class="page-header">
                 <h1></h1>
             </div>
@@ -24,7 +24,7 @@
                             <p class="col-4 col-sm-4 col-md-4">
                                 <label for="title">Title</label>
                                 <input id="title" name="title" class="form-control" type="text" maxlength="300"
-                                       placeholder="Max length 300">
+                                       placeholder="Max length 300" required>
                             </p>
 
                             <p class="col-4 col-sm-4 col-md-4">
@@ -34,7 +34,7 @@
                             </p>
                             <p class="col-4 col-sm-4 col-md-4">
                                 <label for="section">Select Section</label>
-                                <select name="section" id="section" class="form-control">
+                                <select name="section" id="section" class="form-control" required>
                                     <option value="0">-- Select From List --</option>
                                     {% for section in sections %}
                                         <option value="{{ section.id }}">{{ section.name }}</option>
@@ -98,12 +98,12 @@
                         <div class="col-12 col-sm-12 col-md-12" style="margin-top:50px;margin-bottom:50px;">
                             <h4>
                                 <div class="col-3 col-sm-3 col-md-3 col-lg-offset-4">
-                                    <label for="QuestionType">Choose question type</label>
-                                    <select name="QuestionType" id="QuestionType-1" class="form-control choseqt">
+                                    <label for="type">Choose question type</label>
+                                    <select name="type" id="QuestionType-1" class="form-control choseqt">
                                         <option value="0">-- Select From List --</option>
-                                        <option value="1">Multiple choice</option>
-                                        <option value="2">User input</option>
-                                        <option value="3">Reading test</option>
+                                        <option value="multiple">Multiple choice</option>
+                                        <option value="userInput">User input</option>
+                                        <option value="reading">Reading test</option>
                                     </select>
                                 </div>
                             </h4>
@@ -115,7 +115,6 @@
                     </div>
                 </div>
 
-            </form>
             <div id="formButtons" class="col-md-12">
                 <!--Buttons-->
                 <div class=" col-4 col-sm-4 col-md-4 col-lg-4">
@@ -135,7 +134,7 @@
 
                 <div class="col-4 col-sm-4 col-md-4 col-lg-4">
                     <div class="col-12 col-sm-12 col-md-12 col-lg-12">
-                        <button id="saveBtn" type="button" class="btn btn-lg btn-primary btn-block">Save</button>
+                        <button id="saveBtn" type="submit" class="btn btn-lg btn-primary btn-block">Save</button>
                     </div>
                 </div>
 
@@ -147,6 +146,7 @@
                 </div>
 
             </div>
+            </form>
             <script type="text/javascript" src="/js/scripts.js"></script>
 
         </div>

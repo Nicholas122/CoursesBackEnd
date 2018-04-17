@@ -20,6 +20,10 @@ class TestPageController extends BaseController
     {
         $sections = $this->getRepository('AppBundle:Section')->findBy(['course' => $course->getId()]);
 
+        if ($request->getMethod() === 'POST') {
+            //var_dump($request->request->all()); die;
+        }
+
         return $this->render('testpage/new.html.twig', ['sections' => $sections, 'course' => $course]);
     }
 

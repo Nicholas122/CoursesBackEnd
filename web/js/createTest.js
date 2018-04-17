@@ -9,14 +9,14 @@ $(document).ready(function () {
         for (var i = 1; i <= questionCount; i++) {
             $('#QuestionType-' + i).bind('change', function (event) {
                 $('#add-main-question').removeAttr('disabled');
-                switch (parseInt(event.target.value)) {
-                    case 1:
+                switch (event.target.value) {
+                    case 'multiple':
                         createMultipleChoice();
                         break;
-                    case 2:
+                    case 'userInput':
                         createUserInput();
                         break;
-                    case 3:
+                    case 'reading':
                         createReadingTest();
                         break;
                 }
@@ -89,6 +89,7 @@ $(document).ready(function () {
                     '</div> ' +
                     '<div class="col-sm-1 correctCheckbox">' +
                     '<input type="checkbox" class="checkedAnswer answerGroup1" id="answerGroup11" name="questions['+questionCount+'][answers]['+answersCount+'][correct]">' +
+                    '<input type="hidden" name="questions['+questionCount+'][type]" value="multiple">' +
                     '<a class="btn-link" title="Delete answer">' +
                     '<span data-question="'+questionCount+'" data-answer="'+answersCount+'" class="glyphicon glyphicon-remove delAnsButton delMultiAnsButton">' +
                     '</span>' +
@@ -148,9 +149,6 @@ $(document).ready(function () {
             questionCount--;
         });
     });
-    
-    $('#saveBtn').click(function () {
-        $('#questions-form').submit();
-    })
+
 
 });
