@@ -97,3 +97,32 @@ knp_paginator:
 
 ivory_ck_editor:
     jquery: true
+
+fos_rest:
+    routing_loader:
+        default_format: json
+    view:
+        view_response_listener: true
+        formats:
+                xml: true
+                json : true
+    param_fetcher_listener: true
+
+nelmio_api_doc:
+    routes:
+        path_patterns: # an array of regexps
+            - ^/api(?!/doc$)
+    documentation:
+        schemes: [http, https]
+        info:
+            title: FindYou API 1.0.0
+            description: This is an awesome app!
+            version: 1.0.0
+        securityDefinitions:
+            Bearer:
+                type: apiKey
+                description: 'Value: Bearer {jwt}'
+                name: Authorization
+                in: header
+        security:
+            - Bearer: []
