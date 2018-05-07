@@ -55,6 +55,7 @@ class Test implements HasOwnerInterface
      * @JMS\Expose
      * @JMS\Groups({"default"})
      * @ORM\Column(type="integer", nullable=true)
+     * @Assert\NotBlank()
      */
     protected $timeLimit;
 
@@ -62,6 +63,8 @@ class Test implements HasOwnerInterface
      * @JMS\Expose
      * @JMS\Groups({"default"})
      * @ORM\Column(type="integer", nullable=true)
+     * @Assert\NotBlank()
+     * @Assert\Range(min=60, max=100)
      */
     protected $passingScorePercent;
 
@@ -69,8 +72,17 @@ class Test implements HasOwnerInterface
      * @JMS\Expose
      * @JMS\Groups({"default"})
      * @ORM\Column(type="integer", nullable=true)
+     * @Assert\NotBlank()
      */
     protected $retakeTimeout;
+
+
+    /**
+     * @JMS\Expose
+     * @JMS\Groups({"default"})
+     * @ORM\Column(type="datetime")
+     */
+    protected $creationDate;
 
     /**
      * Get id
@@ -232,5 +244,30 @@ class Test implements HasOwnerInterface
     public function getOwners()
     {
         return [$this->getSection()->getCourse()->getUser()];
+    }
+
+    /**
+     * Set creationDate
+     *
+     * @param \DateTime $creationDate
+     *
+     * @return Test
+     * @ORM\PrePersist()
+     */
+    public function setCreationDate($creationDate)
+    {
+        $this->creationDate = new \DateTime();
+
+        return $this;
+    }
+
+    /**
+     * Get creationDate
+     *
+     * @return \DateTime
+     */
+    public function getCreationDate()
+    {
+        return $this->creationDate;
     }
 }

@@ -154,7 +154,7 @@ class Lecture implements HasOwnerInterface
      */
     public function getOwners()
     {
-        return [$this->getCourse()->getUser()];
+        return [$this->getSection()->getCourse()->getUser()];
     }
 
     /**

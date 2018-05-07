@@ -14,6 +14,14 @@ security:
           - ABILITY_SECTION_CREATE
           - ABILITY_SECTION_UPDATE
           - ABILITY_SECTION_DELETE
+          - ABILITY_LECTURE_OWNER
+          - ABILITY_LECTURE_CREATE
+          - ABILITY_LECTURE_UPDATE
+          - ABILITY_LECTURE_DELETE
+          - ABILITY_TEST_OWNER
+          - ABILITY_TEST_CREATE
+          - ABILITY_TEST_UPDATE
+          - ABILITY_TEST_DELETE
         ROLE_SUPER_ADMIN: [ROLE_USER]
     encoders:
         AppBundle\Entity\User: sha512

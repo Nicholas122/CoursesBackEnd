@@ -115,7 +115,7 @@ nelmio_api_doc:
     documentation:
         schemes: [http, https]
         info:
-            title: FindYou API 1.0.0
+            title: Courses API 1.0.0
             description: This is an awesome app!
             version: 1.0.0
         securityDefinitions:

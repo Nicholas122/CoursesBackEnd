@@ -3,6 +3,9 @@
 namespace AppBundle\Controller\API;
 
 
+use AppBundle\Entity\Test;
+use AppBundle\Form\TestForm;
+use AppBundle\Service\TestService;
 use Doctrine\ORM\EntityRepository;
 use FOS\RestBundle\Request\ParamFetcher;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,6 +25,18 @@ class TestController extends BaseRestController
      */
     public function postAction(Request $request)
     {
-       var_dump($request->request->get('test')); die;
+        /**
+         * @var TestService $testService
+         */
+        $testService = $this->get('app.test.service');
+
+        $createTestResponse = $this->handleForm($request, TestForm::class, new Test());
+
+        if ($createTestResponse->getStatusCode() === 201) {
+            $questions = $request->get('questions');
+            $testService->createQuestions($questions);
+        }
+
+        return $createTestResponse;
     }
 }

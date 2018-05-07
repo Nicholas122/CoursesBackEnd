@@ -83,3 +83,12 @@ services:
         class: AppBundle\Twig\Resize
         tags:
             - { name: twig.extension }
+
+    app.test.service:
+        public: true
+        class: AppBundle\Service\TestService
+
+    app.get_tests_by_sections.twig_extension:
+        class: AppBundle\Twig\GetTestByCourseAndSection
+        tags:
+            - { name: twig.extension }

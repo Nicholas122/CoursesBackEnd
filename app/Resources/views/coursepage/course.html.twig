@@ -126,25 +126,62 @@
                                         {% endif %}
                                     </h4>
                                 </div>
-                                {% if section|lectures|length > 0 %}
-                                    <div id="collapse{{ section.id }}" class="panel-collapse in" style="height: auto;">
-                                        <div class="panel-body">
-                                            {% for lecture in section|lectures %}
-                                                <div class="row">
-                                                    <div class="col-12 col-sm-12 col-md-12 col-lg-12">
-                                                        <a role="button" class="btn-link"
-                                                           href="/lecture/{{ lecture.id }}">{{ lecture.title }}</a>
-                                                        <span class="label label-info">New</span>
-                                                    </div>
-                                                    <div class="col-12 col-sm-12 col-md-12 col-lg-12">
-                                                        <em class="small lecture-description">{{ lecture.description }}</em>
-                                                        <span class="small lecture-description text-right"><em>Created at: {{ lecture.creationDate|date('d-M-y') }}</em></span>
-                                                    </div>
+                                <div class="panel-body">
+                                    {% if section|lectures|length > 0 %}
+                                        {% for lecture in section|lectures %}
+                                            <div class="row">
+                                                <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                                    <a role="button" class="btn-link"
+                                                       href="/lecture/{{ lecture.id }}">{{ lecture.title }}</a>
+                                                    {% if is_granted('ABILITY_LECTURE_UPDATE', lecture) %}
+                                                        <a role="button" class="btn-link" title="Edit"
+                                                           href="/lecture-edit/{{ lecture.id }}"><span
+                                                                    class="glyphicon glyphicon-edit"></span></a>
+                                                        <a class="btn-link btn-delete" title="Delete Your Lecture"
+                                                           data-delete-url="/lecture-delete/{{ lecture.id }}"
+                                                           data-target="#deleteConfirmation" data-toggle="modal" href="#"
+                                                           data-confirm-body="Do you really want to delete this lecture?">
+                                                            <span class="glyphicon glyphicon-remove"></span>
+                                                        </a>
+                                                    {% endif %}
+                                                    <span class="label label-info">New</span>
                                                 </div>
-                                            {% endfor %}
-                                        </div>
-                                    </div>
-                                {% endif %}
+                                                <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                                    <em class="small lecture-description">{{ lecture.description }}</em>
+                                                    <span class="small lecture-description text-right"><em>Created at: {{ lecture.creationDate|date('d-M-y') }}</em></span>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                    {% endif %}
+
+                                    {% if section|tests|length > 0 %}
+                                        {% for test in section|tests %}
+                                            <div class="row">
+                                                <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                                    <a role="button" class="btn-link"
+                                                       href="/test/{{ test.id }}">{{ test.title }}</a>
+                                                    {% if is_granted('ABILITY_TEST_UPDATE', test) %}
+                                                        <a role="button" class="btn-link" title="Edit"
+                                                           href="/test-edit/{{ test.id }}"><span
+                                                                    class="glyphicon glyphicon-edit"></span></a>
+                                                        <a class="btn-link btn-delete" title="Delete Your Lecture"
+                                                           data-delete-url="/test-delete/{{ test.id }}"
+                                                           data-target="#deleteConfirmation" data-toggle="modal" href="#"
+                                                           data-confirm-body="Do you really want to delete this lecture?">
+                                                            <span class="glyphicon glyphicon-remove"></span>
+                                                        </a>
+                                                    {% endif %}
+                                                    <span class="label label-warning">Test</span>
+                                                </div>
+                                                <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                                    <em class="small lecture-description">{{ test.description }}</em>
+                                                    <span class="small lecture-description text-right"><em>Created at: {{ test.creationDate|date('d-M-y') }}</em></span>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                    {% endif %}
+                                </div>
+
                             </div>
                         {% endfor %}
                     </div>
