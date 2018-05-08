@@ -45,6 +45,8 @@ class Test implements HasOwnerInterface
     protected $description;
 
     /**
+     * @JMS\Expose
+     * @JMS\Groups({"default"})
      * @ORM\ManyToOne(targetEntity="Section")
      * @ORM\JoinColumn(name="section_id", referencedColumnName="id", onDelete="CASCADE")
      * @Assert\NotBlank()
