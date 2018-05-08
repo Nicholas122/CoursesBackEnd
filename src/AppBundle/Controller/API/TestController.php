@@ -39,4 +39,13 @@ class TestController extends BaseRestController
 
         return $createTestResponse;
     }
+    
+     /**
+     * Get test.
+     * @Rest\View(serializerGroups={"default"})
+     */
+    public function getAction(Test $test)
+    {
+        return $test;
+    }
 }
