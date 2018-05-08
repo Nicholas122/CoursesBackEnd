@@ -36,6 +36,8 @@ class Section implements HasOwnerInterface
     protected $name;
 
     /**
+     * @JMS\Expose
+     * @JMS\Groups({"default"})
      * @ORM\ManyToOne(targetEntity="Course")
      * @ORM\JoinColumn(name="course_id", referencedColumnName="id", onDelete="CASCADE")
      */
