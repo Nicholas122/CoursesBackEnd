@@ -5,8 +5,10 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use JMS\Serializer\Annotation as JMS;
 
 /**
+ * @JMS\ExclusionPolicy("all")
  * @ORM\Entity
  * @ORM\Table(name="question")
  * @ORM\InheritanceType("SINGLE_TABLE")
@@ -17,7 +19,8 @@ abstract class Question
 {
     /**
      * @var int
-     *
+     * @JMS\Expose
+     * @JMS\Groups({"default"})
      * @ORM\Id
      * @ORM\Column(name="id", type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -25,12 +28,16 @@ abstract class Question
     protected $id;
 
     /**
+     * @JMS\Expose
+     * @JMS\Groups({"default"})
      * @ORM\Column(type="text", nullable=false)
      * @Assert\NotBlank()
      */
     protected $question;
 
     /**
+     * @JMS\Expose
+     * @JMS\Groups({"default"})
      * @ORM\Column(type="integer", nullable=false)
      * @Assert\NotBlank()
      */
