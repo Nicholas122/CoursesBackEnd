@@ -25,12 +25,12 @@ class TestService
             switch ($questionData['type']) {
                 case 'USER_INPUT':
                     $question = new UserInputQuestion();
-                    $question->setQuestion($questionData['text']);
+                    $question->setText($questionData['text']);
                     $question->setWeight($questionData['weight']);
                     break;
                 case 'MULTIPLY_CHOISE':
                     $question = new MultipleChoiceQuestion();
-                    $question->setQuestion($questionData['text']);
+                    $question->setText($questionData['text']);
                     $question->setWeight($questionData['weight']);
                     $this->createAnswers($questionData['answers'], $question);
                     break;

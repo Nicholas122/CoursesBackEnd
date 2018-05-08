@@ -33,7 +33,7 @@ abstract class Question
      * @ORM\Column(type="text", nullable=false)
      * @Assert\NotBlank()
      */
-    protected $question;
+    protected $text;
 
     /**
      * @JMS\Expose
@@ -49,7 +49,15 @@ abstract class Question
      * @ORM\OneToMany(targetEntity="Answer", mappedBy="question")
      */
     protected $answers;
-    
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->answers = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
     /**
      * Get id
      *
@@ -61,27 +69,27 @@ abstract class Question
     }
 
     /**
-     * Set question
+     * Set text
      *
-     * @param string $question
+     * @param string $text
      *
      * @return Question
      */
-    public function setQuestion($question)
+    public function setText($text)
     {
-        $this->question = $question;
+        $this->text = $text;
 
         return $this;
     }
 
     /**
-     * Get question
+     * Get text
      *
      * @return string
      */
-    public function getQuestion()
+    public function getText()
     {
-        return $this->question;
+        return $this->text;
     }
 
     /**
@@ -106,13 +114,6 @@ abstract class Question
     public function getWeight()
     {
         return $this->weight;
-    }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->answers = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**

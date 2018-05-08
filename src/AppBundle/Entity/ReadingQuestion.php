@@ -21,7 +21,49 @@ class ReadingQuestion extends Question
      * @ORM\Column(type="text", nullable=false)
      * @Assert\NotBlank()
      */
-    protected $text;
+    protected $readingText;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->answers = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Set readingText
+     *
+     * @param string $readingText
+     *
+     * @return ReadingQuestion
+     */
+    public function setReadingText($readingText)
+    {
+        $this->readingText = $readingText;
+
+        return $this;
+    }
+
+    /**
+     * Get readingText
+     *
+     * @return string
+     */
+    public function getReadingText()
+    {
+        return $this->readingText;
+    }
+
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 
     /**
      * Set text
@@ -46,12 +88,29 @@ class ReadingQuestion extends Question
     {
         return $this->text;
     }
+
     /**
-     * Constructor
+     * Set weight
+     *
+     * @param integer $weight
+     *
+     * @return ReadingQuestion
      */
-    public function __construct()
+    public function setWeight($weight)
     {
-        $this->answers = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->weight = $weight;
+
+        return $this;
+    }
+
+    /**
+     * Get weight
+     *
+     * @return integer
+     */
+    public function getWeight()
+    {
+        return $this->weight;
     }
 
     /**
