@@ -43,6 +43,13 @@ abstract class Question
      */
     protected $weight;
 
+     /**
+     * @JMS\Expose
+     * @JMS\Groups({"default"})
+     * @ORM\OneToMany(targetEntity="Answer", mappedBy="question")
+     */
+    protected $answers;
+    
     /**
      * Get id
      *
