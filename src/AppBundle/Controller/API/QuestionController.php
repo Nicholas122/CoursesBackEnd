@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Controller;
+namespace AppBundle\Controller\API;
 
 use AppBundle\Entity\Question;
 use Doctrine\ORM\EntityRepository;
