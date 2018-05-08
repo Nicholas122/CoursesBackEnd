@@ -4,16 +4,20 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use JMS\Serializer\Annotation as JMS;
 
 /**
  * ReadingQuestion.
  *
+ * @JMS\ExclusionPolicy("all")
  * @ORM\Entity()
  * @ORM\HasLifecycleCallbacks()
  */
 class ReadingQuestion extends Question
 {
     /**
+     * @JMS\Expose
+     * @JMS\Groups({"default"})
      * @ORM\Column(type="text", nullable=false)
      * @Assert\NotBlank()
      */
