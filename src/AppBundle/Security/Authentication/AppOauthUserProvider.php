@@ -37,6 +37,7 @@ class AppOauthUserProvider extends OAuthUserProvider
 
         if (!$user instanceof User) {
             $user = new User();
+            $user->setIsStudent(1);
         }
 
         return $user;
@@ -64,6 +65,7 @@ class AppOauthUserProvider extends OAuthUserProvider
             $user->setRole('ROLE_USER');
             $user->setPassword($googleId);
             $user->setPhoto($avatar);
+            $user->setIsStudent(1);
             $this->em->persist($user);
             $this->em->flush();
         }
