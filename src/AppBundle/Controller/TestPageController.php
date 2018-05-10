@@ -14,18 +14,21 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 class TestPageController extends BaseController
 {
     /**
-     * @Route("/test/new/{course}", name="test-new")
+     * @Route("/test-new/{course}", name="test-new")
      * @Security("has_role('ROLE_USER')")
      */
     public function newAction(Course $course, Request $request)
     {
-        $sections = $this->getRepository('AppBundle:Section')->findBy(['course' => $course->getId()]);
+        return $this->render('testpage/new.html.twig');
+    }
 
-        if ($request->getMethod() === 'POST') {
-            //var_dump($request->request->all()); die;
-        }
-
-        return $this->render('testpage/new.html.twig', ['sections' => $sections, 'course' => $course]);
+    /**
+     * @Route("/test-edit/{test}", name="test-edit")
+     * @Security("has_role('ROLE_USER')")
+     */
+    public function editAction(Test $test, Request $request)
+    {
+        return $this->render('testpage/edit.html.twig');
     }
 
     /**

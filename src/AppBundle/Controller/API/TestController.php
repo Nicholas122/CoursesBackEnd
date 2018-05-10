@@ -39,7 +39,26 @@ class TestController extends BaseRestController
 
         return $createTestResponse;
     }
-    
+
+    /**
+     * Update test.
+     */
+    public function putAction(Test $test, Request $request)
+    {
+        /**
+         * @var TestService $testService
+         */
+        $testService = $this->get('app.test.service');
+        $createTestResponse = $this->handleForm($request, TestForm::class, $test);
+
+        if ($createTestResponse->getStatusCode() === 201) {
+            $questions = $request->get('questions');
+            $testService->createQuestions($questions, $test);
+        }
+
+        return $createTestResponse;
+    }
+
      /**
      * Get test.
      * @Rest\View(serializerGroups={"default"})
