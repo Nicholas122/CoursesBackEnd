@@ -1,0 +1,585 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {% set questionNum = 1 %}
+
+    <div class="container theme-showcase" role="main">
+        <div class="starter-template">
+            <link rel="stylesheet" href="/css/flipclock.css">
+            <link href="/css/viewTest.css" rel="stylesheet">
+
+            <div class="page-header">
+                <div class="row my-header">
+                    <h1 class="col-sm-4">{{ test.title }}</h1>
+                    <div class="col-xs-4 my-clock"></div>
+                </div>
+            </div>
+            <div class="container ">
+                <div class="myTestContainer">
+
+
+                    <div id="calendarPagination">
+                        {% for item in questions %}
+                            {% if item.id == question.id %}
+                                <div class="pagination btn btn-default currentQuestion active"><a
+                                            href="/test/{{ test.id }}/pass?question={{ item.id }}">{{ loop.index }}</a>
+                                </div>
+                                {% set questionNum = loop.index %}
+                            {% else %}
+                                <div class="pagination btn btn-default currentQuestion"><a
+                                            href="/test/{{ test.id }}/pass?question={{ item.id }}">{{ loop.index }}</a>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                    <div id="finish-button" class="">
+                        <a type="button" id="finishTest" class="btn-link">Finish</a>
+                    </div>
+                    <div id="questionContainer">
+                        <div class="questions " id="question1"><h2 class="qHeader">Question {{ questionNum }} out
+                                of {{ questions|length }} </h2>
+                            <div class="rtDescription">
+                                <h3>
+                                    <p>{{ question.text }}</p>
+                                </h3>
+                            </div>
+                            {#<div class="qDescription"><p>{{ question.text }}</p>#}
+                        </div>
+                        {% if question.questionType == 'MULTIPLY_CHOISE' %}
+                            {% for answer in question|answers %}
+                                <div class="form-horizontal answerContainers">
+                                    <div class="form-group answerLines" data-ans="{{ answer.id }}">
+                                        <div class="col-sm-1 multiAnswers">
+                                            <input data-answer="{{ answer.id }}" class="results input-answer"
+                                                   type="radio" name="qGroup1">
+                                        </div>
+                                        <div class="col-sm-10 answerDescriptions"> {{ answer.text }}</div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        {% elseif question.questionType == 'USER_INPUT' %}
+                            <div class="form-horizontal answerContainers">
+                                <div class="form-group">
+                                    <textarea placeholder="Please enter your answers here"
+                                              class="form-control userInputAnswers results"></textarea>
+                                </div>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+                <div id="finish-text" class="hidden">
+                    <h2>
+                        You answered all question on a test. Please press Finish to complete the test or press
+                        Continue
+                        to return
+                    </h2>
+                </div>
+                <ul id="doneTestBtn" class="pager hidden">
+                    <li>
+                        <a type="button" id="completeTest" class="btn-link">Finish</a>
+                    </li>
+                    <li>
+                        <a type="button" id="continueTest" class="btn-link">Continue</a>
+                    </li>
+                </ul>
+                <ul id="prevNextBtn" class="pager">
+                    <li class="previous">
+                        <a type="button" id="previousQuestion" class="btn-link">Previous</a>
+                    </li>
+                    <!--<li>-->
+                    <!--                                        <a type="button" id="finishTest" class="btn-link">Finish</a>-->
+                    <!--</li>-->
+                    <li class="next">
+                        <a type="button" id="nextQuestion" class="btn-link">Next</a>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+        <div class="modal fade" id="finishConfirmation" tabindex="-1" role="dialog"
+             aria-labelledby="deleteConfirmationLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h4 class="modal-title" id="finishConfirmationLabel">Confirm your finishing</h4>
+                    </div>
+                    <div class="modal-body">Are you sure you want to finish?</div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary confirm-finishing">Finish</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript" src="/js/flipclock.min.js"></script>
+
+        <script type="text/javascript">
+
+            $(function () {
+                /**
+                 * clock
+                 * @type {number}
+                 */
+                var outOf = "out of";
+                var testLimit;
+                var qCount;
+                var currentCount;
+                var load;
+                var dataInput;
+                var clock;
+                var finished = false;
+
+                function runClock(testLimit) {
+                    var faceClock;
+
+                    if (testLimit >= 3600) {
+                        faceClock = 'HourCounter';
+                    } else if (testLimit < 3600) {
+                        faceClock = 'MinuteCounter';
+                    }
+                    var opts = {
+                        clockFace: faceClock,
+                        countdown: true,
+                        language: 'Custom'
+                    };
+                    opts.classes = {
+                        active: 'flip-clock-active',
+                        before: 'flip-clock-before',
+                        divider: 'flip-clock-divider',
+                        dot: 'flip-clock-dot',
+                        label: 'flip-clock-label',
+                        flip: 'flip',
+                        play: 'play',
+                        wrapper: 'flip-clock-small-wrapper'
+
+                    };
+                    opts.callbacks = {
+                        stop: function () {
+                            finishTest();
+                        }
+                    };
+                    clock = $('.my-clock').FlipClock(opts);
+                    clock.setTime(testLimit);
+                    clock.start();
+                }
+
+                runClock({{ test.timeLimit * 60 }});
+
+                function createQuestions() {
+
+                    questionNumber = 1;
+                    for (var i = 0; i < rtCount; i++) {
+                        generateQuestion(i + 1, questionNumber);
+                    }
+                    if (testLimit > 0)
+                        runClock(testLimit);
+                }
+
+                $("#nextQuestion").on('mouseup', function () {
+                    var previousId = currentCount;
+                    if (currentCount < qCount) {
+                        $('#question' + currentCount).addClass('hidden');
+                        ++currentCount;
+                        $('#question' + currentCount).removeClass('hidden');
+                    }
+                    else {
+                        if (!checkTestIsDone(previousId, qCount)) {
+                            $('#question' + currentCount).addClass('hidden');
+                            currentCount = 1;
+                            $('#question' + currentCount).removeClass('hidden');
+                        }
+                    }
+                    currentPaginatedQuestion(currentCount, previousId);
+                    checkTestIsDone(previousId, qCount);
+                });
+
+                $('#finishTest').on('mouseup', function () {
+                    $('#finishConfirmation').modal('show');
+                });
+                $('.confirm-finishing').on('mouseup', function () {
+                    finishTest();
+                    $('#finishConfirmation').modal('hide');
+                });
+
+                $("body").delegate(".answerLines", "click", function () {
+                    var $checked = $(".answerLines input").filter(':checked');
+                    if (!$(this).find('input').is(':checked')) {
+                        //$checked.prop("checked", false);
+                        $(this).find('input').prop("checked", true)
+                    }
+                    ;
+                });
+
+                $("body").delegate("#completeTest", "click", function () {
+                    $('#finishConfirmation').modal('show');
+                })
+
+                $("body").delegate("#continueTest", "click", function () {
+                    $('#question' + currentCount).addClass('hidden');
+                    currentCount = 1;
+                    $('#question' + currentCount).removeClass('hidden');
+                    $('#questionContainer').show();
+                    currentPaginatedQuestion(currentCount, qCount);
+                    $('#finish-text').addClass("hidden");
+                    $('#prevNextBtn').show();
+                    $('#doneTestBtn').addClass("hidden");
+                    $('#finish-button').show();
+                })
+
+                function finishTest() {
+                    if (!finished) {
+                        finished = true;
+                        var dataOutput = {};
+                        var retakeTimeout = 0;
+
+                        $('.answerContainers').each(function (qindex) {
+                            var answer = {};
+                            var ans_id = {};
+                            var input_type;
+                            $('#answerContainer' + (qindex + 1) + ' .results').each(function (aindex) {
+
+                                if ($(this).is('textarea')) {
+                                    answer[aindex] = $(this).val();
+                                    ans_id[aindex] = '';
+                                    input_type = 'textarea';
+                                } else if ($(this).is('input')) {
+                                    if ($(this).attr('type') == 'radio') {
+                                        input_type = 'radio';
+                                    } else if ($(this).attr('type') == 'checkbox') {
+                                        answer[aindex] = $(this).is(':checked');
+                                        input_type = 'checkbox';
+                                    }
+                                    answer[aindex] = $(this).is(':checked');
+                                    ans_id[aindex] = $(this).attr('data-ans');
+                                }
+                            });
+                            if (input_type == 'textarea') {
+                                dataOutput[qindex] = {
+                                    "id": $('#answerContainer' + (qindex + 1)).attr('data-ques'),
+                                    input_type,
+                                    answer
+                                };
+                            } else {
+                                dataOutput[qindex] = {
+                                    "id": $('#answerContainer' + (qindex + 1)).attr('data-ques'),
+                                    input_type,
+                                    answer,
+                                    ans_id
+                                };
+                            }
+
+                        });
+
+                        $.ajax({
+                            method: "POST",
+                            url: "http://internalcourses.devcom.com/test/saveTestResult/83",
+                            data: {'dataOutput': dataOutput, 'retakeTimeout': retakeTimeout},
+                            success: function (data) {
+                                data = JSON.parse(data)[0];
+                                var balance = data['balance'];
+                                var includeWeight = parseInt(data['total_qw']);
+                                var totalIncludeWeight = parseInt(data['total']);
+                                getResults(balance, dataOutput, includeWeight, totalIncludeWeight);
+                                $('.my-clock').remove();
+                                $('#prevNextBtn').remove();
+                                $('finish-button').remove();
+                                $('#questionContainer').remove();
+                                $('#calendarPagination').remove();
+                            }
+                        });
+                    }
+                }
+
+                function getResults(data, dataOutput, weight, total) {
+                    var multipleChoiceTest = false;
+                    var inputTest = false;
+                    var fromTotal = '';
+                    var str = '<div id="resultsContainer"> ' +
+                        '<h3 class="resultHeader"> Your results </h3> ';
+                    for (var i = 0; i < Object.keys(dataOutput).length; i++) {
+                        if (dataOutput[i]['input_type'] == "radio" || dataOutput[i]['input_type'] == "checkbox") {
+                            multipleChoiceTest = true;
+                        }
+                        if (dataOutput[i]['input_type'] == "textarea") {
+                            inputTest = true;
+                        }
+                    }
+                    var total = Math.round((weight * 100) / total);
+                    if (total > 0 && total < 100)
+                        fromTotal = ' from ' + total + ' %';
+
+                    if (multipleChoiceTest)
+                        str += '<h4 class="resultHeader">' + "Test score of multiple choice questions: " + data + ' <span>%</span> <span>' + fromTotal + '</span></h4>';
+                    if (inputTest)
+                        str += '<h4 class="resultHeader">' + "Your text input questions will be graded by the teacher " + '</h4>';
+                    str += '</div>';
+                    $('.myTestContainer').append(str);
+                }
+
+                $("#previousQuestion").on('mouseup', function () {
+                    var previousId = currentCount;
+                    var testIsDone;
+                    if (currentCount > 1) {
+                        $('#question' + currentCount).addClass('hidden');
+                        --currentCount;
+                        $('#question' + currentCount).removeClass('hidden');
+
+                    }
+                    else {
+                        $('#question' + currentCount).addClass('hidden');
+                        currentCount = qCount;
+                        $('#question' + currentCount).removeClass('hidden');
+                    }
+                    currentPaginatedQuestion(currentCount, previousId);
+
+//                        console.log(currentCount);
+                });
+
+                function checkTestIsDone(currentCount, qCount) {
+                    var testIsDone = true;
+                    $('.pagination').each(function () {
+                        if ($(this).attr('class').indexOf("btn-success") < 0) {
+                            testIsDone = false;
+                        }
+                    });
+                    if (testIsDone && currentCount == qCount) {
+                        $('#questionContainer').hide();
+                        $('#finish-text').removeClass("hidden");
+                        $('#prevNextBtn').hide();
+                        $('#doneTestBtn').removeClass("hidden");
+                        $('#finish-button').hide();
+                    }
+                    return testIsDone;
+                }
+
+
+                function checkAnswerTicked(questionId) {
+                    var answer = false;
+                    $('#answerContainer' + questionId + ' .results').each(function () {
+                        if ($(this).is('textarea')) {
+                            if ($(this).val() !== '') {
+                                answer = true;
+                            }
+                        } else if ($(this).is('input')) {
+                            if ($(this).is(':checked')) {
+                                answer = true;
+                            }
+                        }
+                    });
+                    return answer;
+                }
+
+                function currentPaginatedQuestion(current, previous) {
+                    var answer = false;
+                    var classToAdd = 'btn-default';
+                    answer = checkAnswerTicked(previous);
+                    if (answer) {
+                        classToAdd = 'btn-success';
+                    }
+                    $('#pagination' + previous).removeClass('btn-default currentQuestion');
+                    $('#pagination' + previous).addClass(classToAdd);
+                    if (!checkAnswerTicked(current)) {
+                        $('#pagination' + current).removeClass('btn-success btn-default');
+                        $('#pagination' + current).addClass('btn-default currentQuestion');
+
+                    }
+                    else {
+                        $('#pagination' + current).addClass("currentQuestion");
+                    }
+                }
+
+                $('#calendarPagination').on('click', function (event) {
+                    if (event.target.id.indexOf('pagination') > -1) {
+                        currentCount = event.target.innerHTML;
+
+                        var previousQuestion = $('#questionContainer .questions:visible').attr('id');
+                        var previousQuestionId = previousQuestion.split('question');
+                        previousQuestionId = previousQuestionId[1];
+                        currentPaginatedQuestion(currentCount, previousQuestionId);
+
+                        $('#' + previousQuestion).addClass('hidden');
+                        $('#question' + currentCount).removeClass('hidden');
+                    }
+                });
+
+                function getCountOfObjects(collection) {
+                    var key, count = 0;
+
+                    if (
+                        !collection
+                        || typeof collection !== 'object'
+                    ) {
+                        return;
+                    }
+
+                    for (key in collection) {
+                        if (collection.hasOwnProperty(key)) {
+                            if (typeof collection[key] === 'object') {
+                                ++count;
+                            }
+                        }
+                    }
+
+                    return count;
+                }
+
+                function generateQuestion(rt_number, q_number) {
+                    var hideClass = '';
+                    var btnStatusClass = 'btn-default currentQuestion';
+                    if (rt_number != 1) {
+                        hideClass = 'hidden';
+                        btnStatusClass = 'btn-default';
+                    }
+                    $('#calendarPagination').append('<div class="pagination btn ' + btnStatusClass + '" id="pagination' + rt_number + '">' + rt_number + '</div>');
+                    $('#questionContainer').append('<div class="questions ' + hideClass + '" id="question' + rt_number + '"><h2 class="qHeader">' + "Question " + q_number + ' ' + outOf + ' ' + qCount + ' </h2> </div>');
+
+
+                    rt_number = rt_number - 1;
+                    var r_description = dataInput[rt_number].r_desc;
+                    var objCount = getCountOfObjects(dataInput[rt_number]);
+                    $('#question' + (rt_number + 1)).append('<div class="rtDescription"><h3>' + r_description + '</h3></div>');
+                    for (var i = 0; i < objCount; i++) {
+                        var description = dataInput[rt_number][i].questions.description;
+                        var input_type = dataInput[rt_number][i].questions.input_type;
+
+
+//                        console.log(input_type)
+                        var answers = {};
+                        $('#question' + (rt_number + 1)).append('<div class="qDescription">' + description + '</div><div class="form-horizontal answerContainers" data-ques="' + dataInput[rt_number][i].id + '" id="answerContainer' + (questionNumber) + '"></div>');
+
+                        if (input_type != 'textarea') {
+
+                            for (var j = 0; j < dataInput[rt_number][i].answers.length; j++) {
+                                var str2 = '<div class="col-sm-1 multiAnswers"> <input data-answer="' + j + '" class="results input-answer" data-ans="' + dataInput[rt_number][i].ans_id[j] + '" type="' + input_type + '" name="qGroup' + (questionNumber) + '"/> </div>';
+                                answers[j] = dataInput[rt_number][i].answers[j];
+                                str2 += '<div class="col-sm-10 answerDescriptions" data-ans="' + dataInput[rt_number][i].ans_id[j] + '" id="answerDescription' + (j + 1) + '"> ' + answers[j] + ' </div>';
+                                $('#answerContainer' + (questionNumber)).append('<div class="form-group answerLines" data-ans="' + dataInput[rt_number][i].ans_id[j] + '" id="answerLine' + (questionNumber) + '" >' + str2 + '</div>')
+                            }
+//                                console.log(answers);
+                        } else {
+                            $('#answerContainer' + (questionNumber)).append('<div class="form-group" ><textarea data-ques="' + dataInput[rt_number][i].id +
+                                '" placeholder="Please enter your answers here" class="form-control userInputAnswers results" ></textarea></div>');
+                        }
+                        questionNumber++;
+                    }
+                }
+
+
+            });
+
+        </script>
+
+    </div>
+    </div><!-- /.container -->
+{% endblock %}
+
+    {% block stylesheets %}
+        <style>
+            .my-clock {
+                float: right;
+                padding: 0px;
+                width: auto;
+                margin: auto;
+                margin-right: 30px;
+            }
+
+            .my-header {
+                margin-left: 15px;
+            }
+
+            .startTest {
+                margin: 15px;
+                text-align: center;
+                /*width: 20%;*/
+
+            }
+
+            .testDescription {
+                text-align: center;
+                margin: 20px;
+            }
+
+            #startBtn, #disabledbBtn {
+                width: 35%;
+
+            }
+
+            .pager {
+                margin-top: 50px;
+                margin-bottom: 0px;
+                width: 97%;
+                /*margin-right: 30px;*/
+            }
+
+            #previousQuestion, #nextQuestion {
+                /*width: 20%;*/
+                /*height: 4%;*/
+                width: 150px;
+                text-align: center;
+                vertical-align: middle;
+            }
+
+            #calendarPagination {
+                display: inline-block;
+            }
+
+            #finish-button {
+                float: right;
+
+            }
+
+            #finishTest {
+                padding: 5px 14px;
+                background-color: #ffffff;
+                border: 1px solid #dddddd;
+                border-radius: 15px;
+                width: 150px;
+                float: right;
+                text-align: center;
+            }
+
+            .hidden {
+                display: none;
+            }
+
+            .qHeader {
+                text-align: center;
+            }
+
+            .answerContainers {
+                margin-top: 10px;
+            }
+
+            .userInputAnswers {
+                width: 95%;
+                margin-left: 15px;
+            }
+
+            .multiAnswers {
+                padding-right: 0px;
+                padding-left: 0px;
+                margin-left: 25px;
+                width: 1%;
+            }
+
+            .resultHeader, #resultsBody {
+                text-align: center;
+            }
+
+            .pagination {
+                padding: 6px 10px;
+                margin: 4px 1px;
+            }
+
+            .currentQuestion {
+                color: black;
+                font-weight: bold;
+            }
+
+            .input-answer {
+                transform: scale(1.4);
+            }
+        </style>
+    {% endblock %}
+

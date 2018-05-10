@@ -51,6 +51,21 @@ abstract class Question
     protected $answers;
 
     /**
+     * @JMS\Expose
+     * @JMS\Groups({"default"})
+     * @ORM\ManyToOne(targetEntity="Test")
+     * @ORM\JoinColumn(name="test_id", referencedColumnName="id", onDelete="CASCADE")
+     */
+    protected $test;
+
+    /**
+     * @JMS\Expose
+     * @JMS\Groups({"default"})
+     * @ORM\Column(type="string", nullable=false)
+     */
+    protected $questionType;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -148,5 +163,53 @@ abstract class Question
     public function getAnswers()
     {
         return $this->answers;
+    }
+
+    /**
+     * Set test
+     *
+     * @param \AppBundle\Entity\Test $test
+     *
+     * @return Question
+     */
+    public function setTest(\AppBundle\Entity\Test $test = null)
+    {
+        $this->test = $test;
+
+        return $this;
+    }
+
+    /**
+     * Get test
+     *
+     * @return \AppBundle\Entity\Test
+     */
+    public function getTest()
+    {
+        return $this->test;
+    }
+
+    /**
+     * Set questionType
+     *
+     * @param string $questionType
+     *
+     * @return Question
+     */
+    public function setQuestionType($questionType)
+    {
+        $this->questionType = $questionType;
+
+        return $this;
+    }
+
+    /**
+     * Get questionType
+     *
+     * @return string
+     */
+    public function getQuestionType()
+    {
+        return $this->questionType;
     }
 }

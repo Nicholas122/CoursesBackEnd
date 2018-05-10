@@ -6,6 +6,7 @@ namespace AppBundle\Service;
 use AppBundle\Entity\Answer;
 use AppBundle\Entity\MultipleChoiceQuestion;
 use AppBundle\Entity\Question;
+use AppBundle\Entity\Test;
 use AppBundle\Entity\User;
 use AppBundle\Entity\UserInputQuestion;
 use Doctrine\ORM\EntityManagerInterface;
@@ -19,7 +20,7 @@ class TestService
         $this->em = $entityManager;
     }
 
-    public function createQuestions($questionsData)
+    public function createQuestions($questionsData, Test $test)
     {
         foreach ($questionsData as $questionData) {
             switch ($questionData['type']) {
@@ -27,11 +28,15 @@ class TestService
                     $question = new UserInputQuestion();
                     $question->setText($questionData['text']);
                     $question->setWeight($questionData['weight']);
+                    $question->setQuestionType('USER_INPUT');
+                    $question->setTest($test);
                     break;
                 case 'MULTIPLY_CHOISE':
                     $question = new MultipleChoiceQuestion();
                     $question->setText($questionData['text']);
                     $question->setWeight($questionData['weight']);
+                    $question->setTest($test);
+                    $question->setQuestionType('MULTIPLY_CHOISE');
                     $this->createAnswers($questionData['answers'], $question);
                     break;
             }

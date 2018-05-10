@@ -113,4 +113,52 @@ class MultipleChoiceQuestion extends Question
     {
         return $this->answers;
     }
+
+    /**
+     * Set test
+     *
+     * @param \AppBundle\Entity\Test $test
+     *
+     * @return MultipleChoiceQuestion
+     */
+    public function setTest(\AppBundle\Entity\Test $test = null)
+    {
+        $this->test = $test;
+
+        return $this;
+    }
+
+    /**
+     * Get test
+     *
+     * @return \AppBundle\Entity\Test
+     */
+    public function getTest()
+    {
+        return $this->test;
+    }
+
+    /**
+     * Set questionType
+     *
+     * @param string $questionType
+     *
+     * @return MultipleChoiceQuestion
+     */
+    public function setQuestionType($questionType)
+    {
+        $this->questionType = $questionType;
+
+        return $this;
+    }
+
+    /**
+     * Get questionType
+     *
+     * @return string
+     */
+    public function getQuestionType()
+    {
+        return $this->questionType;
+    }
 }

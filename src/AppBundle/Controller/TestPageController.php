@@ -37,4 +37,42 @@ class TestPageController extends BaseController
         return $this->render('testpage/test.html.twig', ['test' => $test]);
     }
 
+    /**
+     * @Route("/test/{test}/pass", name="test-pass")
+     * @Security("has_role('ROLE_USER')")
+     */
+    public function passAction(Test $test, Request $request)
+    {
+        $questions = $this->getQuestionsByTest($test);
+
+        return $this->render('testpage/pass.html.twig', [
+            'test' => $test,
+            'questions' => $this->getQuestionsByTest($test),
+            'question' => $this->getQuestionById($request->get('question'), $questions)]);
+    }
+
+    private function getQuestionsByTest(Test $test)
+    {
+        $repository = $this->getRepository('AppBundle:Question');
+
+        $questions = $repository->findBy(['test' => $test->getId()]);
+
+        return $questions;
+    }
+
+    private function getQuestionById($questionId, $questions)
+    {
+        $question = null;
+
+        $repository = $this->getRepository('AppBundle:Question');
+
+        if ($questionId) {
+            $question = $repository->findOneById($questionId);
+        } elseif(count($questions) > 0) {
+            $question = $questions[0];
+        }
+
+        return $question;
+    }
+
 }
