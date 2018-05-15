@@ -57,7 +57,7 @@ class Test implements HasOwnerInterface
      * @JMS\Expose
      * @JMS\Groups({"default"})
      * @ORM\Column(type="integer", nullable=true)
-     * @Assert\NotBlank()
+     *
      */
     protected $timeLimit;
 
@@ -74,7 +74,7 @@ class Test implements HasOwnerInterface
      * @JMS\Expose
      * @JMS\Groups({"default"})
      * @ORM\Column(type="integer", nullable=true)
-     * @Assert\NotBlank()
+     *
      */
     protected $retakeTimeout;
 
@@ -85,6 +85,13 @@ class Test implements HasOwnerInterface
      * @ORM\Column(type="datetime")
      */
     protected $creationDate;
+
+    /**
+     * @JMS\Expose
+     * @JMS\Groups({"default"})
+     * @Assert\NotBlank(message="You can't create test without questions.")
+     */
+    protected $questions;
 
     /**
      * Get id
@@ -272,4 +279,17 @@ class Test implements HasOwnerInterface
     {
         return $this->creationDate;
     }
+
+    public function setQuestions($questions)
+    {
+        $this->questions = $questions;
+
+        return $this;
+    }
+
+    public function getQuestions()
+    {
+        return $this->questions;
+    }
+
 }

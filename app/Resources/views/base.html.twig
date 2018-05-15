@@ -68,9 +68,11 @@
 
                         </a>
                         <ul class="dropdown-menu">
-                            <li role="presentation"><a role="menuitem"
-                                                       href="/courses/new"
-                                                       title="Create New Course">Create New Course</a></li>
+                            {% if app.user.isTeacher  %}
+                                <li role="presentation"><a role="menuitem"
+                                                           href="/courses/new"
+                                                           title="Create New Course">Create New Course</a></li>
+                            {% endif %}
                             <li role="presentation"><a role="menuitem"
                                                        href="/tests/statistics"
                                                        title="Test statistics">Test statistics</a></li>

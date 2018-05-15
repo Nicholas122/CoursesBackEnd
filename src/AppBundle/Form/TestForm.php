@@ -19,7 +19,8 @@ class TestForm extends AbstractType
             ->add('section')
             ->add('timeLimit')
             ->add('passingScorePercent')
-            ->add('retakeTimeout');
+            ->add('retakeTimeout')
+            ->add('questions');
     }
 
     /**

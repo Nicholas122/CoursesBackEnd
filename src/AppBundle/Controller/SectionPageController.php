@@ -58,11 +58,11 @@ class SectionPageController extends BaseController
         }
 
 
-        return $this->render('sectionpage/new.html.twig', ['form' => $form->createView()]);
+        return $this->render('sectionpage/edit.html.twig', ['form' => $form->createView()]);
     }
 
     /**
-     * @Route("/section-delete/{section}", name="section-edit")
+     * @Route("/section-delete/{section}", name="section-delete")
      * @Security("is_granted('ABILITY_SECTION_DELETE', section)")
      */
     public function deleteAction(Section $section, Request $request)

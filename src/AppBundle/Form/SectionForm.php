@@ -25,7 +25,7 @@ class SectionForm extends AbstractType
             ->add('name', TextType::class, ['attr' => ['placeholder' => 'Max length 300', 'class' => 'form-control'], 'label' => 'Title'])
             ->add('save', SubmitType::class, array(
                 'attr' => array('class' => 'btn btn-lg btn-primary btn-block'),
-                'label' => 'Create'))
+                'label' => 'Save'))
             ->add('cancel', ButtonType::class, array(
                 'attr' => array('class' => 'btn btn-lg btn-default btn-block'),
                 'label' => 'Cancel'));

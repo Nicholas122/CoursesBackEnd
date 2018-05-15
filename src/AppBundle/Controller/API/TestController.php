@@ -8,6 +8,7 @@ use AppBundle\Form\TestForm;
 use AppBundle\Service\TestService;
 use Doctrine\ORM\EntityRepository;
 use FOS\RestBundle\Request\ParamFetcher;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -29,7 +30,9 @@ class TestController extends BaseRestController
          * @var TestService $testService
          */
         $testService = $this->get('app.test.service');
+
         $test = new Test();
+
         $createTestResponse = $this->handleForm($request, TestForm::class, $test);
 
         if ($createTestResponse->getStatusCode() === 201) {
@@ -59,7 +62,7 @@ class TestController extends BaseRestController
         return $createTestResponse;
     }
 
-     /**
+    /**
      * Get test.
      * @Rest\View(serializerGroups={"default"})
      */
