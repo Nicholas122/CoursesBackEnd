@@ -63,6 +63,22 @@ class TestPageController extends BaseController
         return $questions;
     }
 
+    /**
+     * @Route("/test-delete/{test}", name="test-delete")
+     * @Security("is_granted('ABILITY_TEST_DELETE', test)")
+     */
+    public function deleteAction(Test $test,Request $request)
+    {
+        $course = $test->getSection()->getCourse();
+
+        $em = $this->getDoctrine()->getManager();
+
+        $em->remove($test);
+        $em->flush();
+
+        return $this->redirectToRoute('course', ['course' => $course->getId()]);
+    }
+
     private function getQuestionById($questionId, $questions)
     {
         $question = null;

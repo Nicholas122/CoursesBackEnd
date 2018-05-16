@@ -83,4 +83,20 @@ class LecturePageController extends BaseController
             'nextLecture' => $nextLecture, 'previousLecture' => $previousLecture
         ]);
     }
+
+    /**
+     * @Route("/lecture-delete/{lecture}", name="lecture-delete")
+     * @Security("is_granted('ABILITY_LECTURE_DELETE', lecture)")
+     */
+    public function deleteAction(Lecture $lecture,Request $request)
+    {
+        $course = $lecture->getSection()->getCourse();
+
+        $em = $this->getDoctrine()->getManager();
+
+        $em->remove($lecture);
+        $em->flush();
+
+        return $this->redirectToRoute('course', ['course' => $course->getId()]);
+    }
 }
