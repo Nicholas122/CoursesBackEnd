@@ -31,12 +31,12 @@ class TestService
                     $question->setQuestionType('USER_INPUT');
                     $question->setTest($test);
                     break;
-                case 'MULTIPLY_CHOISE':
+                case 'MULTIPLE_CHOICE':
                     $question = new MultipleChoiceQuestion();
                     $question->setText($questionData['text']);
                     $question->setWeight($questionData['weight']);
                     $question->setTest($test);
-                    $question->setQuestionType('MULTIPLY_CHOISE');
+                    $question->setQuestionType('MULTIPLE_CHOICE');
                     $this->createAnswers($questionData['answers'], $question);
                     break;
             }
