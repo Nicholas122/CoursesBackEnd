@@ -38,6 +38,30 @@ class LecturePageController extends BaseController
     }
 
     /**
+     * @Route("/lecture-edit/{lecture}", name="lecture-edit")
+     * @Security("has_role('ROLE_USER')")
+     */
+    public function editAction(Lecture $lecture, Request $request)
+    {
+        $form = $this->createForm(LectureForm::class, $lecture, ['course' => $lecture->getSection()->getCourse()]);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid() && 'POST' == $request->getMethod()) {
+
+            $em = $this->getDoctrine()->getManager();
+
+            $em->persist($lecture);
+            $em->flush();
+
+            return $this->redirectToRoute('course', ['course' => $lecture->getSection()->getCourse()->getId()]);
+        }
+
+
+        return $this->render('lecturepage/edit.html.twig', ['form' => $form->createView()]);
+    }
+
+    /**
      * @Route("/lecture/{lecture}", name="lecture")
      * @Security("has_role('ROLE_USER')")
      */

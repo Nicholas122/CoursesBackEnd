@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="container theme-showcase" role="main">
+  <div class="starter-template">
+    <div class="page-header">
+      <h1>Edit lecture</h1>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="containerl-6 col-sm-6 col-md-6 col-lg-6">
+        {{ form_start(form, { 'attr' : { 'class': 'form-create' } }) }}
+        {% for child in form.children|keys %}
+        <p>
+          {% if 'token' not in form_label(attribute(form.children,child)) %}
+          {{ form_label(attribute(form.children,child)) }}
+          {% endif %}
+          {{ form_widget(attribute(form.children,child)) }}
+        </p>
+        {% endfor %}
+        {{ form_end(form) }}
+      </div>
+    </div>  
+  </div>
+</div>
+{% endblock %}
