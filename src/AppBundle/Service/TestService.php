@@ -6,6 +6,8 @@ namespace AppBundle\Service;
 use AppBundle\Entity\Answer;
 use AppBundle\Entity\MultipleChoiceQuestion;
 use AppBundle\Entity\Question;
+use AppBundle\Entity\ReadingQuestion;
+use AppBundle\Entity\ReadingSubQuestion;
 use AppBundle\Entity\Test;
 use AppBundle\Entity\User;
 use AppBundle\Entity\UserInputQuestion;
@@ -39,6 +41,16 @@ class TestService
                     $question->setQuestionType('MULTIPLE_CHOICE');
                     $this->createAnswers($questionData['answers'], $question);
                     break;
+                case 'READING_TEXT':
+                    $question = new ReadingQuestion();
+                    $question->setText($questionData['text']);
+                    $question->setReadingText($questionData['readingText']);
+                    $question->setWeight($questionData['weight']);
+                    $question->setQuestionType('READING_TEXT');
+                    $question->setTest($test);
+                    $this->createSubQuestions($questionData['subQuestions'], $question);
+
+                    break;
             }
 
             $this->em->persist($question);
@@ -56,6 +68,20 @@ class TestService
             $answer->setIsCorrect(boolval($answerData['correct']));
 
             $this->em->persist($answer);
+        }
+    }
+
+    private function createSubQuestions($subQuestions, ReadingQuestion $question)
+    {
+        foreach ($subQuestions as $item) {
+            $subQuestion = new ReadingSubQuestion();
+            $subQuestion->setParent($question);
+            $subQuestion->setText($item['questionText']);
+            $subQuestion->setWeight(1);
+            $subQuestion->setQuestionType('READING_SUB_QUESTION');
+            $this->createAnswers($item['answers'], $subQuestion);
+
+            $this->em->persist($subQuestion);
         }
     }
 

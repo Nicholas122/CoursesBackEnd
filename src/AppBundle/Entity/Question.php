@@ -13,7 +13,7 @@ use JMS\Serializer\Annotation as JMS;
  * @ORM\Table(name="question")
  * @ORM\InheritanceType("SINGLE_TABLE")
  * @ORM\DiscriminatorColumn(name="type", type="string")
- * @ORM\DiscriminatorMap( {"reading" = "ReadingQuestion", "multiple" = "MultipleChoiceQuestion", "userInput" = "UserInputQuestion"} )
+ * @ORM\DiscriminatorMap( {"reading" = "ReadingQuestion", "readingSubQuestion" = "ReadingSubQuestion", "multiple" = "MultipleChoiceQuestion", "userInput" = "UserInputQuestion"} )
  */
 abstract class Question
 {

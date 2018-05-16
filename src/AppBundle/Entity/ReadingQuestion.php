@@ -24,12 +24,13 @@ class ReadingQuestion extends Question
     protected $readingText;
 
     /**
-     * Constructor
+     * @JMS\Expose
+     * @JMS\Groups({"default"})
+     * @ORM\OneToMany(targetEntity="ReadingSubQuestion", mappedBy="parent")
      */
-    public function __construct()
-    {
-        $this->answers = new \Doctrine\Common\Collections\ArrayCollection();
-    }
+    protected $subQuestions;
+
+
 
     /**
      * Set readingText
@@ -193,5 +194,63 @@ class ReadingQuestion extends Question
     public function getQuestionType()
     {
         return $this->questionType;
+    }
+
+    /**
+     * Add subQuestions
+     *
+     * @param \AppBundle\Entity\ReadingSubQuestion $subQuestions
+     *
+     * @return ReadingQuestion
+     */
+    public function addSubQuestions(\AppBundle\Entity\ReadingSubQuestion $subQuestions)
+    {
+        $this->subQuestions[] = $subQuestions;
+
+        return $this;
+    }
+
+    /**
+     * Remove subQuestions
+     *
+     * @param \AppBundle\Entity\ReadingSubQuestion $subQuestions
+     */
+    public function removeSubQuestions(\AppBundle\Entity\ReadingSubQuestion $subQuestions)
+    {
+        $this->subQuestions->removeElement($subQuestions);
+    }
+
+    /**
+     * Get subQuestions
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getSubQuestions()
+    {
+        return $this->subQuestions;
+    }
+
+    /**
+     * Add subQuestion
+     *
+     * @param \AppBundle\Entity\ReadingSubQuestion $subQuestion
+     *
+     * @return ReadingQuestion
+     */
+    public function addSubQuestion(\AppBundle\Entity\ReadingSubQuestion $subQuestion)
+    {
+        $this->subQuestions[] = $subQuestion;
+
+        return $this;
+    }
+
+    /**
+     * Remove subQuestion
+     *
+     * @param \AppBundle\Entity\ReadingSubQuestion $subQuestion
+     */
+    public function removeSubQuestion(\AppBundle\Entity\ReadingSubQuestion $subQuestion)
+    {
+        $this->subQuestions->removeElement($subQuestion);
     }
 }
