@@ -36,7 +36,7 @@ class TestController extends BaseRestController
         $createTestResponse = $this->handleForm($request, TestForm::class, $test);
 
         if ($createTestResponse->getStatusCode() === 201) {
-            $questions = $request->get('questions');
+            $questions = $request->request->get('questions');
             $testService->createQuestions($questions, $test);
         }
 
