@@ -73,3 +73,23 @@ services:
     app.test.service:
         public: true
         class: AppBundle\Service\TestService
+
+    app.serializer.multiple_choice_question:
+        class: AppBundle\Serializer\MultipleChoiceQuestionListener
+        tags:
+            - { name: jms_serializer.event_subscriber }
+
+    app.serializer.user_input_question:
+        class: AppBundle\Serializer\UserInputQuestionListener
+        tags:
+            - { name: jms_serializer.event_subscriber }
+
+    app.serializer.reading_text_question:
+        class: AppBundle\Serializer\ReadingQuestionListener
+        tags:
+            - { name: jms_serializer.event_subscriber }
+
+    app.serializer.answer:
+        class: AppBundle\Serializer\AnswerListener
+        tags:
+            - { name: jms_serializer.event_subscriber }
