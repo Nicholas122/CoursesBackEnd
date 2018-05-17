@@ -63,6 +63,14 @@ class TestController extends BaseRestController
     }
 
     /**
+     * Pass test.
+     */
+    public function postPassAction(Request $request)
+    {
+        var_dump($request->request->all()); die;
+    }
+
+    /**
      * Get test.
      * @Rest\View(serializerGroups={"default"})
      */

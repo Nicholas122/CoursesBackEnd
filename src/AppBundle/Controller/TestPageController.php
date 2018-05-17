@@ -37,21 +37,7 @@ class TestPageController extends BaseController
      */
     public function testAction(Test $test, Request $request)
     {
-        return $this->render('testpage/test.html.twig', ['test' => $test]);
-    }
-
-    /**
-     * @Route("/test/{test}/pass", name="test-pass")
-     * @Security("has_role('ROLE_USER')")
-     */
-    public function passAction(Test $test, Request $request)
-    {
-        $questions = $this->getQuestionsByTest($test);
-
-        return $this->render('testpage/pass.html.twig', [
-            'test' => $test,
-            'questions' => $this->getQuestionsByTest($test),
-            'question' => $this->getQuestionById($request->get('question'), $questions)]);
+        return $this->render('testpage/test.html.twig');
     }
 
     private function getQuestionsByTest(Test $test)
