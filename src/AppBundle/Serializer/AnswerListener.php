@@ -32,6 +32,8 @@ class AnswerListener implements EventSubscriberInterface
         $visitor = $event->getVisitor();
 
         $visitor->setData('correct', boolval($obj->getIsCorrect()));
+        $visitor->setData('questionId', $obj->getQuestion()->getId());
+
 
     }
 }
