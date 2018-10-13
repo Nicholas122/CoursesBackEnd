@@ -52,11 +52,11 @@ class TestController extends BaseRestController
          * @var TestService $testService
          */
         $testService = $this->get('app.test.service');
-        $createTestResponse = $this->handleForm($request, TestForm::class, $test);
+        $createTestResponse = $this->handleForm($request, TestForm::class, $test, [], true);
 
-        if ($createTestResponse->getStatusCode() === 201) {
+        if ($createTestResponse->getStatusCode() === 200) {
             $questions = $request->get('questions');
-            $testService->createQuestions($questions, $test);
+            $testService->updateQuestions($questions, $test);
         }
 
         return $createTestResponse;
