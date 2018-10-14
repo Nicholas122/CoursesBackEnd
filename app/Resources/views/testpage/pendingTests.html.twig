@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <link rel="stylesheet" type="text/css" href="/css/starter-template.css">
+    <div class="container theme-showcase">
+        <div class="starter-template">
+            <style>
+                #user-container {
+                    padding-bottom: 9px;
+                    margin: 40px 0 20px;
+                }
+            </style>
+
+            <div class="page-header">
+                <h1 align="center">
+                    Pending Tests</h1></div>
+
+            <div id="user-container">
+
+                {% for pendingTest in pendingTests %}
+                    <ul class="list-inline">
+                        <li>{{ pendingTest.student.email }}</li>
+                        <li>{{ pendingTest.test.title }}</li>
+                        <li><a role="button" href="{{ url('test-grade', {'gradeTest': pendingTest.id}) }}"
+                               class="btn btn-primary">Grade</a></li>
+                    </ul>
+                {% endfor %}
+
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+    <style>
+        #user-container {
+            padding-bottom: 9px;
+            margin: 40px 0 20px;
+        }
+
+        #user-container .list-inline > li:not(:last-child) {
+            display: inline-block;
+            min-width: 450px;
+            padding-left: 5px;
+            font-size: 20px;
+        }
+    </style>
+{% endblock %}
+

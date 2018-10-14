@@ -65,9 +65,17 @@ class TestController extends BaseRestController
     /**
      * Pass test.
      */
-    public function postPassAction(Request $request)
+    public function postPassAction(Test $test, Request $request)
     {
-        var_dump($request->request->all()); die;
+        /**
+         * @var TestService $testService
+         */
+        $testService = $this->get('app.test.service');
+
+        $testService->passTest($test, $this->getUser(), $request->request->get('answers'));
+
+        return $this->baseSerialize(null);
+
     }
 
     /**

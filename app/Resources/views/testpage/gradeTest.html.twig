@@ -1,0 +1,137 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <link rel="stylesheet" type="text/css" href="/css/starter-template.css">
+    <div class="container theme-showcase" role="main">
+        <div class="starter-template">
+            <style>
+                #submitButtons {
+                    margin-top: 50px;
+                    float: right;
+                }
+            </style>
+            <div class="page-header" style="overflow:hidden">
+                <div style="float:left">
+                    <h1>
+                        Grade:{{ gradeTest.test.title }} </h1>
+                </div>
+                <div style="float:right">
+                    <h1>
+                        User:{{ gradeTest.student.email }}</h1>
+                </div>
+            </div>
+
+            <div class="container">
+                <div id="save-status">
+                </div>
+                <form id="saveForm" accept-charset="UTF-8"
+                      action="http://courses.devcom.com/test/grade_tests?testid=58&amp;userid=117" method="post">
+                    {% for gradeQuestion in gradeQuestions %}
+                        <h2>Question</h2>
+                        <div class="form-group">
+                            <p></p>
+                            <p>{{ gradeQuestion.question.text }}</p>
+                            <p></p>
+                            <textarea class="form-control" rows="5" disabled="">{{ gradeQuestion.userInputAnswer }}</textarea>
+                        </div>
+                        <div class="form-group">
+                            <ul id="list-grade-buttons" class="list-inline">
+                                <li>
+                                    <button type="button" class="btn btn-success" name="196">Mark correct</button>
+                                </li>
+                                <li>
+                                    <button type="button" class="btn btn-warning" name="196">Mark partially correct</button>
+                                </li>
+                                <li>
+                                    <button type="button" class="btn btn-danger" name="196">Mark incorrect</button>
+                                </li>
+                                <input type="hidden" name="196">
+                            </ul>
+                        </div>
+                    {% endfor %}
+
+
+                </form>
+
+                <div id="submitButtons">
+                    <a role="button" href="http://courses.devcom.com/test/pending_tests/117" class="btn btn-primary">Cancel</a>
+                    <button id="saveBtn" class="btn btn-success">Save</button>
+                </div>
+            </div>
+
+
+            <script type="text/javascript">
+                $('#list-grade-buttons button').on('click', function () {
+                    var inputs = $('#list-grade-buttons input');
+                    var clickedButton = $(this);
+
+                    $.each(inputs, function (key, input) {
+                        if (clickedButton.attr("name") == input.name) {
+                            if (clickedButton.hasClass('btn-success')) {
+                                input.value = 100;
+                            } else if (clickedButton.hasClass('btn-warning')) {
+                                input.value = 50;
+                            } else {
+                                input.value = 0;
+                            }
+                        }
+                    });
+                    $.each($('#list-grade-buttons button'), function (key, button) {
+                        if (clickedButton.attr("name") == button.name) {
+                            button.disabled = false;
+                            button.style.opacity = 1;
+                        }
+                    });
+                    clickedButton.prop("disabled", true);
+                    clickedButton.css("opacity", "0.4");
+                });
+
+                $('#saveBtn').on('click', function () {
+                    var inputs = $('#list-grade-buttons input');
+                    var status = true;
+                    $.each(inputs, function (key, input) {
+                        if (input.value === "") {
+                            $('#save-status').addClass('alert alert-danger');
+                            $('#save-status').text('Some answers were not graded. Please grade all answers');
+                            status = false;
+                            return false;
+                        } else {
+                            $('#save-status').removeClass();
+                            $('#save-status').addClass('alert alert-success');
+                            $('#save-status').text('All answers were graded successfully');
+                        }
+                    });
+
+                    if (status) {
+                        $.post('http://courses.devcom.com/test/grade_tests?testid=58&userid=117', $('#saveForm').serialize())
+                            .done(function () {
+                                $('#saveBtn').prop('disabled', true);
+                            });
+                    }
+                    $('body').animate({
+                            scrollTop: 0
+                        },
+                        'slow');
+                });
+
+
+            </script>
+        </div>
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+    <style>
+        #user-container {
+            padding-bottom: 9px;
+            margin: 40px 0 20px;
+        }
+
+        #user-container .list-inline > li:not(:last-child) {
+            display: inline-block;
+            min-width: 450px;
+            padding-left: 5px;
+            font-size: 20px;
+        }
+    </style>
+{% endblock %}
+

@@ -60,32 +60,44 @@
                             {% else %}
                                 <span class="user-small-logo"></span>
                             {% endif %}
+                            {% if  getGradeTestCount(app.user) > 0 %}
+                                <span class="badge"
+                                      style="background-color: red"> {{ getGradeTestCount(app.user) }} </span>
+                            {% endif %}
 
                             {{ app.user.email }}<b class="caret"></b>
 
                         </a>
                         <ul class="dropdown-menu">
-                            {% if app.user.isTeacher  %}
-                                <li role="presentation"><a role="menuitem"
-                                                           href="/courses/new"
-                                                           title="Create New Course">Create New Course</a></li>
+                            {% if app.user.isTeacher %}
+                                <li role="presentation">
+                                    <a role="menuitem" href="/courses/new" title="Create New Course">Create New
+                                        Course</a>
+                                </li>
                             {% endif %}
-                            <li role="presentation"><a role="menuitem"
-                                                       href="/tests/statistics"
-                                                       title="Test statistics">Test statistics</a></li>
+                            <li role="presentation">
+                                <a role="menuitem" href="/tests/statistics" title="Test statistics">Test statistics</a>
+                            </li>
+                            {% if getGradeTestCount(app.user) > 0%}
+                                <li role="presentation">
+                                    <a role="menuitem" style="font-weight: bold" href="{{ url('test-pending-tests') }}" title="Grade Test ({{ getGradeTestCount(app.user) }})">Grade Test (1)</a>
+                                </li>
+                            {% endif %}
                             <!--              -->
-                            <li role="presentation"><a role="menuitem" style="font-weight: normal"
-                                                       href="/tests/result"
-                                                       title="Test Results">Test Results</a></li>
+                            <li role="presentation">
+                                <a role="menuitem" style="font-weight: normal" href="/tests/result"
+                                   title="Test Results">Test Results</a>
+                            </li>
                             <!--              -->
-                            <li role="presentation"><a role="menuitem"
-                                                       href="/settings">Edit
-                                    your profile</a></li>
+                            <li role="presentation">
+                                <a role="menuitem" href="/settings">Edit your profile</a>
+                            </li>
                             <li role="presentation" class="divider"></li>
-                            <li role="presentation"><a role="menuitem"
-                                                       href="/logout"
-                                                       title="Logout">Logout <span
-                                            class="glyphicon glyphicon-log-out"></span></a></li>
+                            <li role="presentation">
+                                <a role="menuitem" href="/logout" title="Logout">Logout <span
+                                            class="glyphicon glyphicon-log-out"></span>
+                                </a>
+                            </li>
                         </ul>
                     </li>
                 {% else %}
@@ -98,7 +110,8 @@
 </div>
 {% block body %}
 {% endblock %}
-<div class="modal fade" id="deleteConfirmation" tabindex="-1" role="dialog" aria-labelledby="deleteConfirmationLabel" aria-hidden="true">
+<div class="modal fade" id="deleteConfirmation" tabindex="-1" role="dialog" aria-labelledby="deleteConfirmationLabel"
+     aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">

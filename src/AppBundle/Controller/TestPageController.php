@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 
 
 use AppBundle\Entity\Course;
+use AppBundle\Entity\GradeTest;
 use AppBundle\Entity\Test;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,6 +21,32 @@ class TestPageController extends BaseController
     public function newAction(Course $course, Request $request)
     {
         return $this->render('testpage/new.html.twig');
+    }
+
+    /**
+     * @Route("/test/pending_tests", name="test-pending-tests")
+     * @Security("has_role('ROLE_USER')")
+     */
+    public function pendingAction(Request $request)
+    {
+
+        $repository = $this->getRepository('AppBundle:GradeTest');
+
+        $user = $this->getUser();
+
+        $gradeTests = $repository->findBy(['teacher' => $user->getId()]);
+
+
+        return $this->render('testpage/pendingTests.html.twig', ['pendingTests' => $gradeTests]);
+    }
+
+    /**
+     * @Route("/test/grade/{gradeTest}", name="test-grade")
+     * @Security("has_role('ROLE_USER')")
+     */
+    public function gradeAction(GradeTest $gradeTest, Request $request)
+    {
+        return $this->render('testpage/gradeTest.html.twig', ['gradeTest' => $gradeTest, 'gradeQuestions' => $gradeTest->getGradeQuestions()->getValues()]);
     }
 
     /**

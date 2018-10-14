@@ -4,11 +4,15 @@ namespace AppBundle\Service;
 
 
 use AppBundle\Entity\Answer;
+use AppBundle\Entity\GradeQuestion;
+use AppBundle\Entity\GradeTest;
 use AppBundle\Entity\MultipleChoiceQuestion;
 use AppBundle\Entity\Question;
+use AppBundle\Entity\QuestionResult;
 use AppBundle\Entity\ReadingQuestion;
 use AppBundle\Entity\ReadingSubQuestion;
 use AppBundle\Entity\Test;
+use AppBundle\Entity\TestResult;
 use AppBundle\Entity\User;
 use AppBundle\Entity\UserInputQuestion;
 use Doctrine\ORM\EntityManagerInterface;
@@ -181,6 +185,72 @@ class TestService
                 $this->createSubQuestions([$item], $question);
             }
         }
+    }
+    public function passTest(Test $test, User $user, $answers)
+    {
+        $questionRepository = $this->em->getRepository('AppBundle:Question');
+        $answerRepository = $this->em->getRepository('AppBundle:Answer');
+        $readingSubQuestionRepository = $this->em->getRepository('AppBundle:ReadingSubQuestion');
+
+        $testResult = new TestResult();
+        $testResult->setTest($test);
+        $testResult->setUser($user);
+        $testResult->setResult(0);
+
+        $this->em->persist($testResult);
+        $this->em->flush();
+
+        $gradeTest = new GradeTest();
+        $gradeTest->setTest($test);
+        $gradeTest->setStudent($user);
+        $gradeTest->setTeacher($test->getSection()->getCourse()->getUser());
+
+        foreach ($answers as $item) {
+            $question = $questionRepository->findOneById($item['questionId']);
+
+            if ($question instanceof Question) {
+                $questionResult = new QuestionResult();
+
+                $questionResult->setQuestion($question);
+
+                if ($question->getQuestionType() === 'USER_INPUT') {
+                    $questionResult->setUserInputAnswer($item['value']);
+
+                    $this->em->persist($gradeTest);
+
+                    $gradeQuestion = new GradeQuestion();
+                    $gradeQuestion->setQuestion($question);
+                    $gradeQuestion->setUserInputAnswer($item['value']);
+                    $gradeQuestion->setGradeTest($gradeTest);
+
+                    $this->em->persist($gradeQuestion);
+
+                }elseif($question->getQuestionType() === 'READING_TEXT') {
+                    $ids = explode('|', $item['value']);
+                    $answer = $answerRepository->findOneById($ids[0]);
+                    $subQuestion = $readingSubQuestionRepository->findOneById($ids[1]);
+
+                    if ($answer instanceof Answer && $subQuestion instanceof ReadingSubQuestion) {
+                        $questionResult->setAnswer($answer);
+                        $questionResult->setIsCorrect($answer->getIsCorrect());
+                        $questionResult->setSubQuestion($subQuestion);
+                    }
+
+                }
+                else {
+                    $answer = $answerRepository->findOneById($item['value']);
+
+                    if ($answer instanceof Answer) {
+                        $questionResult->setAnswer($answer);
+                        $questionResult->setIsCorrect($answer->getIsCorrect());
+                    }
+                }
+
+                $this->em->persist($questionResult);
+            }
+        }
+
+        $this->em->flush();
     }
 
 
