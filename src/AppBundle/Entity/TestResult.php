@@ -44,6 +44,8 @@ class TestResult implements HasOwnerInterface
     protected $questionResults;
 
     /**
+     * @JMS\Expose
+     * @JMS\Groups({"default"})
      * @ORM\Column(type="float")
      */
     protected $result;

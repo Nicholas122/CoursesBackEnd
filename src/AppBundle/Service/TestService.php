@@ -186,8 +186,12 @@ class TestService
             }
         }
     }
+
     public function passTest(Test $test, User $user, $answers)
     {
+        $result = 0;
+        $sumWeight = 0;
+
         $questionRepository = $this->em->getRepository('AppBundle:Question');
         $answerRepository = $this->em->getRepository('AppBundle:Answer');
         $readingSubQuestionRepository = $this->em->getRepository('AppBundle:ReadingSubQuestion');
@@ -207,8 +211,9 @@ class TestService
 
         foreach ($answers as $item) {
             $question = $questionRepository->findOneById($item['questionId']);
-
             if ($question instanceof Question) {
+                $sumWeight += $question->getWeight();
+
                 $questionResult = new QuestionResult();
 
                 $questionResult->setQuestion($question);
@@ -225,7 +230,7 @@ class TestService
 
                     $this->em->persist($gradeQuestion);
 
-                }elseif($question->getQuestionType() === 'READING_TEXT') {
+                } elseif ($question->getQuestionType() === 'READING_TEXT') {
                     $ids = explode('|', $item['value']);
                     $answer = $answerRepository->findOneById($ids[0]);
                     $subQuestion = $readingSubQuestionRepository->findOneById($ids[1]);
@@ -236,8 +241,7 @@ class TestService
                         $questionResult->setSubQuestion($subQuestion);
                     }
 
-                }
-                else {
+                } else {
                     $answer = $answerRepository->findOneById($item['value']);
 
                     if ($answer instanceof Answer) {
@@ -250,7 +254,38 @@ class TestService
             }
         }
 
+        $oneWeightInPercent = 100 / $sumWeight;
+
+        foreach ($answers as $item) {
+            $question = $questionRepository->findOneById($item['questionId']);
+            if ($question instanceof Question) {
+
+
+                if ($question->getQuestionType() === 'READING_TEXT') {
+                    $ids = explode('|', $item['value']);
+                    $answer = $answerRepository->findOneById($ids[0]);
+                    $subQuestion = $readingSubQuestionRepository->findOneById($ids[1]);
+
+                    if ($answer instanceof Answer && $subQuestion instanceof ReadingSubQuestion && $answer->getIsCorrect()) {
+                        $result += $subQuestion->getWeight() * $oneWeightInPercent;
+                    }
+
+                } elseif ($question->getQuestionType() === 'MULTIPLE_CHOICE') {
+                    $answer = $answerRepository->findOneById($item['value']);
+
+                    if ($answer instanceof Answer && $answer->getIsCorrect()) {
+                       $result += $question->getWeight() * $oneWeightInPercent;
+                    }
+                }
+
+            }
+        }
+
+        $testResult->setResult(round($result));
+
         $this->em->flush();
+
+        return $testResult;
     }
 
 

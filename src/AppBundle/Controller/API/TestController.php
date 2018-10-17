@@ -72,9 +72,9 @@ class TestController extends BaseRestController
          */
         $testService = $this->get('app.test.service');
 
-        $testService->passTest($test, $this->getUser(), $request->request->get('answers'));
+        $testResult = $testService->passTest($test, $this->getUser(), $request->request->get('answers'));
 
-        return $this->baseSerialize(null);
+        return $this->baseSerialize($testResult);
 
     }
 
