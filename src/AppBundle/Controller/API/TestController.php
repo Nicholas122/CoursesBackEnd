@@ -3,6 +3,8 @@
 namespace AppBundle\Controller\API;
 
 
+use AppBundle\Entity\GradeQuestion;
+use AppBundle\Entity\GradeTest;
 use AppBundle\Entity\Test;
 use AppBundle\Form\TestForm;
 use AppBundle\Service\TestService;
@@ -77,6 +79,30 @@ class TestController extends BaseRestController
         return $this->baseSerialize($testResult);
 
     }
+
+    /**
+     * Grade user input.
+     */
+    public function postGradeAction(GradeTest $gradeTest, Request $request)
+    {
+        /**
+         * @var TestService $testService
+         */
+        $testService = $this->get('app.test.service');
+
+        $repository = $this->getRepository('AppBundle:GradeQuestion');
+
+
+        $gradeQuestion = $repository->findOneById($request->request->get('questionId'));
+
+        if ($gradeQuestion instanceof GradeQuestion) {
+            $testService->gradeQuestion($gradeQuestion, $request->request->get('result'));
+        }
+
+        return $this->baseSerialize(null);
+
+    }
+
 
     /**
      * Get test.

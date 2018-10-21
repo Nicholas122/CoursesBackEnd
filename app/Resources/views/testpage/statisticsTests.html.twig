@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <link rel="stylesheet" type="text/css" href="/css/starter-template.css">
+    <div class="container theme-showcase" role="main">
+        <div class="starter-template">
+
+            <link href="http://courses.devcom.com/assets/css/viewStatistics.css" rel="stylesheet">
+            <div class="page-header">
+                <h1>Test statistics</h1>
+            </div>
+            <div class="ror"> <div id="message">
+                </div> </div>
+            <div class="container">
+
+                <div class="row">
+                    <div class="col-sm-4 tableCell">Test name</div>
+                    <div class="col-sm-4 tableCell">Course name</div>
+                    <div class="col-sm-4 tableCell">View report</div>
+                </div>
+                <div class="row testRow">
+                    {% for test in tests %}
+                        <div class="col-sm-4 tableCell">{{ test.title }}</div>
+                        <div class="col-sm-4 tableCell">{{ test.section.course.title }}</div>
+                        <div class="col-sm-4 tableCell">
+                            <a type="button" class=" btn btn-primary viewReport" href="{{ url('view-report', {'test': test.id}) }}">View report</a>
+                        </div>
+                    {% endfor %}
+
+                </div>
+            </div>
+            <!--<script type="text/javascript" src="--><!--assets/js/viewStatistics.js"></script>-->
+
+
+        </div>
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+
+{% endblock %}
+

@@ -76,7 +76,7 @@
                                 </li>
                             {% endif %}
                             <li role="presentation">
-                                <a role="menuitem" href="/tests/statistics" title="Test statistics">Test statistics</a>
+                                <a role="menuitem" href="{{ url('test-statistics') }}" title="Test statistics">Test statistics</a>
                             </li>
                             {% if getGradeTestCount(app.user) > 0%}
                                 <li role="presentation">

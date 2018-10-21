@@ -1,0 +1,73 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <link rel="stylesheet" type="text/css" href="/css/starter-template.css">
+    <div class="container theme-showcase" role="main">
+        <div class="starter-template">
+            <div class="page-header">
+                <h1>{{ test.title }} statistics</h1>
+            </div>
+            <div class="col-lg-12">
+                <div id="save-status"></div>
+                <table class="table table-striped table-bordered ">
+                    <thead>
+                    <tr>
+                        <th>User name</th>
+                        <th>Test score, %</th>
+                        <th>Passed date</th>
+                        <th>Pass / Fail</th>
+                        <th>Checked by teacher</th>
+                        <th>Enable retake</th>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for testResult in testResults %}
+                        <tr>
+                            <td>
+                                {{ testResult.user.firstName }} {{ testResult.user.lastName }}
+                            </td>
+                            <td>
+                                {{ testResult.result }}
+                            </td>
+                            <td>
+                                {{ testResult.passDate|date('Y-m-d H:i:s') }}
+                            </td>
+                            <td>
+                                {% if testResult.result > testResult.test.passingScorePercent %}
+                                    Pass
+                                {% else %}
+                                    Fail
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if testResult.check %}
+                                    Yes
+                                {% else %}
+                                    No
+                                {% endif %}
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-primary" value="117">
+                                    Enable retake
+                                </button>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+
+            </div>
+            <script>
+                var testId = 58;
+                var link = "http://courses.devcom.com/test/view_test/58";
+                var msg = 'Test retake was enabled successfully';
+            </script>
+            <script type="text/javascript" src="http://courses.devcom.com/assets/js/viewReport.js"></script>
+        </div>
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+
+{% endblock %}
+

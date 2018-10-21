@@ -54,6 +54,22 @@ class TestResult implements HasOwnerInterface
      * @ORM\Column(type="datetime")
      */
     protected $passDate;
+
+    /**
+     * @ORM\Column(type="float")
+     */
+    protected $oneWeightInPercent;
+
+    /**
+     * @ORM\Column(type="smallint")
+     */
+    protected $checked;
+
+    /**
+     * @ORM\Column(type="smallint")
+     */
+    protected $canRetake;
+
     /**
      * Constructor
      */
@@ -209,5 +225,77 @@ class TestResult implements HasOwnerInterface
     public function getOwners()
     {
         return [$this->getUser()];
+    }
+
+    /**
+     * Set oneWeightInPercent
+     *
+     * @param float $oneWeightInPercent
+     *
+     * @return TestResult
+     */
+    public function setOneWeightInPercent($oneWeightInPercent)
+    {
+        $this->oneWeightInPercent = $oneWeightInPercent;
+
+        return $this;
+    }
+
+    /**
+     * Get oneWeightInPercent
+     *
+     * @return float
+     */
+    public function getOneWeightInPercent()
+    {
+        return $this->oneWeightInPercent;
+    }
+
+    /**
+     * Set checked
+     *
+     * @param integer $checked
+     *
+     * @return TestResult
+     */
+    public function setChecked($checked)
+    {
+        $this->checked = $checked;
+
+        return $this;
+    }
+
+    /**
+     * Get checked
+     *
+     * @return integer
+     */
+    public function getChecked()
+    {
+        return $this->checked;
+    }
+
+    /**
+     * Set canRetake
+     *
+     * @param integer $canRetake
+     *
+     * @return TestResult
+     */
+    public function setCanRetake($canRetake)
+    {
+        $this->canRetake = $canRetake;
+
+        return $this;
+    }
+
+    /**
+     * Get canRetake
+     *
+     * @return integer
+     */
+    public function getCanRetake()
+    {
+        return $this->canRetake;
     }
 }

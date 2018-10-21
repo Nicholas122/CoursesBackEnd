@@ -33,6 +33,12 @@ class GradeTest
     protected $test;
 
     /**
+     * @ORM\ManyToOne(targetEntity="TestResult")
+     * @ORM\JoinColumn(name="test_result_id", referencedColumnName="id", onDelete="CASCADE")
+     */
+    protected $testResult;
+
+    /**
      * @ORM\ManyToOne(targetEntity="User")
      * @ORM\JoinColumn(name="teacher_id", referencedColumnName="id", onDelete="CASCADE")
      */
@@ -170,5 +176,29 @@ class GradeTest
     public function getGradeQuestions()
     {
         return $this->gradeQuestions;
+    }
+
+    /**
+     * Set testResult
+     *
+     * @param \AppBundle\Entity\TestResult $testResult
+     *
+     * @return GradeTest
+     */
+    public function setTestResult(\AppBundle\Entity\TestResult $testResult = null)
+    {
+        $this->testResult = $testResult;
+
+        return $this;
+    }
+
+    /**
+     * Get testResult
+     *
+     * @return \AppBundle\Entity\TestResult
+     */
+    public function getTestResult()
+    {
+        return $this->testResult;
     }
 }

@@ -7,6 +7,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Course;
 use AppBundle\Entity\GradeTest;
 use AppBundle\Entity\Test;
+use AppBundle\Repository\TestRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -24,7 +25,7 @@ class TestPageController extends BaseController
     }
 
     /**
-     * @Route("/test/pending_tests", name="test-pending-tests")
+     * @Route("/test/pending-tests", name="test-pending-tests")
      * @Security("has_role('ROLE_USER')")
      */
     public function pendingAction(Request $request)
@@ -38,6 +39,43 @@ class TestPageController extends BaseController
 
 
         return $this->render('testpage/pendingTests.html.twig', ['pendingTests' => $gradeTests]);
+    }
+
+    /**
+     * @Route("/test/test-statistics", name="test-statistics")
+     * @Security("has_role('ROLE_USER')")
+     */
+    public function statisticsAction()
+    {
+        /**
+         * @var TestRepository $repository
+         */
+        $repository = $this->getRepository('AppBundle:Test');
+
+        $user = $this->getUser();
+
+        $tests = $repository->findByOwner($user);
+
+
+        return $this->render('testpage/statisticsTests.html.twig', ['tests' => $tests]);
+    }
+
+
+    /**
+     * @Route("/test/view-report/{test}", name="view-report")
+     * @Security("has_role('ROLE_USER')")
+     */
+    public function viewReportAction(Test $test)
+    {
+        /**
+         * @var TestRepository $repository
+         */
+        $repository = $this->getRepository('AppBundle:TestResult');
+
+        $testResults = $repository->findBy(['test' => $test->getId()]);
+
+
+        return $this->render('testpage/viewReport.html.twig', ['testResults' => $testResults, 'test' => $test]);
     }
 
     /**
@@ -80,7 +118,7 @@ class TestPageController extends BaseController
      * @Route("/test-delete/{test}", name="test-delete")
      * @Security("is_granted('ABILITY_TEST_DELETE', test)")
      */
-    public function deleteAction(Test $test,Request $request)
+    public function deleteAction(Test $test, Request $request)
     {
         $course = $test->getSection()->getCourse();
 
@@ -100,7 +138,7 @@ class TestPageController extends BaseController
 
         if ($questionId) {
             $question = $repository->findOneById($questionId);
-        } elseif(count($questions) > 0) {
+        } elseif (count($questions) > 0) {
             $question = $questions[0];
         }
 

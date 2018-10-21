@@ -200,6 +200,7 @@ class TestService
         $testResult->setTest($test);
         $testResult->setUser($user);
         $testResult->setResult(0);
+        $testResult->setOneWeightInPercent(0);
 
         $this->em->persist($testResult);
         $this->em->flush();
@@ -256,6 +257,8 @@ class TestService
 
         $oneWeightInPercent = 100 / $sumWeight;
 
+        $testResult->setOneWeightInPercent($oneWeightInPercent);
+
         foreach ($answers as $item) {
             $question = $questionRepository->findOneById($item['questionId']);
             if ($question instanceof Question) {
@@ -274,7 +277,7 @@ class TestService
                     $answer = $answerRepository->findOneById($item['value']);
 
                     if ($answer instanceof Answer && $answer->getIsCorrect()) {
-                       $result += $question->getWeight() * $oneWeightInPercent;
+                        $result += $question->getWeight() * $oneWeightInPercent;
                     }
                 }
 
@@ -286,6 +289,31 @@ class TestService
         $this->em->flush();
 
         return $testResult;
+    }
+
+    public function gradeQuestion(GradeQuestion $gradeQuestion, $result)
+    {
+        $gradeTest = $gradeQuestion->getGradeTest();
+
+        $testResult = $gradeQuestion->getGradeTest()->getTestResult();
+        $result = $testResult->getResult();
+
+        switch ($result) {
+            case 100:
+                $result += $testResult->getOneWeightInPercent() * $gradeQuestion->getQuestion()->getWeight();
+                break;
+            case 50;
+                $result += ($testResult->getOneWeightInPercent() * $gradeQuestion->getQuestion()->getWeight()) / 2;
+                break;
+        }
+
+        $testResult->setResult($result);
+
+        $this->em->persist($testResult);
+        $this->em->remove($gradeTest);
+
+        $this->em->flush();
+
     }
 
 

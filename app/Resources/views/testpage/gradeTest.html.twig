@@ -24,7 +24,7 @@
                 <div id="save-status">
                 </div>
                 <form id="saveForm" accept-charset="UTF-8"
-                      action="http://courses.devcom.com/test/grade_tests?testid=58&amp;userid=117" method="post">
+                      action="{{ url('api_post_test_grade', {'gradeTest': gradeTest.id}) }}" method="post">
                     {% for gradeQuestion in gradeQuestions %}
                         <h2>Question</h2>
                         <div class="form-group">
@@ -36,15 +36,16 @@
                         <div class="form-group">
                             <ul id="list-grade-buttons" class="list-inline">
                                 <li>
-                                    <button type="button" class="btn btn-success" name="196">Mark correct</button>
+                                    <button type="button" class="btn btn-success" name="{{ gradeQuestion.id }}">Mark correct</button>
                                 </li>
                                 <li>
-                                    <button type="button" class="btn btn-warning" name="196">Mark partially correct</button>
+                                    <button type="button" class="btn btn-warning" name="{{ gradeQuestion.id }}">Mark partially correct</button>
                                 </li>
                                 <li>
-                                    <button type="button" class="btn btn-danger" name="196">Mark incorrect</button>
+                                    <button type="button" class="btn btn-danger" name="{{ gradeQuestion.id }}">Mark incorrect</button>
                                 </li>
-                                <input type="hidden" name="196">
+                                <input type="hidden" name="questionId" value="{{ gradeQuestion.id }}">
+                                <input type="hidden" name="result">
                             </ul>
                         </div>
                     {% endfor %}
@@ -53,7 +54,7 @@
                 </form>
 
                 <div id="submitButtons">
-                    <a role="button" href="http://courses.devcom.com/test/pending_tests/117" class="btn btn-primary">Cancel</a>
+                    <a role="button" href="{{ url('test-pending-tests') }}" class="btn btn-primary">Cancel</a>
                     <button id="saveBtn" class="btn btn-success">Save</button>
                 </div>
             </div>
@@ -65,7 +66,7 @@
                     var clickedButton = $(this);
 
                     $.each(inputs, function (key, input) {
-                        if (clickedButton.attr("name") == input.name) {
+                        if (input.name === 'result') {
                             if (clickedButton.hasClass('btn-success')) {
                                 input.value = 100;
                             } else if (clickedButton.hasClass('btn-warning')) {
@@ -102,7 +103,7 @@
                     });
 
                     if (status) {
-                        $.post('http://courses.devcom.com/test/grade_tests?testid=58&userid=117', $('#saveForm').serialize())
+                        $.post($('#saveForm').attr('action'), $('#saveForm').serialize())
                             .done(function () {
                                 $('#saveBtn').prop('disabled', true);
                             });
