@@ -61,12 +61,12 @@ class TestResult implements HasOwnerInterface
     protected $oneWeightInPercent;
 
     /**
-     * @ORM\Column(type="smallint")
+     * @ORM\Column(type="smallint", nullable=true)
      */
     protected $checked;
 
     /**
-     * @ORM\Column(type="smallint")
+     * @ORM\Column(type="smallint", nullable=true)
      */
     protected $canRetake;
 

@@ -209,6 +209,7 @@ class TestService
         $gradeTest->setTest($test);
         $gradeTest->setStudent($user);
         $gradeTest->setTeacher($test->getSection()->getCourse()->getUser());
+        $gradeTest->setTestResult($testResult);
 
         foreach ($answers as $item) {
             $question = $questionRepository->findOneById($item['questionId']);
@@ -291,14 +292,14 @@ class TestService
         return $testResult;
     }
 
-    public function gradeQuestion(GradeQuestion $gradeQuestion, $result)
+    public function gradeQuestion(GradeQuestion $gradeQuestion, $userInputResult)
     {
         $gradeTest = $gradeQuestion->getGradeTest();
 
         $testResult = $gradeQuestion->getGradeTest()->getTestResult();
         $result = $testResult->getResult();
 
-        switch ($result) {
+        switch ($userInputResult) {
             case 100:
                 $result += $testResult->getOneWeightInPercent() * $gradeQuestion->getQuestion()->getWeight();
                 break;
