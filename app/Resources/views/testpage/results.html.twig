@@ -1,0 +1,82 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <link rel="stylesheet" type="text/css" href="/css/starter-template.css">
+    <div class="container theme-showcase" role="main">
+        <div class="starter-template">
+            <style>
+                .resultHeader {
+                    text-align: center;
+                }
+            </style>
+            <div class="container">
+                <div class="page-header">
+                    <h1>Test Results</h1>
+                </div>
+
+                <div class="row">
+                    <div id="message">
+                    </div>
+                </div>
+                <table class="table table-striped table-bordered ">
+                    <thead>
+                    <tr>
+                        <th>Course name</th>
+                        <th>Test name</th>
+                        <th>Test score, %</th>
+                        <th>Passed date</th>
+                        <th>Pass / Fail</th>
+                        <th>Checked by teacher</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for testResult in testsResult %}
+                        <tr>
+
+                            <td>
+                                {{ testResult.test.section.course.title }}
+                            </td>
+
+
+                            <td>
+                                {{ testResult.test.title }}
+                            </td>
+
+
+                            <td>
+                                {{ testResult.result }}
+                            </td>
+
+
+                            <td>
+                                {{ testResult.passDate|date('Y-m-d H:i:s') }}
+                            </td>
+
+
+                            <td>
+                                {% if testResult.result > testResult.test.passingScorePercent %}
+                                    Pass
+                                {% else %}
+                                    Fail
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if testResult.check %}
+                                    Yes
+                                {% else %}
+                                    No
+                                {% endif %}
+                            </td>
+
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+
+{% endblock %}
+

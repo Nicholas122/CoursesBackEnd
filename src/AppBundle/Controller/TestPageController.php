@@ -62,6 +62,22 @@ class TestPageController extends BaseController
 
 
     /**
+     * @Route("/tests/result", name="tests-result")
+     * @Security("has_role('ROLE_USER')")
+     */
+    public function resultsAction()
+    {
+        $repository = $this->getRepository('AppBundle:TestResult');
+
+        $user = $this->getUser();
+
+        $testsResult = $repository->findBy(['user' => $user->getId()]);
+
+
+        return $this->render('testpage/results.html.twig', ['testsResult' => $testsResult]);
+    }
+
+    /**
      * @Route("/test/view-report/{test}", name="view-report")
      * @Security("has_role('ROLE_USER')")
      */
