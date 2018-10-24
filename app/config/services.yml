@@ -89,6 +89,11 @@ services:
         tags:
             - { name: jms_serializer.event_subscriber }
 
+    app.serializer.reading_text_subquestion:
+        class: AppBundle\Serializer\ReadingSubQuestionListener
+        tags:
+        - { name: jms_serializer.event_subscriber }
+
     app.serializer.answer:
         class: AppBundle\Serializer\AnswerListener
         tags:

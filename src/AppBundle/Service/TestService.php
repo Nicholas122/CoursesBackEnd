@@ -309,6 +309,7 @@ class TestService
         }
 
         $testResult->setResult($result);
+        $testResult->setChecked(1);
 
         $this->em->persist($testResult);
         $this->em->remove($gradeTest);
