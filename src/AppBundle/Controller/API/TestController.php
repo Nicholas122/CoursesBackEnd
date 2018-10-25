@@ -5,6 +5,7 @@ namespace AppBundle\Controller\API;
 
 use AppBundle\Entity\GradeQuestion;
 use AppBundle\Entity\GradeTest;
+use AppBundle\Entity\StartedTest;
 use AppBundle\Entity\Test;
 use AppBundle\Form\TestForm;
 use AppBundle\Service\TestService;
@@ -78,6 +79,22 @@ class TestController extends BaseRestController
 
         return $this->baseSerialize($testResult);
 
+    }
+
+    /**
+     * Staart test.
+     */
+    public function postStartAction(Test $test, Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $startedTest = new StartedTest();
+        $startedTest->setTest($test);
+        $startedTest->setUser($this->getUser());
+
+        $em->persist($startedTest);
+        $em->flush();
+
+        return $this->baseSerialize(null);
     }
 
     /**

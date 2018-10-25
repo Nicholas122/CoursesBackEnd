@@ -6,6 +6,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Course;
 use AppBundle\Entity\GradeTest;
+use AppBundle\Entity\StartedTest;
 use AppBundle\Entity\Test;
 use AppBundle\Entity\TestResult;
 use AppBundle\Repository\TestRepository;
@@ -122,14 +123,25 @@ class TestPageController extends BaseController
         $canPass = true;
 
         $repository = $this->getRepository('AppBundle:TestResult');
+        $startedTestRepository = $this->getRepository('AppBundle:StartedTest');
 
         $testResults = $repository->findBy(['test' => $test->getId(), 'user' => $this->getUser()->getId()], ['id' => 'DESC']);
+
+        $startedTest = $startedTestRepository->findBy(['test' => $test->getId(), 'user' => $this->getUser()->getId()], ['id' => 'DESC']);
+
+        if ($startedTest[0] instanceof StartedTest) {
+            $canPass = !$startedTest[0]->getStartedDate()->modify('+' . $test->getRetakeTimeout() . ' days') > new \DateTime();
+        }
+
         if ($testResults[0] instanceof TestResult) {
 
-            if ($testResults[0]->getPassDate('+'.$test->getRetakeTimeout().' days') <= new \DateTime()) {
+            if ($testResults[0]->getPassDate()->modify('+' . $test->getRetakeTimeout() . ' days') > new \DateTime()) {
                 $canPass = boolval($testResults[0]->getCanRetake());
+            } else {
+                $canPass = false;
             }
         }
+
 
         return $this->render('testpage/test.html.twig', ['canPass' => $canPass, 'test' => $test]);
     }
