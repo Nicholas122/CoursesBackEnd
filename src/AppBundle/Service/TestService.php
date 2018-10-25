@@ -325,7 +325,7 @@ class TestService
     {
         $repository = $this->em->getRepository('AppBundle:StartedTest');
 
-        $startedTests = $repository->findBy(['test' => $test->getId(), 'user' => $this->getUser()->getId()], ['id' => 'DESC']);
+        $startedTests = $repository->findBy(['test' => $test->getId(), 'user' => $user->getId()], ['id' => 'DESC']);
 
         foreach ($startedTests as $item) {
             $this->em->remove($item);
