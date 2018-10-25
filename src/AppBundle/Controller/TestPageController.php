@@ -7,6 +7,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Course;
 use AppBundle\Entity\GradeTest;
 use AppBundle\Entity\Test;
+use AppBundle\Entity\TestResult;
 use AppBundle\Repository\TestRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -118,7 +119,19 @@ class TestPageController extends BaseController
      */
     public function testAction(Test $test, Request $request)
     {
-        return $this->render('testpage/test.html.twig');
+        $canPass = true;
+
+        $repository = $this->getRepository('AppBundle:TestResult');
+
+        $testResults = $repository->findBy(['test' => $test->getId(), 'user' => $this->getUser()->getId()], ['id' => 'DESC']);
+        if ($testResults[0] instanceof TestResult) {
+
+            if ($testResults[0]->getPassDate('+'.$test->getRetakeTimeout().' days') <= new \DateTime()) {
+                $canPass = boolval($testResults[0]->getCanRetake());
+            }
+        }
+
+        return $this->render('testpage/test.html.twig', ['canPass' => $canPass, 'test' => $test]);
     }
 
     private function getQuestionsByTest(Test $test)

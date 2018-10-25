@@ -96,9 +96,6 @@
                             status = false;
                             return false;
                         } else {
-                            $('#save-status').removeClass();
-                            $('#save-status').addClass('alert alert-success');
-                            $('#save-status').text('All answers were graded successfully');
                         }
                     });
 
@@ -106,6 +103,7 @@
                         $.post($('#saveForm').attr('action'), $('#saveForm').serialize())
                             .done(function () {
                                 $('#saveBtn').prop('disabled', true);
+                                location.replace('/test/pending-tests');
                             });
                     }
                     $('body').animate({

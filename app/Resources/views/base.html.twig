@@ -80,7 +80,7 @@
                             </li>
                             {% if getGradeTestCount(app.user) > 0%}
                                 <li role="presentation">
-                                    <a role="menuitem" style="font-weight: bold" href="{{ url('test-pending-tests') }}" title="Grade Test ({{ getGradeTestCount(app.user) }})">Grade Test (1)</a>
+                                    <a role="menuitem" style="font-weight: bold" href="{{ url('test-pending-tests') }}" title="Grade Test ({{ getGradeTestCount(app.user) }})">Grade Test ({{ getGradeTestCount(app.user) }})</a>
                                 </li>
                             {% endif %}
                             <!--              -->

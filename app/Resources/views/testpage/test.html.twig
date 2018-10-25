@@ -3,14 +3,34 @@
     <link rel="stylesheet" href="/css/passTest.css">
     <link rel="stylesheet" type="text/css" href="/css/starter-template.css">
     <link rel="stylesheet" type="text/css" href="/css/viewTest.css">
-    <div id="app"></div>
-    <script src="/js/passTest.js"></script>
-    <script src="/js/passTestVendors.js"></script>
+
+    {% if canPass %}
+        <div id="app"></div>
+        <script src="/js/passTest.js"></script>
+        <script src="/js/passTestVendors.js"></script>
+    {% else %}
+       <div class="container theme-showcase">
+           <div class="starter-template">
+               <div class="page-header">
+                   <div class="row my-header">
+                       <h1 class="col-sm-4">{{ test.title }}</h1>
+                   </div>
+               </div>
+               <div class="container" style="text-align: center">
+                   <h3>
+                       You can retake the test after {{ test.retakeTimeout }} days if you'd like.
+                   </h3>
+               </div>
+
+           </div>
+       </div>
+    {% endif %}
+
 {% endblock %}
 
 {% block javascripts %}
     <script>
-        window.onbeforeunload = function(e) {
+        window.onbeforeunload = function (e) {
             var dialogText = 'Dialog text here';
             e.returnValue = dialogText;
             return dialogText;
