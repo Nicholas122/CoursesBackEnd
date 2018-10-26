@@ -266,13 +266,28 @@ class TestService
 
 
                 if ($question->getQuestionType() === 'READING_TEXT') {
-                    $ids = explode('|', $item['value']);
-                    $answer = $answerRepository->findOneById($ids[0]);
-                    $subQuestion = $readingSubQuestionRepository->findOneById($ids[1]);
+                    if (is_array($item['value'])) {
+                        foreach ($item['value'] as $value) {
+                            $ids = explode('|', $value);
 
-                    if ($answer instanceof Answer && $subQuestion instanceof ReadingSubQuestion && $answer->getIsCorrect()) {
-                        $result += $subQuestion->getWeight() * $oneWeightInPercent;
+                            $answer = $answerRepository->findOneById($ids[0]);
+                            $subQuestion = $readingSubQuestionRepository->findOneById($ids[1]);
+
+                            if ($answer instanceof Answer && $subQuestion instanceof ReadingSubQuestion && $answer->getIsCorrect()) {
+                                $result += $subQuestion->getWeight() * $oneWeightInPercent;
+                            }
+                        }
+                    }else {
+                        $ids = explode('|', $item['value']);
+
+                        $answer = $answerRepository->findOneById($ids[0]);
+                        $subQuestion = $readingSubQuestionRepository->findOneById($ids[1]);
+
+                        if ($answer instanceof Answer && $subQuestion instanceof ReadingSubQuestion && $answer->getIsCorrect()) {
+                            $result += $subQuestion->getWeight() * $oneWeightInPercent;
+                        }
                     }
+
 
                 } elseif ($question->getQuestionType() === 'MULTIPLE_CHOICE') {
                     $answer = $answerRepository->findOneById($item['value']);
