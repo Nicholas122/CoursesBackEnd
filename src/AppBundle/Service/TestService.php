@@ -300,7 +300,7 @@ class TestService
             }
         }
 
-        $testResult->setResult(round($result));
+        $testResult->setResult(ceil($result));
 
         $this->em->flush();
 
@@ -325,7 +325,7 @@ class TestService
                 break;
         }
 
-        $testResult->setResult($result);
+        $testResult->setResult(ceil($result));
         $testResult->setChecked(1);
 
         $this->em->persist($testResult);
