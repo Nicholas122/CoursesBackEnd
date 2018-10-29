@@ -178,7 +178,7 @@ class TestService
                 $subQuestion->setText($item['questionText']);
                 $subQuestion->setWeight(1);
                 $subQuestion->setQuestionType('READING_SUB_QUESTION');
-                $this->createAnswers($item['answers'], $subQuestion);
+                $this->updateAnswers($item['answers'], $subQuestion);
 
                 $this->em->persist($subQuestion);
             } else {
