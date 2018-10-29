@@ -53,6 +53,7 @@
             <ul class="nav navbar-nav navbar-right">
 
                 {% if app.user %}
+                    {% set notificationCount = getCheckedTestResultCount(app.user) + getGradeTestCount(app.user) %}
                     <li class="dropdown">
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                             {% if app.user.photo %}
@@ -60,9 +61,9 @@
                             {% else %}
                                 <span class="user-small-logo"></span>
                             {% endif %}
-                            {% if  getGradeTestCount(app.user) > 0 %}
+                            {% if  notificationCount > 0 %}
                                 <span class="badge"
-                                      style="background-color: red"> {{ getGradeTestCount(app.user) }} </span>
+                                      style="background-color: red"> {{ notificationCount }} </span>
                             {% endif %}
 
                             {{ app.user.email }}<b class="caret"></b>
@@ -83,11 +84,18 @@
                                     <a role="menuitem" style="font-weight: bold" href="{{ url('test-pending-tests') }}" title="Grade Test ({{ getGradeTestCount(app.user) }})">Grade Test ({{ getGradeTestCount(app.user) }})</a>
                                 </li>
                             {% endif %}
-                            <!--              -->
-                            <li role="presentation">
-                                <a role="menuitem" style="font-weight: normal" href="/tests/result"
-                                   title="Test Results">Test Results</a>
-                            </li>
+                            {% if getCheckedTestResultCount(app.user)  > 0 %}
+                                <li role="presentation">
+                                    <a role="menuitem" style="font-weight: bold" href="/tests/result"
+                                       title="Test Results">Test Results ({{ getCheckedTestResultCount(app.user) }})</a>
+                                </li>
+                                {% else %}
+                                    <li role="presentation">
+                                        <a role="menuitem" style="font-weight: normal" href="/tests/result"
+                                           title="Test Results">Test Results</a>
+                                    </li>
+                            {% endif %}
+
                             <!--              -->
                             <li role="presentation">
                                 <a role="menuitem" href="/settings">Edit your profile</a>

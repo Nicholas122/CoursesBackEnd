@@ -10,7 +10,7 @@ use JMS\Serializer\Annotation as JMS;
  * Test.
  *
  * @JMS\ExclusionPolicy("all")
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\TestResultRepository")
  * @ORM\HasLifecycleCallbacks()
  */
 class TestResult implements HasOwnerInterface
@@ -69,6 +69,11 @@ class TestResult implements HasOwnerInterface
      * @ORM\Column(type="smallint", nullable=true)
      */
     protected $canRetake;
+
+    /**
+     * @ORM\Column(type="smallint", nullable=true)
+     */
+    protected $viewed;
 
     /**
      * Constructor
@@ -297,5 +302,29 @@ class TestResult implements HasOwnerInterface
     public function getCanRetake()
     {
         return $this->canRetake;
+    }
+
+    /**
+     * Set viewed
+     *
+     * @param integer $viewed
+     *
+     * @return TestResult
+     */
+    public function setViewed($viewed)
+    {
+        $this->viewed = $viewed;
+
+        return $this;
+    }
+
+    /**
+     * Get viewed
+     *
+     * @return integer
+     */
+    public function getViewed()
+    {
+        return $this->viewed;
     }
 }

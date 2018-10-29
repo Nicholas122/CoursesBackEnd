@@ -10,6 +10,7 @@ use AppBundle\Entity\StartedTest;
 use AppBundle\Entity\Test;
 use AppBundle\Entity\TestResult;
 use AppBundle\Repository\TestRepository;
+use AppBundle\Repository\TestResultRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -69,12 +70,16 @@ class TestPageController extends BaseController
      */
     public function resultsAction()
     {
+        /**
+         * @var TestResultRepository $repository
+         */
         $repository = $this->getRepository('AppBundle:TestResult');
 
         $user = $this->getUser();
 
         $testsResult = $repository->findBy(['user' => $user->getId()]);
 
+        $repository->viewTestResult($user);
 
         return $this->render('testpage/results.html.twig', ['testsResult' => $testsResult]);
     }
