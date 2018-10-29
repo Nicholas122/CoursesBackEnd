@@ -175,7 +175,7 @@ class TestService
             if ($subQuestion instanceof ReadingSubQuestion) {
 
                 $subQuestion->setParent($question);
-                $subQuestion->setText($item['questionText']);
+                $subQuestion->setText($item['question   Text']);
                 $subQuestion->setWeight(1);
                 $subQuestion->setQuestionType('READING_SUB_QUESTION');
                 $this->updateAnswers($item['answers'], $subQuestion);
