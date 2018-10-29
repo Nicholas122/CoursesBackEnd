@@ -11,11 +11,20 @@
     {% else %}
        <div class="container theme-showcase">
            <div class="starter-template">
-               <div class="page-header">
-                   <div class="row my-header">
-                       <h1 class="col-sm-4">{{ test.title }}</h1>
+
+               <div class="page-header row">
+                   <div class="col-lg-10">
+
+                       <h1 class="col-sm-4" style="text-transform: uppercase;">{{ test.title }}</h1>
+
+                   </div>
+                   <div class="col-2">
+
+                       <a href="/courses/my" class="btn btn-success h1"> Back to courses</a>
+
                    </div>
                </div>
+
                <div class="container" style="text-align: center">
                    <h3>
                        You can retake the test after {{ test.retakeTimeout }} days if you'd like.
