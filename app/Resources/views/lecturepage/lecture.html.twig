@@ -63,6 +63,7 @@
                     <!-- Main content section -->
                     <div class="col-md-10">
                         {{ lecture.content|raw }}
+
                         <ul class="pager">
                             {% if nextLecture is not empty %}
                                 <li class="next">
@@ -71,6 +72,13 @@
                                         <span class="glyphicon glyphicon-arrow-right"></span>
                                     </a>
                                 </li>
+                              {% else %}
+                                  <li class="next">
+                                      <a role="button" class="btn-link" title="Take Test"
+                                         href="/test/{{  lecture.test.id }}"> Pass Test
+
+                                      </a>
+                                  </li>
                             {% endif %}
                             {% if previousLecture is not empty %}
                                 <li class="previous">
