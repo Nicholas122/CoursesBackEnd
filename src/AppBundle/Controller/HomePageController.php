@@ -26,10 +26,11 @@ class HomePageController extends Controller
      */
     public function initAction(KernelInterface $kernel)
     {
-       $this->installCkeditor($kernel);
-       $this->installAssets($kernel);
-       $this->clearCache($kernel);
-
+        //$this->installCkeditor($kernel);
+        //$this->installAssets($kernel);
+        $this->clearCache($kernel);
+        var_dump('Success!');
+        die;
         return new Response();
     }
 
