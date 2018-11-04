@@ -1,31 +1,53 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-<div class="container theme-showcase" role="main">
-  <div class="starter-template">
-    <div class="page-header">
-      <h1>Add a new lecture</h1>
-    </div>
+    <div class="container theme-showcase" role="main">
+        <div class="starter-template">
+            <div class="page-header">
+                <h1>Add a new lecture</h1>
+            </div>
 
-    <div class="row">
-      <div class="col-md-12">
-      </div>
-    </div>
+            <div class="row">
+                <div class="col-md-12">
+                </div>
+            </div>
 
-    <div class="row">
-      <div class="containerl-6 col-sm-6 col-md-6 col-lg-6">
-        {{ form_start(form, { 'attr' : { 'class': 'form-create' } }) }}
-        {% for child in form.children|keys %}
-        <p>
-          {% if 'token' not in form_label(attribute(form.children,child)) %}
-          {{ form_label(attribute(form.children,child)) }}
-          {% endif %}
-          {{ form_widget(attribute(form.children,child)) }}
-        </p>
-        {% endfor %}
-        {{ form_end(form) }}
-      </div>
-    </div>  
-  </div>
-</div>
+            <div class="row">
+                <div class="containerl-12 col-sm-12 col-md-12 col-lg-12">
+                    {{ form_start(form, { 'attr' : { 'class': 'form-create' } }) }}
+
+                    <!-- Form Elements -->
+                    <p class="col-4 col-sm-4 col-md-4 col-lg-4">
+                        <label for="lTitle">Title</label>
+                        {{ form_widget(form.title) }}
+                    </p>
+
+                    <p class="col-4 col-sm-4 col-md-4 col-lg-4">
+                        <label for="lDescription">Description</label>
+                        {{ form_widget(form.description) }}
+                    </p>
+
+                    <p class="col-4 col-sm-4 col-md-4 col-lg-4">
+                        <label for="CourseSection">Select Section</label>
+                        {{ form_widget(form.section) }}
+                    </p>
+
+
+                    <p class="col-12 col-sm-12 col-md-12 col-lg-12">
+                        <label for="lFullDescription">Full Lecture Description</label>
+                        {{ form_widget(form.content) }}
+                    </p>
+                    <p class="col-3 col-sm-3 col-md-3 col-lg-3">
+                        {{ form_widget(form.save) }}
+                    </p>
+                    <p class="col-3 col-sm-3 col-md-3 colrm-lg-3">
+                        <a role="button" class="btn btn-lg btn-default btn-block"
+                           href="{{ url('courses-my') }}">Cancel</a>
+
+                    </p>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
