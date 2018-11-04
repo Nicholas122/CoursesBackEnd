@@ -2,6 +2,7 @@
 
 namespace AppBundle\Repository;
 
+use AppBundle\Entity\Course;
 use AppBundle\Entity\User;
 
 /**
@@ -23,6 +24,16 @@ class TestRepository extends \Doctrine\ORM\EntityRepository
 
 
         return $result;
+    }
+
+    public function findByCourse(Course $course)
+    {
+        $qb = $this->createQueryBuilder('entity');
+
+        $results = $qb->leftJoin('AppBundle:Section', 'section', 'WITH', 'entity.section = section.id')
+            ->where($qb->expr()->eq('section.course', $course->getId()))->getQuery()->getResult();
+
+        return $results;
     }
 
 }

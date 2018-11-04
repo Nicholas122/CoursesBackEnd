@@ -12,6 +12,7 @@ use JMS\Serializer\Annotation as JMS;
  * @JMS\ExclusionPolicy("all")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\TestRepository")
  * @ORM\HasLifecycleCallbacks()
+ * @ORM\EntityListeners({"AppBundle\EventListener\TestEntityListener"})
  */
 class Test implements HasOwnerInterface
 {

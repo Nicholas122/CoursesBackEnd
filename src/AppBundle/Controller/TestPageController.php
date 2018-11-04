@@ -134,11 +134,11 @@ class TestPageController extends BaseController
 
         $startedTest = $startedTestRepository->findBy(['test' => $test->getId(), 'user' => $this->getUser()->getId()], ['id' => 'DESC']);
 
-        if ($startedTest[0] instanceof StartedTest) {
+        if (@$startedTest[0] instanceof StartedTest) {
             $canPass = !$startedTest[0]->getStartedDate()->modify('+' . $test->getRetakeTimeout() . ' days') > new \DateTime();
         }
 
-        if ($testResults[0] instanceof TestResult) {
+        if (@$testResults[0] instanceof TestResult) {
 
             if ($testResults[0]->getPassDate()->modify('+' . $test->getRetakeTimeout() . ' days') > new \DateTime()) {
                 $canPass = boolval($testResults[0]->getCanRetake());

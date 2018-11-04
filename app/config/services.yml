@@ -52,6 +52,13 @@ services:
     app.course_subscriber.service:
         public: true
         class: AppBundle\Service\CourseSubscribeService
+        arguments: ['@app.course_notification.service']
+
+
+    app.course_notification.service:
+        public: true
+        class: AppBundle\Service\CourseNotificationService
+
 
     app.set_owner.entity_listener:
         class: AppBundle\EventListener\SetOwnerListener
@@ -63,6 +70,18 @@ services:
         arguments: ['@app.photo.service']
         tags:
             - { name: doctrine.orm.entity_listener }
+
+    app.lecture.entity_listener:
+        class: AppBundle\EventListener\LectureEntityListener
+        arguments: ['@app.course_notification.service']
+        tags:
+        - { name: doctrine.orm.entity_listener }
+
+    app.test.entity_listener:
+        class: AppBundle\EventListener\TestEntityListener
+        arguments: ['@app.course_notification.service']
+        tags:
+        - { name: doctrine.orm.entity_listener }
 
     app.photo.service:
         public: true
