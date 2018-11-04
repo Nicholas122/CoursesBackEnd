@@ -67,7 +67,7 @@ class Test implements HasOwnerInterface
      * @JMS\Groups({"default"})
      * @ORM\Column(type="integer", nullable=true)
      * @Assert\NotBlank()
-     * @Assert\Range(min=60, max=100)
+     * @Assert\Range(min=1, max=100)
      */
     protected $passingScorePercent;
 
