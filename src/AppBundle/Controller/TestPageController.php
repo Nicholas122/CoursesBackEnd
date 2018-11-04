@@ -127,26 +127,29 @@ class TestPageController extends BaseController
     {
         $canPass = true;
 
-        $repository = $this->getRepository('AppBundle:TestResult');
-        $startedTestRepository = $this->getRepository('AppBundle:StartedTest');
+        if ($test->getRetakeTimeout() > 0) {
 
-        $testResults = $repository->findBy(['test' => $test->getId(), 'user' => $this->getUser()->getId()], ['id' => 'DESC']);
+            $repository = $this->getRepository('AppBundle:TestResult');
+            $startedTestRepository = $this->getRepository('AppBundle:StartedTest');
 
-        $startedTest = $startedTestRepository->findBy(['test' => $test->getId(), 'user' => $this->getUser()->getId()], ['id' => 'DESC']);
+            $testResults = $repository->findBy(['test' => $test->getId(), 'user' => $this->getUser()->getId()], ['id' => 'DESC']);
 
-        if (@$startedTest[0] instanceof StartedTest) {
-            $canPass = !$startedTest[0]->getStartedDate()->modify('+' . $test->getRetakeTimeout() . ' days') > new \DateTime();
-        }
+            $startedTest = $startedTestRepository->findBy(['test' => $test->getId(), 'user' => $this->getUser()->getId()], ['id' => 'DESC']);
 
-        if (@$testResults[0] instanceof TestResult) {
-
-            if ($testResults[0]->getPassDate()->modify('+' . $test->getRetakeTimeout() . ' days') > new \DateTime()) {
-                $canPass = boolval($testResults[0]->getCanRetake());
-            } else {
-                $canPass = false;
+            if (@$startedTest[0] instanceof StartedTest) {
+                $canPass = !$startedTest[0]->getStartedDate()->modify('+' . $test->getRetakeTimeout() . ' days') > new \DateTime();
             }
-        }
 
+            if (@$testResults[0] instanceof TestResult) {
+
+                if ($testResults[0]->getPassDate()->modify('+' . $test->getRetakeTimeout() . ' days') > new \DateTime()) {
+                    $canPass = boolval($testResults[0]->getCanRetake());
+                } else {
+                    $canPass = false;
+                }
+            }
+
+        }
 
         return $this->render('testpage/test.html.twig', ['canPass' => $canPass, 'test' => $test]);
     }

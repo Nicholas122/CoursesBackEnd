@@ -214,13 +214,13 @@ class TestService
         foreach ($answers as $item) {
             $question = $questionRepository->findOneById($item['questionId']);
             if ($question instanceof Question) {
-                $sumWeight += $question->getWeight();
-
-                $questionResult = new QuestionResult();
-
-                $questionResult->setQuestion($question);
-
                 if ($question->getQuestionType() === 'USER_INPUT') {
+                    $sumWeight += $question->getWeight();
+
+                    $questionResult = new QuestionResult();
+
+                    $questionResult->setQuestion($question);
+
                     $questionResult->setUserInputAnswer($item['value']);
 
                     $this->em->persist($gradeTest);
@@ -233,17 +233,53 @@ class TestService
                     $this->em->persist($gradeQuestion);
 
                 } elseif ($question->getQuestionType() === 'READING_TEXT') {
-                    $ids = explode('|', $item['value']);
-                    $answer = $answerRepository->findOneById($ids[0]);
-                    $subQuestion = $readingSubQuestionRepository->findOneById($ids[1]);
 
-                    if ($answer instanceof Answer && $subQuestion instanceof ReadingSubQuestion) {
-                        $questionResult->setAnswer($answer);
-                        $questionResult->setIsCorrect($answer->getIsCorrect());
-                        $questionResult->setSubQuestion($subQuestion);
+                    if (is_array($item['value'])) {
+                        foreach ($item['value'] as $value) {
+                            $ids = explode('|', $value);
+                            $answer = $answerRepository->findOneById($ids[0]);
+                            $subQuestion = $readingSubQuestionRepository->findOneById($ids[1]);
+
+                            $sumWeight += $subQuestion->getWeight();
+
+                            $questionResult = new QuestionResult();
+
+                            $questionResult->setQuestion($subQuestion);
+
+                            if ($answer instanceof Answer && $subQuestion instanceof ReadingSubQuestion) {
+                                $questionResult->setAnswer($answer);
+                                $questionResult->setIsCorrect($answer->getIsCorrect());
+                                $questionResult->setSubQuestion($subQuestion);
+                            }
+
+                        }
+                    } else {
+                        $ids = explode('|', $item['value']);
+                        $answer = $answerRepository->findOneById($ids[0]);
+                        $subQuestion = $readingSubQuestionRepository->findOneById($ids[1]);
+
+                        $sumWeight += $subQuestion->getWeight();
+
+                        $questionResult = new QuestionResult();
+
+                        $questionResult->setQuestion($subQuestion);
+
+                        if ($answer instanceof Answer && $subQuestion instanceof ReadingSubQuestion) {
+                            $questionResult->setAnswer($answer);
+                            $questionResult->setIsCorrect($answer->getIsCorrect());
+                            $questionResult->setSubQuestion($subQuestion);
+                        }
+
                     }
 
+
                 } else {
+                    $sumWeight += $question->getWeight();
+
+                    $questionResult = new QuestionResult();
+
+                    $questionResult->setQuestion($question);
+
                     $answer = $answerRepository->findOneById($item['value']);
 
                     if ($answer instanceof Answer) {
