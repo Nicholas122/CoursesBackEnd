@@ -21,18 +21,6 @@ class HomePageController extends Controller
         return $this->render('homepage/index.html.twig');
     }
 
-    /**
-     * @Route("/init", name="init")
-     */
-    public function initAction(KernelInterface $kernel)
-    {
-       $this->installCkeditor($kernel);
-       $this->installAssets($kernel);
-       $this->clearCache($kernel);
-
-        return new Response();
-    }
-
     private function installCkeditor(KernelInterface $kernel)
     {
         $application = new Application($kernel);

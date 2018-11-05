@@ -79,7 +79,13 @@ class TestPageController extends BaseController
 
         $testsResult = $repository->findBy(['user' => $user->getId()]);
 
-        $repository->viewTestResult($user);
+        $qb = $repository->createQueryBuilder('entity');
+
+        $qb->update('AppBundle:TestResult', 'entity')
+            ->set('entity.viewed', 1)
+            ->where($qb->expr()->eq('entity.user', $user->getId()))
+            ->andWhere($qb->expr()->eq('entity.checked', 1))
+            ->andWhere($qb->expr()->isNull('entity.viewed'))->getQuery()->execute();
 
         return $this->render('testpage/results.html.twig', ['testsResult' => $testsResult]);
     }
@@ -134,6 +140,8 @@ class TestPageController extends BaseController
 
             $testResults = $repository->findBy(['test' => $test->getId(), 'user' => $this->getUser()->getId()], ['id' => 'DESC']);
 
+
+
             $startedTest = $startedTestRepository->findBy(['test' => $test->getId(), 'user' => $this->getUser()->getId()], ['id' => 'DESC']);
 
             if (@$startedTest[0] instanceof StartedTest) {
@@ -141,6 +149,7 @@ class TestPageController extends BaseController
             }
 
             if (@$testResults[0] instanceof TestResult) {
+
 
                 if ($testResults[0]->getPassDate()->modify('+' . $test->getRetakeTimeout() . ' days') > new \DateTime()) {
                     $canPass = boolval($testResults[0]->getCanRetake());
