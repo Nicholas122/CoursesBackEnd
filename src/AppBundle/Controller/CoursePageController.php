@@ -5,6 +5,8 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Course;
 use AppBundle\Form\CourseForm;
 use AppBundle\Repository\CourseRepository;
+use AppBundle\Service\CourseNotificationService;
+use AppBundle\Service\CourseSubscribeService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -69,7 +71,21 @@ class CoursePageController extends BaseController
      */
     public function courseAction(Course $course)
     {
+        /**
+         * @var CourseSubscribeService $courseSubscribeService
+         */
+        $courseSubscribeService = $this->get('app.course_subscriber.service');
+
+        /**
+         * @var CourseNotificationService $courseNotificationService
+         */
+        $courseNotificationService = $this->get('app.course_notification.service');
+
         $sections = $this->getRepository('AppBundle:Section')->findBy(['course' => $course->getId()]);
+
+        if ($courseSubscribeService->isSubscribed($course, $this->getUser())) {
+            $courseNotificationService->viewAllNotifications($course, $this->getUser(), $this->getDoctrine()->getManager());
+        }
 
         return $this->render('coursepage/course.html.twig', ['course' => $course, 'sections' => $sections]);
     }

@@ -54,10 +54,7 @@ class CourseForm extends AbstractType
                 ]])
             ->add('save', SubmitType::class, array(
                 'attr' => array('class' => 'btn btn-lg btn-primary btn-block'),
-                'label' => 'Create'))
-            ->add('cancel', ButtonType::class, array(
-                'attr' => array('class' => 'btn btn-lg btn-default btn-block'),
-                'label' => 'Cancel'));
+                'label' => 'Create'));
     }
 
     /**

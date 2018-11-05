@@ -37,10 +37,7 @@ class LectureForm extends AbstractType
         ->add('content', CKEditorType::class, ['attr' => ['class' => 'form-control'], 'label' => 'Full lecture description', 'config' => ['uiColor' => '#ffffff']])
         ->add('save', SubmitType::class, array(
             'attr' => array('class' => 'btn btn-lg btn-primary btn-block'),
-            'label' => 'Save'))
-        ->add('cancel', ButtonType::class, array(
-            'attr' => array('class' => 'btn btn-lg btn-default btn-block'),
-            'label' => 'Cancel'));
+            'label' => 'Save'));
     }
 
     /**

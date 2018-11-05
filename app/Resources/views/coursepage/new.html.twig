@@ -14,14 +14,84 @@
 
             <div class="row">
                 {{ form_start(form, { 'attr' : { 'class': 'form-create' } }) }}
-                {% for child in form.children|keys %}
-                    <p>
-                        {% if 'token' not in form_label(attribute(form.children,child)) %}
-                            {{ form_label(attribute(form.children,child)) }}
-                        {% endif %}
-                        {{ form_widget(attribute(form.children,child)) }}
+                    <!-- Form Elements -->
+                    <p class="col-6 col-sm-6 col-md-6 col-lg-6">
+                        <label for="cTitle">Title</label>
+                        {{ form_widget(form.title) }}
                     </p>
-                {% endfor %}
+
+                    <p class="col-3 col-sm-3 col-md-3 col-lg-3">
+                        <label for="category">Category</label>
+                        {{ form_widget(form.category) }}
+                    </p>
+
+                    <p class="col-3 col-sm-3 col-md-3 col-lg-3">
+                        <label for="languages">Language</label>
+                        {{ form_widget(form.language) }}
+                    </p>
+
+                    <div class="clearfix"></div>
+
+                    <p class="col-6 col-sm-6 col-md-6 col-lg-6">
+                        <label for="subTitle">Subtitle</label>
+                        {{ form_widget(form.subTitle) }}
+                    </p>
+
+                    <p class="col-3 col-sm-3 col-md-3 col-lg-3">
+                        <label for="status">Status</label>
+                        {{ form_widget(form.status) }}
+                    </p>
+
+                    <p class="col-3 col-sm-3 col-md-3 col-lg-3">
+                        <label for="instructional_level">Instructional Level</label>
+                        {{ form_widget(form.instructionalLevel) }}
+                    </p>
+
+                    <div class="clearfix"></div>
+
+                    <p class="col-12 col-sm-12 col-md-12 col-lg-12">
+                        <label for="courseSummary">Course Summary</label>
+                        {{ form_widget(form.summary) }}
+
+                    </p>
+
+                    <p class="col-6 col-sm-6 col-md-6 col-lg-6">
+                        <label for="imageLogoPath">Upload course image logo</label>
+                        {{ form_widget(form.logo) }}
+                    </p>
+
+                    <p class="col-6 col-sm-6 col-md-6 col-lg-6">
+                        <label for="promoVideoUrl">Put your promo video</label>
+                        {{ form_widget(form.video) }}
+                    </p>
+
+                    <!-- Area to create session for enrollment -->
+                    <p class="col-12 col-sm-12 col-md-12 col-lg-12">
+                        <label for="enrollExist">Sessions exist</label>
+                        {{ form_widget(form.session) }}
+                    </p>
+                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 enrollmentArea hidden">
+                        <p class="col-12">
+                            <button name="createEnrollment" type="button" class="btn btn-info createEnrollment">Create New Session</button>        <span class="form-control form-error hidden valid-error"><label>Fill in all dates fields</label></span>
+                        </p>
+                        <input hidden="" name="enrollment" value="false">
+                    </div>
+
+                    <!-- END area to create session for enrollment -->
+                    <!-- /.Form Elements -->
+
+                    <div class="clearfix"></div>
+
+                    <!-- Submit buttons-->
+                    <p class="col-3 col-sm-3 col-md-3 col-lg-3">
+                        {{ form_widget(form.save) }}
+                    </p>
+
+                    <p class="col-3 col-sm-3 col-md-3 col-lg-3">
+                        <a role="button" class="btn btn-lg btn-default btn-block" href="{{ url('courses-my')  }}">Cancel</a>
+                    </p>
+                    <!-- /.Submit buttons-->
+
                 {{ form_end(form) }}
             </div>
 

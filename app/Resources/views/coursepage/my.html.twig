@@ -24,9 +24,12 @@
                 {% else %}
                 <ul class="user-course-list">
                     {% for subscribedCourse in subscribedCourses %}
+                        {% set courseNotficationCount = getCourseNotificationCount(subscribedCourse, app.user) %}
                     <li>
                         <a href="/course/{{subscribedCourse.id}}" title="{{subscribedCourse.title}}">{{subscribedCourse.title}}</a>
-                        <span class="badge">13</span>
+                        {% if courseNotficationCount > 0 %}
+                        <span class="badge" style="background-color: red">{{ courseNotficationCount }}</span>
+                        {% endif %}
                     </li>
                     {% endfor %}
                 </ul>
