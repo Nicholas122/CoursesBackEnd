@@ -1,79 +1,100 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-<div class="container theme-showcase" role="main">
-    <div class="starter-template">
-        <div class="page-header" id="pageHeaderMyCourse">
-            <h1>My Courses</h1>
-        </div>
-
-        <div class="row">
-            <div class="col-md-12" id="message">
+    <div class="container theme-showcase" role="main">
+        <div class="starter-template">
+            <div class="page-header" id="pageHeaderMyCourse">
+                <h1>My Courses</h1>
             </div>
-        </div>
 
-        <div class="row">
-            <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-12" id="message">
+                </div>
+            </div>
 
-                <div class="page-header">
-                    <h3>Learning ({{ subscribedCourses|length }})</h3>
+            <div class="row">
+                <div class="col-md-6">
+
+                    <div class="page-header">
+                        <h3>Learning ({{ subscribedCourses|length }})</h3>
+                    </div>
+
+                    {% if subscribedCourses is empty %}
+                        <p>You haven't subscribed to any of the courses</p>
+                    {% else %}
+                        <ul class="user-course-list">
+                            {% for subscribedCourse in subscribedCourses %}
+                                {% set courseNotficationCount = getCourseNotificationCount(subscribedCourse, app.user) %}
+                                <li>
+                                    <a href="/course/{{ subscribedCourse.id }}"
+                                       title="{{ subscribedCourse.title }}">{{ subscribedCourse.title }}</a>
+                                    {% if courseNotficationCount > 0 %}
+                                        <span class="badge"
+                                              style="background-color: red">{{ courseNotficationCount }}</span>
+                                    {% endif %}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
                 </div>
 
-                {% if subscribedCourses is empty %}
-                <p>You haven't subscribed to any of the courses</p>
-                {% else %}
-                <ul class="user-course-list">
-                    {% for subscribedCourse in subscribedCourses %}
-                        {% set courseNotficationCount = getCourseNotificationCount(subscribedCourse, app.user) %}
-                    <li>
-                        <a href="/course/{{subscribedCourse.id}}" title="{{subscribedCourse.title}}">{{subscribedCourse.title}}</a>
-                        {% if courseNotficationCount > 0 %}
-                        <span class="badge" style="background-color: red">{{ courseNotficationCount }}</span>
-                        {% endif %}
-                    </li>
-                    {% endfor %}
-                </ul>
+                {% if app.user.isTeacher %}
+                    <div class="col-md-6">
+                        <div class="page-header">
+                            <h3>Teaching ({{ courses|length }})</h3>
+                        </div>
+                        <ul class="user-course-list">
+                            {% for course in courses %}
+                                {% set sections = findBy('AppBundle:Section', {'course': course.id}) %}
+                                <li>
+                                    <a role="button" class="btn-link" href="/course/{{ course.id }}"
+                                       title="{{ course.title }}">{{ course.title }}</a>
+                                    <a role="button" class="btn-link" href="/courses-edit/{{ course.id }}"
+                                       title="Update Your Course"><span class="glyphicon glyphicon-edit"></span></a>
+                                    <div class="dropdown menu-inline">
+                                        <a class="dropdown-toggle" id="ctAction" role="button" data-toggle="dropdown"
+                                           data-target="#" href="http://internalcourses.devcom.com/course/my_course#">
+                                            <span class="glyphicon glyphicon-plus-sign"></span><b class="caret"></b>
+                                        </a>
+                                        <ul class="dropdown-menu" role="menu" aria-labelledby="ctAction">
+                                            <li role="presentation">
+                                                <a role="menuitem" title="Add Section"
+                                                   href="/section/new/{{ course.id }}">Add Section</a>
+                                            </li>
+                                            <li role="presentation">
+                                                <a role="menuitem" {% if sections|length == 0 %} data-toggle="modal" data-target="#warning"  class="modal-warning" data-text="You can not create a lecture without section" data-course="{{ course.id }}" href="#"{% else %}href="/lecture/new/{{ course.id }}"{% endif %}
+                                                   title="Add Lecture">Add Lecture</a>
+                                            </li>
+                                            <li role="presentation">
+                                                <a role="menuitem"
+                                                   title="Add Test" {% if sections|length == 0 %} data-toggle="modal" data-target="#warning" class="modal-warning" data-text="You can not create a test without section" data-course="{{ course.id }}" href="#" {% else %}href="/test-new/{{ course.id }}"{% endif %}>Add
+                                                    Test</a>
+                                            </li>
+
+                                        </ul>
+                                    </div>
+                                    <a class="btn-link btn-delete" title="Delete Your Course"
+                                       data-delete-url="/courses-delete/{{ course.id }}"
+                                       data-target="#deleteConfirmation" data-toggle="modal" href="#"
+                                       data-confirm-body="Do you really want to delete this course?">
+                                        <span class="glyphicon glyphicon-remove"></span>
+                                    </a>
+                                    <small>{{ course.subTitle }}</small>
+                                </li>
+                            {% endfor %}
+
+                        </ul>
+                        <p>
+                            <!--<a role="button" href="#" class="btn btn-default"> <span class="glyphicon glyphicon-chevron-right"></span></a>-->
+                            <a role="button" href="/courses/new" class="btn btn-default">Create New Course <span
+                                        class="glyphicon glyphicon-plus-sign"></span></a>
+                        </p>
+                    </div>
                 {% endif %}
             </div>
 
-            {% if app.user.isTeacher %}
-            <div class="col-md-6">
-                <div class="page-header">
-                    <h3>Teaching ({{ courses|length }})</h3>
-                </div>
-                <ul class="user-course-list">
-                    {% for course in courses %}
-                    <li>
-                        <a role="button" class="btn-link" href="/course/{{ course.id }}" title="{{ course.title }}">{{ course.title }}</a>
-                        <a role="button" class="btn-link" href="/courses-edit/{{ course.id }}" title="Update Your Course"><span class="glyphicon glyphicon-edit"></span></a>
-                        <div class="dropdown menu-inline">
-                            <a class="dropdown-toggle" id="ctAction" role="button" data-toggle="dropdown" data-target="#" href="http://internalcourses.devcom.com/course/my_course#">
-                                <span class="glyphicon glyphicon-plus-sign"></span><b class="caret"></b>
-                            </a>
-                            <ul class="dropdown-menu" role="menu" aria-labelledby="ctAction">
-                                <li role="presentation"><a role="menuitem" href="/section/new/{{ course.id }}" title="Add Section">Add Section</a></li>
-                                <li role="presentation"><a role="menuitem" href="/lecture/new/{{ course.id }}" title="Add Lecture">Add Lecture</a></li>
-                                <li role="presentation"><a role="menuitem" href="/test-new/{{ course.id }}" title="Add Test">Add Test</a></li>
-
-                            </ul>
-                        </div>
-                        <a class="btn-link btn-delete" title="Delete Your Course" data-delete-url="/courses-delete/{{ course.id }}" data-target="#deleteConfirmation" data-toggle="modal" href="#" data-confirm-body="Do you really want to delete this course?">
-                            <span class="glyphicon glyphicon-remove"></span>
-                        </a>
-                        <small>{{ course.subTitle }}</small>
-                    </li>
-                    {% endfor %}
-
-                </ul>
-                <p>
-                    <!--<a role="button" href="#" class="btn btn-default"> <span class="glyphicon glyphicon-chevron-right"></span></a>-->
-                    <a role="button" href="/courses/new" class="btn btn-default">Create New Course <span class="glyphicon glyphicon-plus-sign"></span></a>
-                </p>
-            </div>
-            {% endif %}
+            <script type="text/javascript" src="/js/scripts.js"></script>
+            <script type="text/javascript" src="/js/course.js"></script>
         </div>
-
-        <script type="text/javascript" src="/js/scripts.js"></script>
-        <script type="text/javascript" src="/js/course.js"></script>  </div>
     </div>
-    {% endblock %}
+{% endblock %}

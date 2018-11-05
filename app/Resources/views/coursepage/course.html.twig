@@ -1,6 +1,8 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+    {% set sections = findBy('AppBundle:Section', {'course': course.id}) %}
+
     <div class="container theme-showcase" role="main">
         <div class="starter-template">
             <link rel="stylesheet" href="/css/viewCourse.css">
@@ -28,11 +30,11 @@
                                                        title="Add Section">Add Section</a>
                                                 </li>
                                                 <li role="presentation">
-                                                    <a role="menuitem" href="/lecture/new/{{ course.id }}"
+                                                    <a role="menuitem" {% if sections|length == 0 %} data-toggle="modal" data-target="#warning"  class="modal-warning" data-text="You can not create a lecture without section" data-course="{{ course.id }}" href="#"{% else %}href="/lecture/new/{{ course.id }}"{% endif %}"
                                                        title="Add Lecture">Add Lecture</a>
                                                 </li>
                                                 <li role="presentation">
-                                                    <a role="menuitem" href="/test-new/{{ course.id }}"
+                                                    <a role="menuitem" {% if sections|length == 0 %} data-toggle="modal" data-target="#warning" class="modal-warning" data-text="You can not create a test without section" data-course="{{ course.id }}" href="#" {% else %}href="/test-new/{{ course.id }}"{% endif %}
                                                        title="Add Test">Add Test</a>
                                                 </li>
                                             </ul>
