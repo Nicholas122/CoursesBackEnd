@@ -6,6 +6,7 @@ use AppBundle\Entity\Course;
 use AppBundle\Entity\Lecture;
 use AppBundle\Form\LectureForm;
 use AppBundle\Repository\LectureRepository;
+use AppBundle\Repository\TestRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -72,14 +73,20 @@ class LecturePageController extends BaseController
          */
         $repository = $this->getRepository('AppBundle:Lecture');
 
+        /**
+         * @var TestRepository $repository
+         */
+        $testRepository = $this->getRepository('AppBundle:Test');
+
         $sections = $this->getRepository('AppBundle:Section')->findBy(['course' => $lecture->getSection()->getCourse()]);
 
         $nextLecture = $repository->getNextLecture($lecture);
         $previousLecture = $repository->getPreviousLecture($lecture);
 
+        $test = $testRepository->findBy(['section' => $lecture->getSection()->getId()], ['id' => 'desc'], 1);
 
         return $this->render('lecturepage/lecture.html.twig', [
-            'lecture' => $lecture, 'sections' => $sections,
+            'lecture' => $lecture, 'sections' => $sections, 'test' => @$test[0],
             'nextLecture' => $nextLecture, 'previousLecture' => $previousLecture
         ]);
     }
