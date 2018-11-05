@@ -58,9 +58,10 @@ class TestService
             }
 
             $this->em->persist($question);
+            $this->em->flush();
         }
 
-        $this->em->flush();
+
     }
 
     private function createAnswers($answersData, Question $question)
