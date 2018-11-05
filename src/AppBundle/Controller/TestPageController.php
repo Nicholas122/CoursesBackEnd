@@ -79,18 +79,13 @@ class TestPageController extends BaseController
 
         $testsResult = $repository->findBy(['user' => $user->getId()]);
 
-        try {
-           $qb = $repository->createQueryBuilder('entity');
+        $qb = $repository->createQueryBuilder('entity');
 
-            $qb->update('AppBundle:TestResult', 'entity')
-                ->set('entity.viewed', 1)
-                ->where($qb->expr()->eq('entity.user', $user->getId()))
-                ->andWhere($qb->expr()->eq('entity.checked', 1))
-                ->andWhere($qb->expr()->isNull('entity.viewed'))->getQuery()->execute();
-
-        } catch (\Exception $e) {
-
-        }
+        $qb->update('AppBundle:TestResult', 'entity')
+            ->set('entity.viewed', 1)
+            ->where($qb->expr()->eq('entity.user', $user->getId()))
+            ->andWhere($qb->expr()->eq('entity.checked', 1))
+            ->andWhere($qb->expr()->isNull('entity.viewed'))->getQuery()->execute();
 
         return $this->render('testpage/results.html.twig', ['testsResult' => $testsResult]);
     }
