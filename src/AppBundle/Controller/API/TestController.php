@@ -109,12 +109,18 @@ class TestController extends BaseRestController
 
         $repository = $this->getRepository('AppBundle:GradeQuestion');
 
+        foreach ($request->request->get('questions', []) as $item) {
+            $gradeQuestion = $repository->findOneById($item['id']);
 
-        $gradeQuestion = $repository->findOneById($request->request->get('questionId'));
-
-        if ($gradeQuestion instanceof GradeQuestion) {
-            $testService->gradeQuestion($gradeQuestion, $request->request->get('result'));
+            if ($gradeQuestion instanceof GradeQuestion) {
+                $testService->gradeQuestion($gradeQuestion, $item['result']);
+            }
         }
+
+        $em = $this->getDoctrine()->getManager();
+
+        $em->remove($gradeTest);
+        $em->flush();
 
         return $this->baseSerialize(null);
 

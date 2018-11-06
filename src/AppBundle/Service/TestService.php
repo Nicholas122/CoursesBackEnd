@@ -235,27 +235,8 @@ class TestService
 
                 } elseif ($question->getQuestionType() === 'READING_TEXT') {
 
-                    if (is_array($item['value'])) {
-                        foreach ($item['value'] as $value) {
-                            $ids = explode('|', $value);
-                            $answer = $answerRepository->findOneById($ids[0]);
-                            $subQuestion = $readingSubQuestionRepository->findOneById($ids[1]);
-
-                            $sumWeight += $subQuestion->getWeight();
-
-                            $questionResult = new QuestionResult();
-
-                            $questionResult->setQuestion($subQuestion);
-
-                            if ($answer instanceof Answer && $subQuestion instanceof ReadingSubQuestion) {
-                                $questionResult->setAnswer($answer);
-                                $questionResult->setIsCorrect($answer->getIsCorrect());
-                                $questionResult->setSubQuestion($subQuestion);
-                            }
-
-                        }
-                    } else {
-                        $ids = explode('|', $item['value']);
+                    foreach ($item['value'] as $value) {
+                        $ids = explode('|', $value);
                         $answer = $answerRepository->findOneById($ids[0]);
                         $subQuestion = $readingSubQuestionRepository->findOneById($ids[1]);
 
@@ -272,7 +253,6 @@ class TestService
                         }
 
                     }
-
 
                 } else {
                     $sumWeight += $question->getWeight();
@@ -300,22 +280,9 @@ class TestService
         foreach ($answers as $item) {
             $question = $questionRepository->findOneById($item['questionId']);
             if ($question instanceof Question) {
-
-
                 if ($question->getQuestionType() === 'READING_TEXT') {
-                    if (is_array($item['value'])) {
-                        foreach ($item['value'] as $value) {
-                            $ids = explode('|', $value);
-
-                            $answer = $answerRepository->findOneById($ids[0]);
-                            $subQuestion = $readingSubQuestionRepository->findOneById($ids[1]);
-
-                            if ($answer instanceof Answer && $subQuestion instanceof ReadingSubQuestion && $answer->getIsCorrect()) {
-                                $result += $subQuestion->getWeight() * $oneWeightInPercent;
-                            }
-                        }
-                    }else {
-                        $ids = explode('|', $item['value']);
+                    foreach ($item['value'] as $value) {
+                        $ids = explode('|', $value);
 
                         $answer = $answerRepository->findOneById($ids[0]);
                         $subQuestion = $readingSubQuestionRepository->findOneById($ids[1]);
@@ -324,8 +291,6 @@ class TestService
                             $result += $subQuestion->getWeight() * $oneWeightInPercent;
                         }
                     }
-
-
                 } elseif ($question->getQuestionType() === 'MULTIPLE_CHOICE') {
                     $answer = $answerRepository->findOneById($item['value']);
 
@@ -348,8 +313,6 @@ class TestService
 
     public function gradeQuestion(GradeQuestion $gradeQuestion, $userInputResult)
     {
-        $gradeTest = $gradeQuestion->getGradeTest();
-
         $testResult = $gradeQuestion->getGradeTest()->getTestResult();
         $result = $testResult->getResult();
 
@@ -362,11 +325,12 @@ class TestService
                 break;
         }
 
-        $testResult->setResult(ceil($result));
+        $result = ceil($result) < 100 ?ceil($result): 100;
+
+        $testResult->setResult($result);
         $testResult->setChecked(1);
 
         $this->em->persist($testResult);
-        $this->em->remove($gradeTest);
 
         $this->em->flush();
 

@@ -44,8 +44,8 @@
                                 <li>
                                     <button type="button" class="btn btn-danger" name="{{ gradeQuestion.id }}">Mark incorrect</button>
                                 </li>
-                                <input type="hidden" name="questionId" value="{{ gradeQuestion.id }}">
-                                <input type="hidden" name="result">
+                                <input type="hidden" name="questions[{{ loop.index }}][id]" value="{{ gradeQuestion.id }}">
+                                <input type="hidden" name="questions[{{ loop.index }}][result]">
                             </ul>
                         </div>
                     {% endfor %}
@@ -66,7 +66,7 @@
                     var clickedButton = $(this);
 
                     $.each(inputs, function (key, input) {
-                        if (input.name === 'result') {
+                        if (input.name.includes('result')) {
                             if (clickedButton.hasClass('btn-success')) {
                                 input.value = 100;
                             } else if (clickedButton.hasClass('btn-warning')) {

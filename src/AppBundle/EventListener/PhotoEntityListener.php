@@ -63,10 +63,12 @@ class PhotoEntityListener
         $photoDir = pathinfo($photo, PATHINFO_DIRNAME);
         $fileName = pathinfo($photo, PATHINFO_FILENAME);
 
-        $files = scandir($photoDir);
-        foreach ($files as $file) {
-            if (0 === strpos($file, $fileName)) {
-                unlink($photoDir . '/' . $file);
+        if ($photoDir) {
+            $files = scandir($photoDir);
+            foreach ($files as $file) {
+                if (0 === strpos($file, $fileName)) {
+                    unlink($photoDir . '/' . $file);
+                }
             }
         }
     }
